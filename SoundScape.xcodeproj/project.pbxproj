@@ -7,21 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BBF3A4B0F5F6E41F467F0753 /* Pods_SoundScape.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6797C15E936E333C697E1AD /* Pods_SoundScape.framework */; };
 		D43B13551ED61B2F00A78A77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B13541ED61B2F00A78A77 /* AppDelegate.swift */; };
-		D43B13571ED61B2F00A78A77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B13561ED61B2F00A78A77 /* ViewController.swift */; };
+		D43B13571ED61B2F00A78A77 /* SongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B13561ED61B2F00A78A77 /* SongsTableViewController.swift */; };
 		D43B135A1ED61B2F00A78A77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D43B13581ED61B2F00A78A77 /* Main.storyboard */; };
 		D43B135C1ED61B2F00A78A77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43B135B1ED61B2F00A78A77 /* Assets.xcassets */; };
 		D43B135F1ED61B2F00A78A77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D43B135D1ED61B2F00A78A77 /* LaunchScreen.storyboard */; };
+		D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */; };
+		D4A17E2E1ED7D34200490D1A /* SpotifyAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */; };
+		D4F5DEBA1ED61D8D008FA0C1 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* Song.swift */; };
+		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
+		D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */; };
+		D4F5DEC21ED79138008FA0C1 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */; };
+		D4F5DEC31ED79138008FA0C1 /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F5DEC11ED79138008FA0C1 /* SpotifyAuthentication.framework */; };
+		D4F5DECC1ED7938B008FA0C1 /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F5DECB1ED7938B008FA0C1 /* SpotifyMetadata.framework */; };
+		D4F5DED01ED79F53008FA0C1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DECF1ED79F53008FA0C1 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57C367E47721CC85950BE19A /* Pods-SoundScape.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundScape.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SoundScape/Pods-SoundScape.debug.xcconfig"; sourceTree = "<group>"; };
+		8AEDADC3142FA1CEF2C657CA /* Pods-SoundScape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundScape.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundScape/Pods-SoundScape.release.xcconfig"; sourceTree = "<group>"; };
 		D43B13511ED61B2F00A78A77 /* SoundScape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundScape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43B13541ED61B2F00A78A77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D43B13561ED61B2F00A78A77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D43B13561ED61B2F00A78A77 /* SongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsTableViewController.swift; sourceTree = "<group>"; };
 		D43B13591ED61B2F00A78A77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D43B135B1ED61B2F00A78A77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D43B135E1ED61B2F00A78A77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D43B13601ED61B2F00A78A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsSearchViewController.swift; sourceTree = "<group>"; };
+		D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAuthManager.swift; sourceTree = "<group>"; };
+		D4F5DEB91ED61D8D008FA0C1 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		D4F5DEC11ED79138008FA0C1 /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		D4F5DEC41ED791EB008FA0C1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D4F5DEC61ED791F6008FA0C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D4F5DEC81ED79351008FA0C1 /* SoundScape-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundScape-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		D4F5DECB1ED7938B008FA0C1 /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		D4F5DECF1ED79F53008FA0C1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D6797C15E936E333C697E1AD /* Pods_SoundScape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundScape.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +54,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F5DEC31ED79138008FA0C1 /* SpotifyAuthentication.framework in Frameworks */,
+				D4F5DECC1ED7938B008FA0C1 /* SpotifyMetadata.framework in Frameworks */,
+				D4F5DEC21ED79138008FA0C1 /* SpotifyAudioPlayback.framework in Frameworks */,
+				BBF3A4B0F5F6E41F467F0753 /* Pods_SoundScape.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C74E43D5488618CE213EA35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4F5DECB1ED7938B008FA0C1 /* SpotifyMetadata.framework */,
+				D4F5DEC61ED791F6008FA0C1 /* SystemConfiguration.framework */,
+				D4F5DEC41ED791EB008FA0C1 /* AVFoundation.framework */,
+				D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */,
+				D4F5DEC11ED79138008FA0C1 /* SpotifyAuthentication.framework */,
+				D6797C15E936E333C697E1AD /* Pods_SoundScape.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D3B6AB5E80A2252AFBE3621E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				57C367E47721CC85950BE19A /* Pods-SoundScape.debug.xcconfig */,
+				8AEDADC3142FA1CEF2C657CA /* Pods-SoundScape.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D43B13481ED61B2F00A78A77 = {
 			isa = PBXGroup;
 			children = (
 				D43B13531ED61B2F00A78A77 /* SoundScape */,
 				D43B13521ED61B2F00A78A77 /* Products */,
+				D3B6AB5E80A2252AFBE3621E /* Pods */,
+				6C74E43D5488618CE213EA35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,13 +108,44 @@
 			isa = PBXGroup;
 			children = (
 				D43B13541ED61B2F00A78A77 /* AppDelegate.swift */,
-				D43B13561ED61B2F00A78A77 /* ViewController.swift */,
+				D4A17E2C1ED7CEF100490D1A /* Services and Managers */,
+				D4A17E2B1ED7CEE300490D1A /* View Controllers */,
+				D4A17E2A1ED7CED400490D1A /* Models */,
 				D43B13581ED61B2F00A78A77 /* Main.storyboard */,
-				D43B135B1ED61B2F00A78A77 /* Assets.xcassets */,
 				D43B135D1ED61B2F00A78A77 /* LaunchScreen.storyboard */,
+				D43B135B1ED61B2F00A78A77 /* Assets.xcassets */,
 				D43B13601ED61B2F00A78A77 /* Info.plist */,
+				D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */,
+				D4F5DEC81ED79351008FA0C1 /* SoundScape-Bridging-Header.h */,
 			);
 			path = SoundScape;
+			sourceTree = "<group>";
+		};
+		D4A17E2A1ED7CED400490D1A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D4F5DEB91ED61D8D008FA0C1 /* Song.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D4A17E2B1ED7CEE300490D1A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D4F5DECF1ED79F53008FA0C1 /* LoginViewController.swift */,
+				D43B13561ED61B2F00A78A77 /* SongsTableViewController.swift */,
+				D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		D4A17E2C1ED7CEF100490D1A /* Services and Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */,
+				D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */,
+			);
+			name = "Services and Managers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D43B13631ED61B2F00A78A77 /* Build configuration list for PBXNativeTarget "SoundScape" */;
 			buildPhases = (
+				A579DE775A4DC2882E7C68D8 /* [CP] Check Pods Manifest.lock */,
 				D43B134D1ED61B2F00A78A77 /* Sources */,
 				D43B134E1ED61B2F00A78A77 /* Frameworks */,
 				D43B134F1ED61B2F00A78A77 /* Resources */,
+				FD0BD991F067971467DE8316 /* [CP] Embed Pods Frameworks */,
+				C802A4D3245F83D0B239DC75 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +183,7 @@
 				TargetAttributes = {
 					D43B13501ED61B2F00A78A77 = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -124,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43B135F1ED61B2F00A78A77 /* LaunchScreen.storyboard in Resources */,
+				D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */,
 				D43B135C1ED61B2F00A78A77 /* Assets.xcassets in Resources */,
 				D43B135A1ED61B2F00A78A77 /* Main.storyboard in Resources */,
 			);
@@ -131,12 +220,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A579DE775A4DC2882E7C68D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C802A4D3245F83D0B239DC75 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SoundScape/Pods-SoundScape-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD0BD991F067971467DE8316 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SoundScape/Pods-SoundScape-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D43B134D1ED61B2F00A78A77 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D43B13571ED61B2F00A78A77 /* ViewController.swift in Sources */,
+				D4A17E2E1ED7D34200490D1A /* SpotifyAuthManager.swift in Sources */,
+				D43B13571ED61B2F00A78A77 /* SongsTableViewController.swift in Sources */,
+				D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */,
+				D4F5DEBA1ED61D8D008FA0C1 /* Song.swift in Sources */,
+				D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */,
+				D4F5DED01ED79F53008FA0C1 /* LoginViewController.swift in Sources */,
 				D43B13551ED61B2F00A78A77 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,24 +400,43 @@
 		};
 		D43B13641ED61B2F00A78A77 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57C367E47721CC85950BE19A /* Pods-SoundScape.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SoundScape/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauryndavis.SoundScape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundScape-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		D43B13651ED61B2F00A78A77 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AEDADC3142FA1CEF2C657CA /* Pods-SoundScape.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SoundScape/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauryndavis.SoundScape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundScape-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -299,6 +460,7 @@
 				D43B13651ED61B2F00A78A77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
