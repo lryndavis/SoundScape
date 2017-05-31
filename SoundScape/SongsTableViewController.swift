@@ -6,7 +6,7 @@ import GeoFire
 
 class SongsTableViewController: UITableViewController, CLLocationManagerDelegate {
     
-    var songItems: [Song] = []
+    var songItems: [SpotifyTrackSimplified] = []
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
@@ -77,10 +77,10 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
-    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ newSongs: [Song]) -> Void) {
+    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ newSongs: [SpotifyTrackSimplified]) -> Void) {
         
         let dispatchGroup = DispatchGroup()
-        var newSongs: [Song] = []
+        var newSongs: [SpotifyTrackSimplified] = []
         
         for songId in songsByKey {
             
@@ -89,7 +89,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
             self.ref?.child(songId).observeSingleEvent(of: .value, with: { snapshot in
                 
                 if let _ = snapshot.value as? [String: Any] {
-                    newSongs.append(Song(snapshot: snapshot))
+                    newSongs.append(SpotifyTrackSimplified(snapshot: snapshot))
                     
                 }
                 dispatchGroup.leave()
@@ -132,7 +132,8 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
         let songItem = songItems[indexPath.row]
         
-        cell.textLabel?.text = songItem.title
+        cell.textLabel?.text = songItem.name
+        cell.detailTextLabel?.text = songItem.artist
         
         return cell
     }
@@ -147,15 +148,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
             tableView.reloadData()
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        var songItem = songItems[indexPath.row]
 
-        tableView.reloadData()
-    }
-    
-    // MARK: Add song
     @IBAction func addButtonDidTouch(_ sender: AnyObject) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -164,52 +157,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         vc.userLocation = self.locationManager.location
         
         navigationController?.pushViewController(vc, animated: true)
-        
-//        let alert = UIAlertController(title: "New Song",
-//                                      message: "Add a song",
-//                                      preferredStyle: .alert)
-//        
-//        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-//
-//        guard let textField = alert.textFields?.first,
-//              let text = textField.text else { return }
-//
-//        if let ref = self.ref {
-//            
-//            let key = ref.childByAutoId().key
-//            let songItem = Song(
-//                            title: text,
-//                            id: key)
-//            
-//            ref.child(key).setValue(songItem.toAnyObject())
-//
-//            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
-//            
-//            if let longitude = self.locationManager.location?.coordinate.longitude,
-//                let latitude = self.locationManager.location?.coordinate.latitude {
-//                
-//                geoFire?.setLocation(CLLocation(latitude: latitude, longitude: longitude), forKey: key)
-//            }
-//            
-//            self.songItems.append(songItem)
-//            self.tableView.reloadData()
-//            
-//            }
-//        }
-//
-//        
-//        let cancelAction = UIAlertAction(title: "Cancel",
-//                                         style: .default)
-//        
-//        alert.addTextField()
-//        
-//        alert.addAction(saveAction)
-//        alert.addAction(cancelAction)
-//        
-//        present(alert, animated: true, completion: nil)
     }
 }
-
-
 
 
