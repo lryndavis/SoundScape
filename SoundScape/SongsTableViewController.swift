@@ -161,6 +161,8 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
         
+        vc.userLocation = self.locationManager.location
+        
         navigationController?.pushViewController(vc, animated: true)
         
 //        let alert = UIAlertController(title: "New Song",

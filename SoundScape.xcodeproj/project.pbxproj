@@ -15,7 +15,7 @@
 		D43B135F1ED61B2F00A78A77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D43B135D1ED61B2F00A78A77 /* LaunchScreen.storyboard */; };
 		D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */; };
 		D4A17E2E1ED7D34200490D1A /* SpotifyAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */; };
-		D4F5DEBA1ED61D8D008FA0C1 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* Song.swift */; };
+		D4F5DEBA1ED61D8D008FA0C1 /* SpotifyTrackSimplifed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrackSimplifed.swift */; };
 		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
 		D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */; };
 		D4F5DEC21ED79138008FA0C1 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */; };
@@ -36,7 +36,7 @@
 		D43B13601ED61B2F00A78A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsSearchViewController.swift; sourceTree = "<group>"; };
 		D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAuthManager.swift; sourceTree = "<group>"; };
-		D4F5DEB91ED61D8D008FA0C1 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrackSimplifed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrackSimplifed.swift; sourceTree = "<group>"; };
 		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		D4A17E2A1ED7CED400490D1A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D4F5DEB91ED61D8D008FA0C1 /* Song.swift */,
+				D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrackSimplifed.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -276,7 +276,7 @@
 				D4A17E2E1ED7D34200490D1A /* SpotifyAuthManager.swift in Sources */,
 				D43B13571ED61B2F00A78A77 /* SongsTableViewController.swift in Sources */,
 				D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */,
-				D4F5DEBA1ED61D8D008FA0C1 /* Song.swift in Sources */,
+				D4F5DEBA1ED61D8D008FA0C1 /* SpotifyTrackSimplifed.swift in Sources */,
 				D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */,
 				D4F5DED01ED79F53008FA0C1 /* LoginViewController.swift in Sources */,
 				D43B13551ED61B2F00A78A77 /* AppDelegate.swift in Sources */,

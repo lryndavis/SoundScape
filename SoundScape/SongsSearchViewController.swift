@@ -1,6 +1,8 @@
 
 
 import UIKit
+import Firebase
+import GeoFire
 
 class SongsSearchViewController: UIViewController {
 
@@ -9,6 +11,8 @@ class SongsSearchViewController: UIViewController {
     
     var songs: [SpotifyTrackSimplified] = []
     var session: SPTSession!
+    var ref: DatabaseReference?
+    var userLocation: CLLocation?
     
     override func viewDidLoad() {
 
@@ -17,6 +21,8 @@ class SongsSearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        
+        ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
 
         let userDefaults = UserDefaults.standard
         let sessionObj: Any? = userDefaults.object(forKey: "SpotifySession")
@@ -83,4 +89,38 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
 
         return cell
     }
-}
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let songItem = songs[indexPath.row]
+        
+        let alert = UIAlertController(title: nil,
+                                      message: "Do you want to add \(songItem.name) to this location?",
+                                      preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            if let ref = self.ref {
+                
+                let key = ref.childByAutoId().key
+                ref.child(key).setValue(songItem.toAnyObject())
+                
+                let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+                
+                if let longitude = self.userLocation?.coordinate.longitude,
+                   let latitude = self.userLocation?.coordinate.latitude {
+                
+                    geoFire?.setLocation(CLLocation(latitude: latitude, longitude: longitude), forKey: key)
+                    }
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .default)
+
+            alert.addAction(saveAction)
+            alert.addAction(cancelAction)
+                    
+            present(alert, animated: true, completion: nil)
+        }
+    }
