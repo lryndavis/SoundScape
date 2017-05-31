@@ -158,48 +158,53 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
     // MARK: Add song
     @IBAction func addButtonDidTouch(_ sender: AnyObject) {
         
-        let alert = UIAlertController(title: "New Song",
-                                      message: "Add a song",
-                                      preferredStyle: .alert)
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
         
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-
-        guard let textField = alert.textFields?.first,
-              let text = textField.text else { return }
-
-        if let ref = self.ref {
-            
-            let key = ref.childByAutoId().key
-            let songItem = Song(
-                            title: text,
-                            id: key)
-            
-            ref.child(key).setValue(songItem.toAnyObject())
-
-            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
-            
-            if let longitude = self.locationManager.location?.coordinate.longitude,
-                let latitude = self.locationManager.location?.coordinate.latitude {
-                
-                geoFire?.setLocation(CLLocation(latitude: latitude, longitude: longitude), forKey: key)
-            }
-            
-            self.songItems.append(songItem)
-            self.tableView.reloadData()
-            
-            }
-        }
-
+        navigationController?.pushViewController(vc, animated: true)
         
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .default)
-        
-        alert.addTextField()
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "New Song",
+//                                      message: "Add a song",
+//                                      preferredStyle: .alert)
+//        
+//        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+//
+//        guard let textField = alert.textFields?.first,
+//              let text = textField.text else { return }
+//
+//        if let ref = self.ref {
+//            
+//            let key = ref.childByAutoId().key
+//            let songItem = Song(
+//                            title: text,
+//                            id: key)
+//            
+//            ref.child(key).setValue(songItem.toAnyObject())
+//
+//            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+//            
+//            if let longitude = self.locationManager.location?.coordinate.longitude,
+//                let latitude = self.locationManager.location?.coordinate.latitude {
+//                
+//                geoFire?.setLocation(CLLocation(latitude: latitude, longitude: longitude), forKey: key)
+//            }
+//            
+//            self.songItems.append(songItem)
+//            self.tableView.reloadData()
+//            
+//            }
+//        }
+//
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel",
+//                                         style: .default)
+//        
+//        alert.addTextField()
+//        
+//        alert.addAction(saveAction)
+//        alert.addAction(cancelAction)
+//        
+//        present(alert, animated: true, completion: nil)
     }
 }
 
