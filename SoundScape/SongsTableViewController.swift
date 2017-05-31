@@ -18,6 +18,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         
         tableView.allowsMultipleSelectionDuringEditing = false
+        self.navigationItem.title = "Songs near you"
         
         determineCurrentUserLocation()
     }
