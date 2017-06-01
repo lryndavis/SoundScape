@@ -2,6 +2,7 @@
 import UIKit
 
 class HalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
+    
     var viewController: UIViewController
     var presentingViewController: UIViewController?
     var panGestureRecognizer: UIPanGestureRecognizer
@@ -21,8 +22,7 @@ class HalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         super.startInteractiveTransition(transitionContext)
-        
-        print("start interactive")
+
     }
     
     override var completionSpeed: CGFloat {

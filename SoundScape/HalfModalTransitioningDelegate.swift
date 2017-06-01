@@ -1,14 +1,8 @@
-//
-//  HalfModalTransitioningDelegate.swift
-//  HalfModalPresentationController
-//
-//  Created by Martin Normark on 17/01/16.
-//  Copyright © 2016 martinnormark. All rights reserved.
-//
 
 import UIKit
 
 class HalfModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+    
     var viewController: UIViewController
     var presentingViewController: UIViewController
     var interactionController: HalfModalInteractiveTransition

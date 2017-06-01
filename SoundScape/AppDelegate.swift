@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  SoundScape
-//
-//  Created by Lauryn Davis on 5/24/17.
-//  Copyright © 2017 Lauryn Davis. All rights reserved.
-//
 
 import UIKit
 import FirebaseDatabase

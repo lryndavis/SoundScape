@@ -2,6 +2,7 @@
 import UIKit
 
 class HalfModalPresentationController : UIPresentationController {
+    
     var isMaximized: Bool = false
     
     var _dimmingView: UIView?
@@ -83,7 +84,6 @@ class HalfModalPresentationController : UIPresentationController {
     }
     
     override func dismissalTransitionDidEnd(_ completed: Bool) {
-        print("dismissal did end: \(completed)")
         
         if completed {
             dimmingView.removeFromSuperview()

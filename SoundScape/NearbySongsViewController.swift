@@ -4,7 +4,7 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsTableViewController: UITableViewController, CLLocationManagerDelegate {
+class NearbySongsViewController: UIViewController {
     
     var songItems: [SpotifyTrackPartial] = []
     var ref: DatabaseReference?
@@ -14,9 +14,16 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
     let noResultsLabel = UILabel()
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var enlargeModalButton: UIButton!
+    @IBOutlet weak var audioPlayerView: UIView!
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         
@@ -25,7 +32,6 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         determineCurrentUserLocation()
     }
     
-
     func loadLocalSongIds() {
         
         if let location = self.locationManager.location {
@@ -33,6 +39,7 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
                           completionHandler: {
                             (keys) in
                             if let keys = keys {
+                                print(keys.count)
                                 self.localSongIds = keys
                                 self.updateSongItems()
                             }
@@ -40,7 +47,6 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         }
     }
     
-    //TODO: rename this 
     func updateSongItems() {
         
         self.returnSongsFromId(songsByKey: self.localSongIds) {
@@ -119,6 +125,28 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         }
     }
 
+    @IBAction func addSongButtonTapped(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
+        
+        vc.userLocation = self.locationManager.location
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+        
+        segue.destination.modalPresentationStyle = .custom
+        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
+    }
+}
+
+extension NearbySongsViewController: CLLocationManagerDelegate {
     
     func determineCurrentUserLocation() {
         
@@ -132,7 +160,7 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         }
     }
     
-     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation: CLLocation = locations[0] as CLLocation
         
@@ -141,13 +169,16 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         
         loadLocalSongIds()
     }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+}
+
+extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return songItems.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
         let songItem = songItems[indexPath.row]
@@ -158,33 +189,11 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let songItem = songItems[indexPath.row]
         
         audioPlayer.playTrack(track: songItem)
     }
-    
-
-    //TODO: change name of method and add perform segue instead of push view
-    @IBAction func addButtonDidTouch(_ sender: AnyObject) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
-        
-        vc.userLocation = self.locationManager.location
-        
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        
-        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
-        
-        segue.destination.modalPresentationStyle = .custom
-        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
-    }
 }
-
 

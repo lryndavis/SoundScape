@@ -20,7 +20,7 @@ class SongsSearchViewController: UITableViewController {
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
 
         let userDefaults = UserDefaults.standard
-        let sessionObj: Any? = userDefaults.object(forKey: "SpotifySession")
+        let sessionObj: Any? = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey)
         let sessionDataObj = sessionObj as! Data
         self.session = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
         
@@ -55,7 +55,7 @@ class SongsSearchViewController: UITableViewController {
         return cell
     }
     
-    
+    //TODO: move logic of tableview func
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let songItem = songs[indexPath.row]
