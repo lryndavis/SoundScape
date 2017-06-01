@@ -11,6 +11,7 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
     let audioPlayer = SpotifyAudioPlayer()
+    let noResultsLabel = UILabel()
 
     override func viewDidLoad() {
 
@@ -18,7 +19,6 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         
-        tableView.allowsMultipleSelectionDuringEditing = false
         self.navigationItem.title = "Songs near you"
         
         determineCurrentUserLocation()
@@ -33,29 +33,43 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
                             (keys) in
                             if let keys = keys {
                                 self.localSongIds = keys
-                                self.updateSongsArray()
+                                self.updateSongItems()
                             }
-                            else {
-                                //no local songs
-                                print("No songs in vicinity")
-                            }
-                            
             })
         }
     }
     
     //TODO: rename this 
-    func updateSongsArray() {
-        
-        print(localSongIds.count)
+    func updateSongItems() {
         
         self.returnSongsFromId(songsByKey: self.localSongIds) {
             newSongs in
             
-            self.songItems.removeAll()
-            self.songItems.append(contentsOf: newSongs)
-            self.tableView.reloadData()
+            if self.localSongIds.count > 0 {
+                
+                self.tableView.separatorStyle = .singleLine
+                self.tableView.backgroundView = nil
+                
+                self.songItems.removeAll()
+                self.songItems.append(contentsOf: newSongs)
+                self.tableView.reloadData()
+            } else {
+                
+                self.songItems.removeAll()
+                self.tableView.reloadData()
+                self.showNoResultsView()
+            }
         }
+    }
+    
+    func showNoResultsView() {
+        
+        noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
+        noResultsLabel.text = "No nearby songs"
+        noResultsLabel.textColor = UIColor.black
+        noResultsLabel.textAlignment = .center
+        self.tableView.backgroundView = noResultsLabel
+        self.tableView.separatorStyle = .none
     }
     
     func queryLocalSongs(location: CLLocation, completionHandler: @escaping (_ songData: [String]?) -> Void) {

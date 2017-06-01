@@ -111,7 +111,7 @@
 			children = (
 				D43B13541ED61B2F00A78A77 /* AppDelegate.swift */,
 				D4A17E2C1ED7CEF100490D1A /* Services and Managers */,
-				D4A17E2B1ED7CEE300490D1A /* View Controllers */,
+				D4A17E2B1ED7CEE300490D1A /* View Controllers and Views  */,
 				D4A17E2A1ED7CED400490D1A /* Models */,
 				D43B13581ED61B2F00A78A77 /* Main.storyboard */,
 				D43B135D1ED61B2F00A78A77 /* LaunchScreen.storyboard */,
@@ -132,14 +132,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		D4A17E2B1ED7CEE300490D1A /* View Controllers */ = {
+		D4A17E2B1ED7CEE300490D1A /* View Controllers and Views  */ = {
 			isa = PBXGroup;
 			children = (
 				D4F5DECF1ED79F53008FA0C1 /* LoginViewController.swift */,
 				D43B13561ED61B2F00A78A77 /* NearbySongsTableViewController.swift */,
 				D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */,
 			);
-			name = "View Controllers";
+			name = "View Controllers and Views ";
 			sourceTree = "<group>";
 		};
 		D4A17E2C1ED7CEF100490D1A /* Services and Managers */ = {
