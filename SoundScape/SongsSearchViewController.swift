@@ -5,7 +5,7 @@ import GeoFire
 
 class SongsSearchViewController: UITableViewController {
     
-    var songs: [SpotifyTrackSimplified] = []
+    var songs: [SpotifyTrackPartial] = []
     var session: SPTSession!
     var ref: DatabaseReference?
     var userLocation: CLLocation?
@@ -31,6 +31,11 @@ class SongsSearchViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
 
         tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    deinit {
+        
+        self.searchController.view.removeFromSuperview()
     }
     
     
@@ -87,21 +92,23 @@ class SongsSearchViewController: UITableViewController {
     func updateTableView(listPage: SPTListPage) {
         
         if listPage.items != nil {
+            
             songs.removeAll()
             
             for item in listPage.items {
-                let songItem = SpotifyTrackSimplified(track: item as! SPTPartialTrack)
+                let songItem = SpotifyTrackPartial(track: item as! SPTPartialTrack)
                 songs.append(songItem)
             }
             tableView.reloadData()
-        }
+        } 
     }
     
     func searchSpotify(query: String) {
         
         SPTSearch.perform(withQuery: query, queryType: SPTSearchQueryType.queryTypeTrack, accessToken: session.accessToken) { (error, response) in
-            if error != nil {
-                print(error!)
+            
+            if let error = error {
+                print("error while searching spotify: \(error)")
             } else {
                 let listpage = response as! SPTListPage
                 self.updateTableView(listPage: listpage)
@@ -109,7 +116,7 @@ class SongsSearchViewController: UITableViewController {
         }
     }
     
-    func search() {
+    func performSearch() {
         
         if let query = searchController.searchBar.text {
             if !query.isEmpty {
@@ -120,20 +127,14 @@ class SongsSearchViewController: UITableViewController {
     }
 }
 
-
 extension SongsSearchViewController: UISearchBarDelegate {
-    
-//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-//        
-//         searchSpotify(query: searchBar.text!)
-//    }
-    
+
     func didChangeSearchText(_ query: String) {
         
         if query.characters.count > 2 {
             
             searchTimer?.invalidate()
-            searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(SongsSearchViewController.search), userInfo: nil, repeats: false)
+            searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(SongsSearchViewController.performSearch), userInfo: nil, repeats: false)
         }
     }
 }

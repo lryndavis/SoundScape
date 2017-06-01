@@ -4,12 +4,13 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class SongsTableViewController: UITableViewController, CLLocationManagerDelegate {
+class NearbySongsTableViewController: UITableViewController, CLLocationManagerDelegate {
     
-    var songItems: [SpotifyTrackSimplified] = []
+    var songItems: [SpotifyTrackPartial] = []
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
+    let audioPlayer = SpotifyAudioPlayer()
 
     override func viewDidLoad() {
 
@@ -43,6 +44,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
+    //TODO: rename this 
     func updateSongsArray() {
         
         print(localSongIds.count)
@@ -78,10 +80,10 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
-    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ newSongs: [SpotifyTrackSimplified]) -> Void) {
+    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ newSongs: [SpotifyTrackPartial]) -> Void) {
         
         let dispatchGroup = DispatchGroup()
-        var newSongs: [SpotifyTrackSimplified] = []
+        var newSongs: [SpotifyTrackPartial] = []
         
         for songId in songsByKey {
             
@@ -90,7 +92,7 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
             self.ref?.child(songId).observeSingleEvent(of: .value, with: { snapshot in
                 
                 if let _ = snapshot.value as? [String: Any] {
-                    newSongs.append(SpotifyTrackSimplified(snapshot: snapshot))
+                    newSongs.append(SpotifyTrackPartial(snapshot: snapshot))
                     
                 }
                 dispatchGroup.leave()
@@ -126,10 +128,12 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return songItems.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
         let songItem = songItems[indexPath.row]
         
@@ -139,17 +143,15 @@ class SongsTableViewController: UITableViewController, CLLocationManagerDelegate
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let songItem = songItems[indexPath.row]
+        
+        audioPlayer.playTrack(track: songItem)
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            songItems.remove(at: indexPath.row)
-            tableView.reloadData()
-        }
-    }
 
+    //TODO: change name of method and add perform segue instead of push view
     @IBAction func addButtonDidTouch(_ sender: AnyObject) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)

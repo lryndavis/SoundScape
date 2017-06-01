@@ -2,7 +2,7 @@ import Foundation
 import Firebase
 
 
-class SpotifyTrackSimplified {
+class SpotifyTrackPartial {
 
     let artist: String
     let duration: Double

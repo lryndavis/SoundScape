@@ -1,12 +1,11 @@
 
 import UIKit
-import SafariServices
-import AVFoundation
+
 
 class LoginViewController: UIViewController {
 
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
+    var session: SPTSession!
     var loginUrl: URL?
 
     let loginToSongsView = "LoginToSongView"
@@ -40,7 +39,7 @@ class LoginViewController: UIViewController {
         loginButton.isHidden = true
         let userDefaults = UserDefaults.standard
 
-        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
+        if let sessionObj:AnyObject = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey) as AnyObject? {
 
             let sessionDataObj = sessionObj as! Data
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
@@ -52,6 +51,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+    //TODO: fix deprecation
     @IBAction func onLoginButtonTap(_ sender: Any) {
         
         let spotifyAuthManager = SpotifyAuthManager()
