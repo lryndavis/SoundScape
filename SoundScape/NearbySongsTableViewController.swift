@@ -12,6 +12,7 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
     var localSongIds: [String] = []
     let audioPlayer = SpotifyAudioPlayer()
     let noResultsLabel = UILabel()
+    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
 
     override func viewDidLoad() {
 
@@ -174,6 +175,15 @@ class NearbySongsTableViewController: UITableViewController, CLLocationManagerDe
         vc.userLocation = self.locationManager.location
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+        
+        segue.destination.modalPresentationStyle = .custom
+        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
     }
 }
 
