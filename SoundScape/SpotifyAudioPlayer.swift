@@ -8,6 +8,7 @@ class SpotifyAudioPlayer {
     var session: SPTSession!
     var isPlayingAudio: Bool = false
     
+    
     init() {
         
         let userDefaults = UserDefaults.standard
@@ -29,24 +30,24 @@ class SpotifyAudioPlayer {
         }
     }
     
-    func playTrack(track: SpotifyTrackPartial) {
-        
-        self.audioPlayer?.playSpotifyURI(track.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
-            
-            if error == nil {
-                self.isPlayingAudio = true
-            }
-        })
-    }
-    
-    func pauseTrack() {
-        
-        self.audioPlayer?.setIsPlaying(false, callback: nil)
-    }
-    
-    func playTrack() {
-        
-        self.audioPlayer?.setIsPlaying(true, callback: nil)
-    }
-    
+//    func playTrack(track: SpotifyTrackPartial) {
+//        
+//        self.audioPlayer?.playSpotifyURI(track.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
+//            
+//            if error == nil {
+//                self.isPlayingAudio = true
+//            }
+//        })
+//    }
+//    
+//    func pauseTrack() {
+//        
+//        self.audioPlayer?.setIsPlaying(false, callback: nil)
+//    }
+//    
+//    func playTrack() {
+//        
+//        self.audioPlayer?.setIsPlaying(true, callback: nil)
+//    }
+//    
 }

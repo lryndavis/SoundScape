@@ -10,13 +10,14 @@ class NearbySongsViewController: UIViewController {
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
-    let audioPlayer = SpotifyAudioPlayer()
+    //let audioPlayer = SpotifyAudioPlayer()
     let noResultsLabel = UILabel()
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
-
+    let audioPlayerVC = SpotifyAudioPlayerViewController()
+    
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var enlargeModalButton: UIButton!
-    @IBOutlet weak var audioPlayerView: UIView!
+    @IBOutlet weak var containerStackView: UIStackView!
+    //@IBOutlet weak var enlargeModalButton: UIButton!
     
     override func viewDidLoad() {
 
@@ -30,6 +31,23 @@ class NearbySongsViewController: UIViewController {
         self.navigationItem.title = "Songs near you"
         
         determineCurrentUserLocation()
+        
+        addSpotifyMusicPlayerVC()
+    }
+    
+    func addSpotifyMusicPlayerVC() {
+        
+        containerStackView.axis = .vertical
+        addChildViewController(audioPlayerVC)
+        
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(audioPlayerVC.view)
+        
+        audioPlayerVC.didMove(toParentViewController: self)
+        audioPlayerVC.view.anchorSidesTo(view)
+        containerStackView.addArrangedSubview(view)
     }
     
     func loadLocalSongIds() {
@@ -125,6 +143,7 @@ class NearbySongsViewController: UIViewController {
         }
     }
 
+
     @IBAction func addSongButtonTapped(_ sender: Any) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -192,8 +211,11 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let songItem = songItems[indexPath.row]
+
+        var nearbySongsQueue = songItems
+        nearbySongsQueue.insert(songItem, at: 0)
         
-        audioPlayer.playTrack(track: songItem)
+        audioPlayerVC.setQueue(playerQueue: nearbySongsQueue)
     }
 }
 

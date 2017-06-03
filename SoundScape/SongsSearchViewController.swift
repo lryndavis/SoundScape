@@ -10,7 +10,7 @@ class SongsSearchViewController: UITableViewController {
     var ref: DatabaseReference?
     var userLocation: CLLocation?
     let searchController = UISearchController(searchResultsController: nil)
-    var searchTimer : Timer?
+    var searchTimer: Timer?
     
     override func viewDidLoad() {
 
