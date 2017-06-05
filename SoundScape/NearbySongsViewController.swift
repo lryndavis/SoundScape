@@ -10,7 +10,6 @@ class NearbySongsViewController: UIViewController {
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
-    //let audioPlayer = SpotifyAudioPlayer()
     let noResultsLabel = UILabel()
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
     let audioPlayerVC = SpotifyAudioPlayerViewController()
@@ -40,14 +39,12 @@ class NearbySongsViewController: UIViewController {
         containerStackView.axis = .vertical
         addChildViewController(audioPlayerVC)
         
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(audioPlayerVC.view)
-        
         audioPlayerVC.didMove(toParentViewController: self)
-        audioPlayerVC.view.anchorSidesTo(view)
-        containerStackView.addArrangedSubview(view)
+        containerStackView.addArrangedSubview(audioPlayerVC.view)
+        
+        if !audioPlayerVC.isPlaying {
+            audioPlayerVC.view.isHidden = true
+        }
     }
     
     func loadLocalSongIds() {
@@ -57,7 +54,7 @@ class NearbySongsViewController: UIViewController {
                           completionHandler: {
                             (keys) in
                             if let keys = keys {
-                                print(keys.count)
+                                //print(keys.count)
                                 self.localSongIds = keys
                                 self.updateSongItems()
                             }
@@ -183,8 +180,8 @@ extension NearbySongsViewController: CLLocationManagerDelegate {
         
         let userLocation: CLLocation = locations[0] as CLLocation
         
-        print("LAT:\(userLocation.coordinate.latitude)")
-        print("LONG:\(userLocation.coordinate.longitude)")
+//        print("LAT:\(userLocation.coordinate.latitude)")
+//        print("LONG:\(userLocation.coordinate.longitude)")
         
         loadLocalSongIds()
     }
@@ -215,7 +212,10 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         var nearbySongsQueue = songItems
         nearbySongsQueue.insert(songItem, at: 0)
         
+        audioPlayerVC.isPlaying = true
+        audioPlayerVC.trackCounter = 0 
         audioPlayerVC.setQueue(playerQueue: nearbySongsQueue)
+        audioPlayerVC.view.isHidden = false
     }
 }
 

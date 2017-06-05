@@ -5,7 +5,6 @@ class ModalViewController: UIViewController, HalfModalPresentable {
     
     override func viewDidLoad() {
         
-        print("calling view did load")
     }
     
     @IBAction func maximizeButtonTapped(_ sender: Any) {

@@ -34,13 +34,11 @@ class SongsSearchViewController: UITableViewController {
     }
     
     deinit {
-        
         self.searchController.view.removeFromSuperview()
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return songs.count
     }
     

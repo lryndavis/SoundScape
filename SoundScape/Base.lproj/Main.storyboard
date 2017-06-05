@@ -13,7 +13,7 @@
         <!--Nearby Songs View Controller-->
         <scene sceneID="spp-th-M01">
             <objects>
-                <viewController id="5fP-6H-O61" customClass="NearbySongsViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="5fP-6H-O61" customClass="NearbySongsViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cgJ-Sx-9Ne"/>
                         <viewControllerLayoutGuide type="bottom" id="pI5-Jv-oV9"/>
@@ -25,26 +25,26 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pg8-4R-Ktz">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="diF-ki-rqL">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="diF-ki-rqL">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" textLabel="XiI-sd-ZSg" detailTextLabel="grj-Lc-3j9" style="IBUITableViewCellStyleSubtitle" id="c9y-hD-UqU">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="65"/>
+                                                <rect key="frame" x="0.0" y="1" width="375" height="65"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c9y-hD-UqU" id="coo-34-ida">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XiI-sd-ZSg">
-                                                            <rect key="frame" x="15" y="15" width="33.5" height="20.5"/>
+                                                            <rect key="frame" x="15" y="15" width="34" height="21"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="grj-Lc-3j9">
-                                                            <rect key="frame" x="15" y="35.5" width="44" height="14.5"/>
+                                                            <rect key="frame" x="15" y="36" width="44" height="15"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
@@ -60,10 +60,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="bottom" secondItem="pI5-Jv-oV9" secondAttribute="top" id="29L-aU-Qaf"/>
-                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="top" secondItem="cgJ-Sx-9Ne" secondAttribute="bottom" id="8XT-eq-UeQ"/>
-                            <constraint firstAttribute="trailing" secondItem="pg8-4R-Ktz" secondAttribute="trailing" id="E74-PU-1bX"/>
-                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="leading" secondItem="W8x-tt-Bco" secondAttribute="leading" id="hvY-hK-Kes"/>
+                            <constraint firstAttribute="trailing" secondItem="pg8-4R-Ktz" secondAttribute="trailing" id="9L8-9I-Sd8"/>
+                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="leading" secondItem="W8x-tt-Bco" secondAttribute="leading" id="Fty-ka-fYY"/>
+                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="top" secondItem="cgJ-Sx-9Ne" secondAttribute="bottom" id="JZ2-yP-Kxp"/>
+                            <constraint firstItem="pg8-4R-Ktz" firstAttribute="bottom" secondItem="pI5-Jv-oV9" secondAttribute="top" id="lyb-NY-shc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vfT-Pk-7ee">
