@@ -4,9 +4,10 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsViewController: UIViewController {
+class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
-    var songItems: [SpotifyTrackPartial] = []
+    var songItems = [SpotifyTrackPartial]()
+    var currentQueue = [SpotifyTrackPartial]()
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
@@ -16,21 +17,19 @@ class NearbySongsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var containerStackView: UIStackView!
-    //@IBOutlet weak var enlargeModalButton: UIButton!
     
     override func viewDidLoad() {
 
         super.viewDidLoad()
         
+        self.navigationItem.title = "Songs Near you"
+        
         tableView.delegate = self
         tableView.dataSource = self
         
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
-        
-        self.navigationItem.title = "Songs near you"
-        
+    
         determineCurrentUserLocation()
-        
         addSpotifyMusicPlayerVC()
     }
     
@@ -42,7 +41,7 @@ class NearbySongsViewController: UIViewController {
         audioPlayerVC.didMove(toParentViewController: self)
         containerStackView.addArrangedSubview(audioPlayerVC.view)
         
-        if !audioPlayerVC.isPlaying {
+        if !audioPlayerVC.spotifyAudioPlayer.isPlaying {
             audioPlayerVC.view.isHidden = true
         }
     }
@@ -68,7 +67,6 @@ class NearbySongsViewController: UIViewController {
             newSongs in
             
             if self.localSongIds.count > 0 {
-                
                 self.tableView.separatorStyle = .singleLine
                 self.tableView.backgroundView = nil
                 
@@ -76,7 +74,6 @@ class NearbySongsViewController: UIViewController {
                 self.songItems.append(contentsOf: newSongs)
                 self.tableView.reloadData()
             } else {
-                
                 self.songItems.removeAll()
                 self.tableView.reloadData()
                 self.showNoResultsView()
@@ -139,7 +136,28 @@ class NearbySongsViewController: UIViewController {
             completionHandler(newSongs)
         }
     }
-
+    
+    func determineCurrentUserLocation() {
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation: CLLocation = locations[0] as CLLocation
+        
+        print("LAT:\(userLocation.coordinate.latitude)")
+        print("LONG:\(userLocation.coordinate.longitude)")
+        
+        loadLocalSongIds()
+    }
 
     @IBAction func addSongButtonTapped(_ sender: Any) {
         
@@ -159,31 +177,6 @@ class NearbySongsViewController: UIViewController {
         
         segue.destination.modalPresentationStyle = .custom
         segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
-    }
-}
-
-extension NearbySongsViewController: CLLocationManagerDelegate {
-    
-    func determineCurrentUserLocation() {
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let userLocation: CLLocation = locations[0] as CLLocation
-        
-//        print("LAT:\(userLocation.coordinate.latitude)")
-//        print("LONG:\(userLocation.coordinate.longitude)")
-        
-        loadLocalSongIds()
     }
 }
 
@@ -209,12 +202,12 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         
         let songItem = songItems[indexPath.row]
 
-        var nearbySongsQueue = songItems
-        nearbySongsQueue.insert(songItem, at: 0)
-        
-        audioPlayerVC.isPlaying = true
-        audioPlayerVC.trackCounter = 0 
-        audioPlayerVC.setQueue(playerQueue: nearbySongsQueue)
+        currentQueue = songItems
+        currentQueue.insert(songItem, at: 0)
+
+        audioPlayerVC.spotifyAudioPlayer.trackIndex = 0
+        audioPlayerVC.setQueue(queue: currentQueue)
+        audioPlayerVC.playTrack(atIndex: audioPlayerVC.spotifyAudioPlayer.trackIndex)
         audioPlayerVC.view.isHidden = false
     }
 }

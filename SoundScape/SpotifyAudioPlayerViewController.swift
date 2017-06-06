@@ -7,10 +7,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
     let songLabel = UILabel()
     let pausePlayButton = UIButton()
 
-    let spotifyAudioPlayer = SpotifyAudioPlayer()
-    var playerQueue: [SpotifyTrackPartial]?
-    var trackCounter: Int = 0
-    var isPlaying = Bool()
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     
     override func viewDidLoad() {
         
@@ -22,6 +19,12 @@ class SpotifyAudioPlayerViewController: UIViewController {
         setupView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        spotifyAudioPlayer.isPlaying ? setButtonPause() : setButtonPlay()
+    }
+    
+    // build basic view for mini audio player
     fileprivate func setupView() {
 
         view.backgroundColor = UIColor.black
@@ -33,7 +36,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
 
         verticalContainerStackView.anchorSidesTo(view)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(24, 16, 24, 16)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 24, 16, 24)
         
         let horizontalContainerStackView = UIStackView()
         horizontalContainerStackView.axis = .horizontal
@@ -42,7 +45,9 @@ class SpotifyAudioPlayerViewController: UIViewController {
         secondaryVerticalStackView.axis = .vertical
         
         artistLabel.textColor = UIColor.white
+        artistLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
         songLabel.textColor = UIColor.white
+        songLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)
         
         secondaryVerticalStackView.addArrangedSubview(artistLabel)
         secondaryVerticalStackView.addArrangedSubview(songLabel)
@@ -56,50 +61,52 @@ class SpotifyAudioPlayerViewController: UIViewController {
         horizontalContainerStackView.addArrangedSubview(pausePlayButton)
     }
     
-    func setQueue(playerQueue: [SpotifyTrackPartial]) {
-        
-        // set initial button state
-        isPlaying ? setButtonPause() : setButtonPlay()
-        
-        self.playerQueue = playerQueue
-        
-        playTrack(atIndex: trackCounter)
+    func setQueue(queue: [SpotifyTrackPartial]) {
+        spotifyAudioPlayer.playerQueue = queue
     }
-    
+
+    //TODO: temporary implementation; will update UI
     func setButtonPlay() {
         pausePlayButton.setTitle(">>", for: .normal)
     }
     
+    //TODO: temporary implementation; will update UI
     func setButtonPause() {
         pausePlayButton.setTitle("||", for: .normal)
     }
     
     func togglePlay() {
         
-        if isPlaying {
+        if spotifyAudioPlayer.isPlaying {
             spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-            isPlaying = false
+            spotifyAudioPlayer.isPlaying = false
             setButtonPlay()
         } else {
             spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-            isPlaying = true
+            spotifyAudioPlayer.isPlaying = true
             setButtonPause()
         }
     }
     
-    fileprivate func playTrack(atIndex: Int) {
-        //change audio player ui properties here
-        
-        let currentSong = playerQueue?[atIndex]
+    func setCurrentPlayerDisplay() {
+    
+        let currentSong = spotifyAudioPlayer.playerQueue?[spotifyAudioPlayer.trackIndex]
         artistLabel.text = currentSong?.artist
         songLabel.text = currentSong?.name
+    }
+    
+    func playTrack(atIndex: Int) {
+        
+        setCurrentPlayerDisplay()
+
+        let currentSong = spotifyAudioPlayer.playerQueue?[spotifyAudioPlayer.trackIndex]
         
         self.spotifyAudioPlayer.player?.playSpotifyURI(currentSong?.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
 
             if error != nil {
                 print("error playing track: \(String(describing: error))")
             } else {
-                print("playing: \(String(describing: self.playerQueue?[self.trackCounter].name))")
+                print("playing: \(String(describing: self.spotifyAudioPlayer.playerQueue?[self.spotifyAudioPlayer.trackIndex].name))")
             }
         })
     }
@@ -119,20 +126,20 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
+        spotifyAudioPlayer.isPlaying = true
+        setButtonPause()
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
         
-        trackCounter += 1
-        print("track counter: \(trackCounter)")
+        spotifyAudioPlayer.trackIndex += 1
         
-        if let playerQueue = playerQueue {
+        if let playerQueue = spotifyAudioPlayer.playerQueue {
             
-            if trackCounter < playerQueue.count {
-                playTrack(atIndex: trackCounter)
+            if spotifyAudioPlayer.trackIndex < playerQueue.count {
+                playTrack(atIndex: spotifyAudioPlayer.trackIndex)
             } else {
-                trackCounter = 0
-                playTrack(atIndex: trackCounter)
+                spotifyAudioPlayer.isPlaying = false
             }
         }
     }

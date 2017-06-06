@@ -2,13 +2,18 @@
 import Foundation
 
 
-struct SpotifyAudioPlayer {
+class SpotifyAudioPlayer {
+    
+    static let sharedInstance = SpotifyAudioPlayer()
     
     var player = SPTAudioStreamingController.sharedInstance()
     var session: SPTSession!
-    var isPlayingAudio: Bool = false
+    
+    var playerQueue: [SpotifyTrackPartial]?
+    var trackIndex: Int = 0
+    var isPlaying = Bool()
 
-    init() {
+    private init() {
         
         let userDefaults = UserDefaults.standard
         let sessionObj: Any? = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey)
