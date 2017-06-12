@@ -64,54 +64,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func loadLocalSongIds() {
-        
-        if let location = self.locationManager.location {
-            self.queryLocalSongs(location: location,
-                          completionHandler: {
-                            (keys) in
-                            if let keys = keys {
-                                self.localSongIds = keys
-                                self.updateSongItems()
-                            }
-            })
-        }
-    }
-    
-    //todo: clean this up
-    func updateSongItems() {
-        
-        self.returnSongsFromId(songsByKey: self.localSongIds) {
-            nearbySongs, nearbyAnnotations in
-
-            if self.localSongIds.count > 0 {
-                
-                self.tableView.separatorStyle = .singleLine
-                self.tableView.backgroundView = nil
-                
-                self.songItems.removeAll()
-                self.songItems.append(contentsOf: nearbySongs)
-                
-                self.songAnnotationItems.removeAll()
-                self.mapView.annotations.forEach {
-                    if !($0 is MKUserLocation) {
-                        self.mapView.removeAnnotation($0)
-                    }
-                }
-                
-                self.songAnnotationItems.append(contentsOf: nearbyAnnotations)
-                self.mapView.addAnnotations(self.songAnnotationItems)
-                
-                self.tableView.reloadData()
-            } else {
-                
-                self.songItems.removeAll()
-                self.tableView.reloadData()
-                self.showNoResultsView()
-            }
-        }
-    }
-    
     func showNoResultsView() {
         
         noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
@@ -122,6 +74,46 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         self.tableView.separatorStyle = .none
     }
     
+    func determineCurrentUserLocation() {
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        loadLocalSongIds()
+    }
+    
+    internal func locationManager(_ manager:CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        if status == .authorizedWhenInUse {
+            mapView.showsUserLocation = true
+        }
+    }
+    
+    // get songs from query and update 
+    func loadLocalSongIds() {
+        
+        if let location = self.locationManager.location {
+            self.queryLocalSongs(location: location,
+                                 completionHandler: {
+                                    (keys) in
+                                    if let keys = keys {
+                                        self.localSongIds = keys
+                                        self.updateSongItems()
+                                    }
+            })
+        }
+    }
+
+    // query geofire to find all songs in radius
     func queryLocalSongs(location: CLLocation, completionHandler: @escaping (_ songData: [String]?) -> Void) {
         
         var songData: [String] = []
@@ -144,6 +136,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    // creat new track and annotation objects from returned song objects
     func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ nearbySongs: [SpotifyTrackPartial], _ nearbyAnnotations: [SpotifyTrackAnnotation]) -> Void) {
         
         let dispatchGroup = DispatchGroup()
@@ -183,33 +176,51 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func determineCurrentUserLocation() {
+    // once songs are returned, call methods for updating UI
+    func updateSongItems() {
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
+        self.returnSongsFromId(songsByKey: self.localSongIds) {
+            nearbySongs, nearbyAnnotations in
+            
+            if !self.localSongIds.isEmpty {
+                
+                self.tableView.separatorStyle = .singleLine
+                self.tableView.backgroundView = nil
+                
+                self.updateSongsList(nearbySongs: nearbySongs)
+                self.addTrackAnnotations(nearbyAnnotations: nearbyAnnotations)
+                
+            } else {
+                
+                self.songItems.removeAll()
+                self.tableView.reloadData()
+                self.showNoResultsView()
+            }
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    // add annotations to map view for relevant songs
+    func addTrackAnnotations(nearbyAnnotations: [SpotifyTrackAnnotation]) {
         
- //       let userLocation: CLLocation = locations[0] as CLLocation
-//        
-//        print("LAT:\(userLocation.coordinate.latitude)")
-//        print("LONG:\(userLocation.coordinate.longitude)")
-
-        loadLocalSongIds()
+        if !songAnnotationItems.isEmpty {
+            let existingAnnotationIds = songAnnotationItems.map{ $0.spotifyTrackPartial.id }
+            let newAnnotations = nearbyAnnotations.filter { !existingAnnotationIds.contains($0.spotifyTrackPartial.id) }
+            
+            songAnnotationItems.append(contentsOf: newAnnotations)
+            mapView.addAnnotations(newAnnotations)
+        } else {
+            songAnnotationItems.append(contentsOf: nearbyAnnotations)
+            mapView.addAnnotations(self.songAnnotationItems)
+        }
     }
     
-    internal func locationManager(_ manager:CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    // update nearby songs tableview
+    func updateSongsList(nearbySongs: [SpotifyTrackPartial]) {
         
-        if status == .authorizedWhenInUse {
-            mapView.showsUserLocation = true
-        }
+        songItems.removeAll()
+        songItems.append(contentsOf: nearbySongs)
+        
+        tableView.reloadData()
     }
 
     @IBAction func addSongButtonTapped(_ sender: Any) {
@@ -273,14 +284,13 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-
 extension NearbySongsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         
         if let userLocation = userLocation.location {
 
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 2000, 2000)
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 5000, 5000)
             mapView.setRegion(coordinateRegion, animated: true)
         }
     }

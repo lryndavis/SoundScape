@@ -13,3 +13,4 @@ class SpotifyTrackAnnotation: NSObject, MKAnnotation {
         self.spotifyTrackPartial  = spotifyTrackPartial
     }
 }
+

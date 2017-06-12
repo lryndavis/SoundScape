@@ -11,6 +11,7 @@ class SpotifyTrackPartial {
     let isPlayable: Bool
     let name: String
     let uri: String
+    let id: String
     
     init(snapshot: DataSnapshot) {
         
@@ -22,6 +23,7 @@ class SpotifyTrackPartial {
         isPlayable  = snapshotValue["isPlayable"] as! Bool
         name        = snapshotValue["name"] as! String
         uri         = snapshotValue["uri"] as! String
+        id          = snapshotValue["id"] as! String
     }
     
     init(track: SPTPartialTrack) {
@@ -35,9 +37,10 @@ class SpotifyTrackPartial {
         isPlayable  = track.isPlayable
         name        = track.name
         uri         = spotifyUri
+        id          = ""
     }
     
-    func toAnyObject() -> Any {
+    func toAnyObject(key: String) -> Any {
         
         return [
             "artist": artist,
@@ -45,7 +48,8 @@ class SpotifyTrackPartial {
             "spotifyId": spotifyId,
             "isPlayable": isPlayable,
             "name": name,
-            "uri": uri
+            "uri": uri,
+            "id": key
         ]
     }
 }

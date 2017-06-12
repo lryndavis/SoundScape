@@ -105,7 +105,7 @@ class SongsSearchViewController: UIViewController {
         if let ref = self.ref {
             
             let key = ref.childByAutoId().key
-            ref.child(key).setValue(song.toAnyObject())
+            ref.child(key).setValue(song.toAnyObject(key: key))
             
             let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
             
