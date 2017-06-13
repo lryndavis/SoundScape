@@ -3,7 +3,7 @@ import Foundation
 import Firebase
 
 
-class SpotifyTrackPartial {
+class SpotifyTrack {
 
     let artist: String
     let duration: Double
@@ -12,6 +12,7 @@ class SpotifyTrackPartial {
     let name: String
     let uri: String
     let id: String
+    let album: String
     
     init(snapshot: DataSnapshot) {
         
@@ -24,11 +25,13 @@ class SpotifyTrackPartial {
         name        = snapshotValue["name"] as! String
         uri         = snapshotValue["uri"] as! String
         id          = snapshotValue["id"] as! String
+        album       = snapshotValue["album"] as! String
     }
     
-    init(track: SPTPartialTrack) {
+    init(track: SPTTrack) {
         
         let spotifyArtist = track.artists[0] as! SPTPartialArtist
+        let spotifyAlbum = track.album!
         let spotifyUri = track.uri.absoluteString
         
         artist      = spotifyArtist.name
@@ -38,6 +41,7 @@ class SpotifyTrackPartial {
         name        = track.name
         uri         = spotifyUri
         id          = ""
+        album       = spotifyAlbum.name
     }
     
     func toAnyObject(key: String) -> Any {
@@ -49,8 +53,14 @@ class SpotifyTrackPartial {
             "isPlayable": isPlayable,
             "name": name,
             "uri": uri,
-            "id": key
+            "id": key,
+            "album": album
         ]
     }
+    
+    var albumArtistDisplay: String {
+        return "\(self.artist) / \(self.album)"
+    }
+    
 }
 

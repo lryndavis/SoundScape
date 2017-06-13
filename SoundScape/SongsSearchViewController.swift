@@ -5,7 +5,7 @@ import GeoFire
 
 class SongsSearchViewController: UIViewController {
     
-    var songs: [SpotifyTrackPartial] = []
+    var songs: [SpotifyTrack] = []
     var session: SPTSession!
     var ref: DatabaseReference?
     var userLocation: CLLocation?
@@ -67,18 +67,32 @@ class SongsSearchViewController: UIViewController {
         }
     }
     
-    func updateTableView(listPage: SPTListPage) {
+    func getFullTrackObjects(listPage: SPTListPage) {
         
         if listPage.items != nil {
             
             songs.removeAll()
-            
-            for item in listPage.items {
-                let songItem = SpotifyTrackPartial(track: item as! SPTPartialTrack)
-                songs.append(songItem)
+            let tracks = listPage.items as! [SPTPartialTrack]
+            let trackURIs = tracks.map{ $0.uri.absoluteURL }
+        
+            SPTTrack.tracks(withURIs: trackURIs, accessToken: session.accessToken, market: nil) { error, response in
+                if error != nil {
+                    print(error!)
+                } else {
+                    let spotifyTracks = response as! [SPTTrack]
+                    self.updateTableView(spotifyTracks: spotifyTracks)
+                }
             }
-            tableView.reloadData()
-        } 
+        }
+    }
+    
+    func updateTableView(spotifyTracks: [SPTTrack]) {
+        
+        for track in spotifyTracks {
+            let songItem = SpotifyTrack(track: track)
+            songs.append(songItem)
+        }
+        tableView.reloadData()
     }
     
     func searchSpotify(query: String) {
@@ -89,7 +103,7 @@ class SongsSearchViewController: UIViewController {
                 print("error while searching spotify: \(error)")
             } else {
                 let listpage = response as! SPTListPage
-                self.updateTableView(listPage: listpage)
+                self.getFullTrackObjects(listPage: listpage)
             }
         }
     }
@@ -104,7 +118,7 @@ class SongsSearchViewController: UIViewController {
         }
     }
     
-    func saveSongToLocation(song: SpotifyTrackPartial) {
+    func saveSongToLocation(song: SpotifyTrack) {
         
         if let ref = self.ref {
             
@@ -136,7 +150,8 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         let songItem = songs[indexPath.row]
         
         cell.songLabel.text = songItem.name
-        cell.artistLabel.text = songItem.artist
+        cell.artistLabel.text = songItem.albumArtistDisplay
+        cell.selectionStyle = .none
         
         return cell
     }

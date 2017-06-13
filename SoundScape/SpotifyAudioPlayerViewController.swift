@@ -68,7 +68,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
         horizontalContainerStackView.addArrangedSubview(pausePlayButton)
     }
     
-    func setQueue(queue: [SpotifyTrackPartial]) {
+    func setQueue(queue: [SpotifyTrack]) {
         spotifyAudioPlayer.playerQueue = queue
     }
 
@@ -104,7 +104,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
     func setCurrentPlayerDisplay() {
     
         let currentSong = spotifyAudioPlayer.playerQueue?[spotifyAudioPlayer.trackIndex]
-        artistLabel.text = currentSong?.artist
+        artistLabel.text = currentSong?.albumArtistDisplay
         songLabel.text = currentSong?.name
     }
     

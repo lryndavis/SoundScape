@@ -9,7 +9,7 @@ class SpotifyAudioPlayer {
     var player = SPTAudioStreamingController.sharedInstance()
     var session: SPTSession!
     
-    var playerQueue: [SpotifyTrackPartial]?
+    var playerQueue: [SpotifyTrack]?
     var trackIndex: Int = 0
     var isPlaying = Bool()
 

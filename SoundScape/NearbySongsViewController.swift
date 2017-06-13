@@ -6,9 +6,9 @@ import GeoFire
 
 class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
-    var songItems = [SpotifyTrackPartial]()
+    var songItems = [SpotifyTrack]()
     var songAnnotationItems = [SpotifyTrackAnnotation]()
-    var currentQueue = [SpotifyTrackPartial]()
+    var currentQueue = [SpotifyTrack]()
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
@@ -147,10 +147,10 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // creat new track and annotation objects from returned song objects
-    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ nearbySongs: [SpotifyTrackPartial], _ nearbyAnnotations: [SpotifyTrackAnnotation]) -> Void) {
+    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ nearbySongs: [SpotifyTrack], _ nearbyAnnotations: [SpotifyTrackAnnotation]) -> Void) {
         
         let dispatchGroup = DispatchGroup()
-        var nearbySongs: [SpotifyTrackPartial] = []
+        var nearbySongs: [SpotifyTrack] = []
         var nearbyAnnotations: [SpotifyTrackAnnotation] = []
         
         for songId in songsByKey {
@@ -161,7 +161,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
                 
                 if let _ = snapshot.value as? [String: Any] {
                     
-                    let newSong = SpotifyTrackPartial(snapshot: snapshot)
+                    let newSong = SpotifyTrack(snapshot: snapshot)
                     nearbySongs.append(newSong)
                     
                     let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
@@ -225,7 +225,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // update nearby songs tableview
-    func updateSongsList(nearbySongs: [SpotifyTrackPartial]) {
+    func updateSongsList(nearbySongs: [SpotifyTrack]) {
         
         songItems.removeAll()
         songItems.append(contentsOf: nearbySongs)
@@ -267,7 +267,8 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         let songItem = songItems[indexPath.row]
         
         cell.songLabel.text = songItem.name
-        cell.artistLabel.text = songItem.artist
+        cell.artistLabel.text = songItem.albumArtistDisplay
+        cell.selectionStyle = .none
         
         let currentTrackId = audioPlayerVC.spotifyAudioPlayer.playerQueue?[audioPlayerVC.spotifyAudioPlayer.trackIndex].spotifyId
         
