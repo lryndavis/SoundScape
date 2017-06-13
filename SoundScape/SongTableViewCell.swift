@@ -23,7 +23,7 @@ class SongTableViewCell: UITableViewCell {
         self.addSubview(verticalContainerStackView)
         verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 24, 16, 24)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(8, 16, 8, 16)
         verticalContainerStackView.spacing = 8.0
         
         songLabel.textColor = UIColor.black

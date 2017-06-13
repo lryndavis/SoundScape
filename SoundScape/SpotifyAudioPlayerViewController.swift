@@ -25,6 +25,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
     }
     
     // build basic view for mini audio player
+    // todo: move to custom uiview
     fileprivate func setupView() {
 
         view.backgroundColor = UIColor.black
@@ -37,24 +38,30 @@ class SpotifyAudioPlayerViewController: UIViewController {
         verticalContainerStackView.anchorSidesTo(view)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
         verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 24, 16, 24)
+        verticalContainerStackView.heightAnchor.constraint(equalToConstant: 65.0).isActive = true
         
         let horizontalContainerStackView = UIStackView()
         horizontalContainerStackView.axis = .horizontal
+        horizontalContainerStackView.distribution = .fill
+        horizontalContainerStackView.alignment = .center
+        horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
         
         let secondaryVerticalStackView = UIStackView()
         secondaryVerticalStackView.axis = .vertical
         
-        artistLabel.textColor = UIColor.white
-        artistLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
         songLabel.textColor = UIColor.white
-        songLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)
+        songLabel.font = UIFont(name: "Helvetica Neue", size: 16.0)
         
-        secondaryVerticalStackView.addArrangedSubview(artistLabel)
+        artistLabel.textColor = UIColor.white
+        artistLabel.font = UIFont(name: "Helvetica Neue", size: 12.0)
+        
         secondaryVerticalStackView.addArrangedSubview(songLabel)
+        secondaryVerticalStackView.addArrangedSubview(artistLabel)
 
-        pausePlayButton.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+        pausePlayButton.widthAnchor.constraint(equalToConstant: 12.0).isActive = true
         pausePlayButton.addTarget(self, action: #selector(togglePlay), for: .touchUpInside)
-        verticalContainerStackView.addArrangedSubview(pausePlayButton)
+        pausePlayButton.tintColor = .white
+        pausePlayButton.imageView?.contentMode = .scaleAspectFit
         
         verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
         horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
@@ -65,14 +72,20 @@ class SpotifyAudioPlayerViewController: UIViewController {
         spotifyAudioPlayer.playerQueue = queue
     }
 
-    //TODO: temporary implementation; will update UI
     func setButtonPlay() {
-        pausePlayButton.setTitle(">>", for: .normal)
+        
+        let playImage = UIImage(named: "play.png")
+        let tintedPlayImage = playImage?.withRenderingMode(.alwaysTemplate)
+    
+        pausePlayButton.setImage(tintedPlayImage, for: .normal)
     }
     
-    //TODO: temporary implementation; will update UI
     func setButtonPause() {
-        pausePlayButton.setTitle("||", for: .normal)
+        
+        let pauseImage = UIImage(named: "pause.png")
+        let tintedPauseImage = pauseImage?.withRenderingMode(.alwaysTemplate)
+        
+        pausePlayButton.setImage(tintedPauseImage, for: .normal)
     }
     
     func togglePlay() {

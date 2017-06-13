@@ -20,7 +20,8 @@ class SongsSearchViewController: UIViewController {
 
         super.viewDidLoad()
         
-        self.navigationItem.title = "Add a song to this location"
+        // navigation bar
+        self.navigationItem.title = "Add a Song Here"        
         ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
 
         let userDefaults = UserDefaults.standard
@@ -38,6 +39,9 @@ class SongsSearchViewController: UIViewController {
         tableView.tableHeaderView = searchController.searchBar
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(SongTableViewCell.self, forCellReuseIdentifier: "SongCell")
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 65
         
         addAudioPlayer()
     }
@@ -128,11 +132,11 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SongSearchCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongTableViewCell
         let songItem = songs[indexPath.row]
         
-        cell.textLabel?.text = songItem.name
-        cell.detailTextLabel?.text = songItem.artist
+        cell.songLabel.text = songItem.name
+        cell.artistLabel.text = songItem.artist
         
         return cell
     }

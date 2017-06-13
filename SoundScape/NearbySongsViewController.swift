@@ -24,16 +24,25 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
 
         super.viewDidLoad()
         
-        self.navigationItem.title = "Songs Near you"
+        ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         
+        // navigation bar
+        self.navigationItem.title = "Songs near You"
+        let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        addButton.setBackgroundImage(UIImage(named: "plus.png"), for: .normal)
+        addButton.addTarget(self, action: #selector(addSongButtonTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        
+        // tableview
         tableView.delegate = self
         tableView.dataSource = self
         
+        // mapview
         mapView.delegate = self
         mapView.userTrackingMode = MKUserTrackingMode.follow
-        
-        ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
     
+        // build views
         determineCurrentUserLocation()
         buildView()
         addSpotifyMusicPlayerVC()
@@ -41,13 +50,14 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
     func buildView() {
         
+        // add mapview
         mapView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         containerStackView.addArrangedSubview(mapView)
 
+        // add tableview 
         tableView.register(SongTableViewCell.self, forCellReuseIdentifier: "SongCell")
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
-
         containerStackView.addArrangedSubview(tableView)
     }
     
@@ -223,7 +233,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         tableView.reloadData()
     }
 
-    @IBAction func addSongButtonTapped(_ sender: Any) {
+    func addSongButtonTapped() {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
@@ -297,14 +307,17 @@ extension NearbySongsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        var view: MKPinAnnotationView
+        var view: MKAnnotationView
         guard let annotation = annotation as? SpotifyTrackAnnotation else { return nil }
         
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: "TrackAnnotation") as? MKPinAnnotationView {
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: "TrackAnnotation") {
             view = dequeuedView
         } else {
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "TrackAnnotation")
+            view = MKAnnotationView(annotation: annotation, reuseIdentifier: "TrackAnnotation")
         }
+        
+        view.image = UIImage(named: "headphones.png")
+        
         return view
     }
     
