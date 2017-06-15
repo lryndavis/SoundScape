@@ -351,9 +351,13 @@ extension NearbySongsViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+        let span = mapView.region.span
         
-        guard let annotation = view.annotation as? SpotifyTrackAnnotation else { return }
-        print("\(annotation.spotifyTrackPartial.name) tapped")
+        if let annotationPin = view.annotation {
+            let region = MKCoordinateRegion(center: annotationPin.coordinate, span: span)
+            mapView.setRegion(region, animated: true)
+        }
     }
 }
 
