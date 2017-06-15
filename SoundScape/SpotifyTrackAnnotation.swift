@@ -12,5 +12,13 @@ class SpotifyTrackAnnotation: NSObject, MKAnnotation {
         self.coordinate           = coordinate
         self.spotifyTrackPartial  = spotifyTrackPartial
     }
+    
+    var title: String? {
+        return spotifyTrackPartial.name
+    }
+    
+    var subtitle: String? {
+        return spotifyTrackPartial.artist
+    }
 }
 

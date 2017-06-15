@@ -6,7 +6,7 @@ class SongTableViewCell: UITableViewCell {
     var songLabel = UILabel()
     var artistLabel = UILabel()
     var verticalContainerStackView = UIStackView()
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
     }
@@ -23,7 +23,7 @@ class SongTableViewCell: UITableViewCell {
         self.addSubview(verticalContainerStackView)
         verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(8, 16, 8, 16)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
         verticalContainerStackView.spacing = 8.0
         
         songLabel.textColor = UIColor.black

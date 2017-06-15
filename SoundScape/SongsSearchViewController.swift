@@ -66,48 +66,8 @@ class SongsSearchViewController: UIViewController {
             }
         }
     }
-    
-    func getFullTrackObjects(listPage: SPTListPage) {
-        
-        if listPage.items != nil {
-            
-            songs.removeAll()
-            let tracks = listPage.items as! [SPTPartialTrack]
-            let trackURIs = tracks.map{ $0.uri.absoluteURL }
-        
-            SPTTrack.tracks(withURIs: trackURIs, accessToken: session.accessToken, market: nil) { error, response in
-                if error != nil {
-                    print(error!)
-                } else {
-                    let spotifyTracks = response as! [SPTTrack]
-                    self.updateTableView(spotifyTracks: spotifyTracks)
-                }
-            }
-        }
-    }
-    
-    func updateTableView(spotifyTracks: [SPTTrack]) {
-        
-        for track in spotifyTracks {
-            let songItem = SpotifyTrack(track: track)
-            songs.append(songItem)
-        }
-        tableView.reloadData()
-    }
-    
-    func searchSpotify(query: String) {
-        
-        SPTSearch.perform(withQuery: query, queryType: SPTSearchQueryType.queryTypeTrack, accessToken: session.accessToken) { (error, response) in
-            
-            if let error = error {
-                print("error while searching spotify: \(error)")
-            } else {
-                let listpage = response as! SPTListPage
-                self.getFullTrackObjects(listPage: listpage)
-            }
-        }
-    }
-    
+
+    // begin search
     func performSearch() {
         
         if let query = searchController.searchBar.text {
@@ -118,6 +78,51 @@ class SongsSearchViewController: UIViewController {
         }
     }
     
+    // query spotify for tracks
+    func searchSpotify(query: String) {
+        
+        SPTSearch.perform(withQuery: query, queryType: SPTSearchQueryType.queryTypeTrack, accessToken: session.accessToken) { (error, response) in
+            if let error = error {
+                print("error while searching spotify: \(error)")
+            } else {
+                let listpage = response as! SPTListPage
+                self.getFullTrackObjects(listPage: listpage)
+            }
+        }
+    }
+    
+    // spotify query always returns an array of partial tracks 
+    // make additional call to get full track objects from partial track URIs
+    func getFullTrackObjects(listPage: SPTListPage) {
+        
+        if listPage.items != nil {
+            
+            songs.removeAll()
+            let tracks = listPage.items as! [SPTPartialTrack]
+            let trackURIs = tracks.map{ $0.uri.absoluteURL }
+        
+            SPTTrack.tracks(withURIs: trackURIs, accessToken: session.accessToken, market: nil) { error, response in
+                if let error = error {
+                    print("error when getting full tracks: \(error)")
+                } else {
+                    let spotifyTracks = response as! [SPTTrack]
+                    self.updateTableView(spotifyTracks: spotifyTracks)
+                }
+            }
+        }
+    }
+    
+    // update tableview with new tracks
+    func updateTableView(spotifyTracks: [SPTTrack]) {
+        
+        for track in spotifyTracks {
+            let songItem = SpotifyTrack(track: track)
+            songs.append(songItem)
+        }
+        tableView.reloadData()
+    }
+    
+    // save selected song to user's current location 
     func saveSongToLocation(song: SpotifyTrack) {
         
         if let ref = self.ref {
@@ -137,7 +142,7 @@ class SongsSearchViewController: UIViewController {
     
 }
 
-
+// MARK: tableview delegate
 extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -179,6 +184,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
+// MARK: searchbar delegate
 extension SongsSearchViewController: UISearchBarDelegate {
 
     func didChangeSearchText(_ query: String) {
@@ -191,6 +197,7 @@ extension SongsSearchViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: search results updating 
 extension SongsSearchViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {

@@ -51,13 +51,23 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     func buildView() {
         
         // add mapview
-        mapView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        mapView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         containerStackView.addArrangedSubview(mapView)
+        
+//        let closeMapButton = UIButton()
+//        closeMapButton.frame = CGRect(x: 10, y: 10, width: 15, height: 15)
+//        closeMapButton.addTarget(self, action: #selector(toggleMap), for: .touchUpInside)
+//        closeMapButton.imageView?.contentMode = .scaleAspectFit
+//        closeMapButton.tintColor = .blue
+//        let closeImage = UIImage(named: "close.png")
+//        let tintedCloseImage = closeImage?.withRenderingMode(.alwaysTemplate)
+//        closeMapButton.setImage(tintedCloseImage, for: .normal)
+//        mapView.addSubview(closeMapButton)
 
-        // add tableview 
+        // add tableview
         tableView.register(SongTableViewCell.self, forCellReuseIdentifier: "SongCell")
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 65
+        tableView.estimatedRowHeight = 75
         containerStackView.addArrangedSubview(tableView)
     }
     
@@ -71,6 +81,22 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         
         if !audioPlayerVC.spotifyAudioPlayer.isPlaying {
             audioPlayerVC.view.isHidden = true
+        }
+    }
+    
+    func showMusicPlayer() {
+
+        if audioPlayerVC.view.isHidden == true {
+            UIView.animate(withDuration: 0.3) {
+                self.audioPlayerVC.view.isHidden = false
+            }
+        }
+    }
+    
+    func toggleMap() {
+        
+        UIView.animate(withDuration: 0.3){
+            self.mapView.isHidden = !self.mapView.isHidden
         }
     }
     
@@ -254,6 +280,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
+// MARK: UITableViewDelegate + UITableViewDataSource methods
 extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -270,7 +297,7 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = songItem.albumArtistDisplay
         cell.selectionStyle = .none
         
-        let currentTrackId = audioPlayerVC.spotifyAudioPlayer.playerQueue?[audioPlayerVC.spotifyAudioPlayer.trackIndex].spotifyId
+        let currentTrackId = audioPlayerVC.spotifyAudioPlayer.playerQueue?[safe:audioPlayerVC.spotifyAudioPlayer.trackIndex]?.spotifyId
         
         if songItem.spotifyId == currentTrackId {
             cell.songLabel.textColor = UIColor.blue
@@ -291,12 +318,14 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         audioPlayerVC.spotifyAudioPlayer.trackIndex = 0
         audioPlayerVC.setQueue(queue: currentQueue)
         audioPlayerVC.playTrack(atIndex: audioPlayerVC.spotifyAudioPlayer.trackIndex)
-        audioPlayerVC.view.isHidden = false
+
+        showMusicPlayer()
     }
 }
 
+// MARK: - MKMapViewDelegate methods
 extension NearbySongsViewController: MKMapViewDelegate {
-    
+   
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         
         if let userLocation = userLocation.location {
@@ -308,23 +337,23 @@ extension NearbySongsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        var view: MKAnnotationView
-        guard let annotation = annotation as? SpotifyTrackAnnotation else { return nil }
+        if annotation is MKUserLocation { return nil }
         
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: "TrackAnnotation") {
-            view = dequeuedView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "SongAnnotation")
+        
+        if annotationView == nil {
+            annotationView = SongDetailAnnotationView(annotation: annotation, reuseIdentifier: "SongAnnotation")
         } else {
-            view = MKAnnotationView(annotation: annotation, reuseIdentifier: "TrackAnnotation")
+            annotationView?.annotation = annotation
         }
         
-        view.image = UIImage(named: "headphones.png")
-        
-        return view
+        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
-        print("annotation tapped")
+        guard let annotation = view.annotation as? SpotifyTrackAnnotation else { return }
+        print("\(annotation.spotifyTrackPartial.name) tapped")
     }
 }
 

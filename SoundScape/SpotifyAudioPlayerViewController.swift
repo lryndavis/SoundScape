@@ -37,7 +37,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
 
         verticalContainerStackView.anchorSidesTo(view)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 24, 16, 24)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
         verticalContainerStackView.heightAnchor.constraint(equalToConstant: 65.0).isActive = true
         
         let horizontalContainerStackView = UIStackView()
@@ -50,10 +50,10 @@ class SpotifyAudioPlayerViewController: UIViewController {
         secondaryVerticalStackView.axis = .vertical
         
         songLabel.textColor = UIColor.white
-        songLabel.font = UIFont(name: "Helvetica Neue", size: 16.0)
+        songLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)
         
         artistLabel.textColor = UIColor.white
-        artistLabel.font = UIFont(name: "Helvetica Neue", size: 12.0)
+        artistLabel.font = UIFont(name: "Helvetica Neue", size: 10.0)
         
         secondaryVerticalStackView.addArrangedSubview(songLabel)
         secondaryVerticalStackView.addArrangedSubview(artistLabel)
