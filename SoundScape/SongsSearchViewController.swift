@@ -8,7 +8,7 @@ class SongsSearchViewController: UIViewController {
     var songs: [SpotifyTrack] = []
     var session: SPTSession!
     var ref: DatabaseReference?
-    var userLocation: CLLocation?
+    var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
     var searchTimer: Timer?
     let audioPlayerVC = SpotifyAudioPlayerViewController()
@@ -132,8 +132,8 @@ class SongsSearchViewController: UIViewController {
             
             let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
             
-            if let longitude = self.userLocation?.coordinate.longitude,
-                let latitude = self.userLocation?.coordinate.latitude {
+            if let longitude = self.coordinate?.longitude,
+                let latitude = self.coordinate?.latitude {
                 
                 geoFire?.setLocation(CLLocation(latitude: latitude, longitude: longitude), forKey: key)
             }

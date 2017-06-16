@@ -4,7 +4,7 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
+class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
     var spotifyTracks = [SpotifyTrack]()
     var spotifyTrackAnnotationItems = [SpotifyTrackAnnotation]()
@@ -42,9 +42,9 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
         // mapview
         mapView.delegate = self
         mapView.userTrackingMode = MKUserTrackingMode.follow
+        determineCurrentUserLocation()
     
         // build views
-        determineCurrentUserLocation()
         buildView()
         addSpotifyMusicPlayerVC()
         
@@ -52,13 +52,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
         longPressGestureRecognizer.delegate = self
         mapView.addGestureRecognizer(longPressGestureRecognizer)
-    }
-    
-    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
-        
-        let location = gestureReconizer.location(in: mapView)
-        let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
-        print(coordinate)
     }
 
     func buildView() {
@@ -245,26 +238,33 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
         
         tableView.reloadData()
     }
-
+    
     func addSongButtonTapped() {
+        
+        if let coordinate = self.locationManager.location?.coordinate {
+            segueToSongSearchVC(coordinate: coordinate)
+        }
+    }
+    
+    func segueToSongSearchVC(coordinate: CLLocationCoordinate2D) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: "SongsSearchViewController") as! SongsSearchViewController
         
-        vc.userLocation = self.locationManager.location
-        
+        vc.coordinate = coordinate
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        super.prepare(for: segue, sender: sender)
-        
-        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
-        
-        segue.destination.modalPresentationStyle = .custom
-        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
-    }
+    //TODO: redo this functionality
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        super.prepare(for: segue, sender: sender)
+//        
+//        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+//        
+//        segue.destination.modalPresentationStyle = .custom
+//        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
+//    }
 }
 
 // MARK: - UITableViewDelegate + UITableViewDataSource methods
@@ -338,6 +338,41 @@ extension NearbySongsViewController: MKMapViewDelegate {
             let region = MKCoordinateRegion(center: annotationPin.coordinate, span: span)
             mapView.setRegion(region, animated: true)
         }
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate methods
+extension NearbySongsViewController: UIGestureRecognizerDelegate {
+    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        
+        if gestureReconizer.state == UIGestureRecognizerState.ended {
+            
+            let location = gestureReconizer.location(in: mapView)
+            let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+            
+            showNewSongAdditionAlert(coordinate: coordinate)
+            
+        } else if gestureReconizer.state == UIGestureRecognizerState.began {
+            print("map press gesture detected")
+        }
+    }
+    
+    func showNewSongAdditionAlert(coordinate: CLLocationCoordinate2D) {
+        
+        let alert = UIAlertController(title: nil, message: "Would you like to add a song here?", preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Yes!", style: .default) { _ in
+            
+            self.segueToSongSearchVC(coordinate: coordinate)
+        }
+        
+        let cancelAction = UIAlertAction(title: "No", style: .default)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
