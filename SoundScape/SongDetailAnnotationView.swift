@@ -7,6 +7,7 @@ private let kMapPinImage = UIImage(named: "headphones")!
 class SongDetailAnnotationView: MKAnnotationView {
     
     var customCalloutView: SongDetailMapView?
+    var delegate: SongDetailMapViewDelegate? 
     
     override var annotation: MKAnnotation? {
         willSet { customCalloutView?.removeFromSuperview() }
@@ -68,6 +69,7 @@ class SongDetailAnnotationView: MKAnnotationView {
     func loadSongDetailAnnotationView() -> SongDetailMapView {
         
         let songDetailMapView = SongDetailMapView()
+        songDetailMapView.delegate = self.delegate
         
         if let trackAnnotation = annotation as? SpotifyTrackAnnotation {
             songDetailMapView.setupWithTrack(spotifyTrack: trackAnnotation.spotifyTrack)
@@ -78,5 +80,15 @@ class SongDetailAnnotationView: MKAnnotationView {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.customCalloutView?.removeFromSuperview()
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+
+        if let parentHitView = super.hitTest(point, with: event) { return parentHitView }
+        else {
+            if customCalloutView != nil {
+                return customCalloutView!.hitTest(convert(point, to: customCalloutView!), with: event)
+            } else { return nil }
+        }
     }
 }

@@ -37,22 +37,27 @@ class SpotifyAudioPlayer {
 
 extension SpotifyAudioPlayer {
     
+    public var currentTrack: SpotifyTrack? {
+        return self.trackQueue?[safe: self.trackIndex]
+    }
+    
     public var currentTrackId: String? {
         return self.trackQueue?[safe: self.trackIndex]?.spotifyId
     }
     
      public func playTrack(atIndex: Int) {
 
-        let currentSong = self.trackQueue?[self.trackIndex]
+        if let currentTrack = self.currentTrack {
         
-        self.player?.playSpotifyURI(currentSong?.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
+            self.player?.playSpotifyURI(currentTrack.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
             
-            if error != nil {
-                print("error playing track: \(String(describing: error))")
-            } else {
-                print("playing: \(String(describing: self.trackQueue?[self.trackIndex].name))")
-            }
-        })
+                if error != nil {
+                    print("error playing track: \(String(describing: error))")
+                } else {
+                    print("playing: \(String(describing: self.trackQueue?[self.trackIndex].name))")
+                }
+            })
+        }
     }
     
     public func setTrackQueue(trackQueue: [SpotifyTrack]) {

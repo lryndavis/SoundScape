@@ -1,49 +1,9 @@
 
 import UIKit
 
+class SpotifyAudioPlayerViewController: UIViewController {
 
-protocol SpotifyAudioPlayable {
-    
-    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
-}
-
-extension SpotifyAudioPlayable {
-    
-    func beginNewQueueWithSelection(trackQueue: [SpotifyTrack]) {
-        
-        spotifyAudioPlayer.trackIndex = 0
-        spotifyAudioPlayer.setTrackQueue(trackQueue: trackQueue)
-        spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)
-    }
-}
-
-protocol SpotifyAudioControllable {
-    
-    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
-    var pausePlayButton: AudioPausePlayButton { get }
-}
-
-extension SpotifyAudioControllable {
-    
-    func togglePlay() {
-        
-        if spotifyAudioPlayer.isPlaying {
-            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-            spotifyAudioPlayer.isPlaying = false
-            pausePlayButton.setButtonPlay()
-        } else {
-            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-            spotifyAudioPlayer.isPlaying = true
-            pausePlayButton.setButtonPause()
-        }
-    }
-}
-
-class SpotifyAudioPlayerViewController: UIViewController, SpotifyAudioControllable {
-    
-    let artistLabel = UILabel()
-    let songLabel = UILabel()
-    let pausePlayButton = AudioPausePlayButton()
+    let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
 
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     
@@ -51,6 +11,7 @@ class SpotifyAudioPlayerViewController: UIViewController, SpotifyAudioControllab
         
         super.viewDidLoad()
         
+        miniSpotifyAudioPlayer.delegate = self
         spotifyAudioPlayer.player?.delegate = self
         spotifyAudioPlayer.player?.playbackDelegate = self
         
@@ -59,60 +20,26 @@ class SpotifyAudioPlayerViewController: UIViewController, SpotifyAudioControllab
     
     override func viewDidAppear(_ animated: Bool) {
         
-        spotifyAudioPlayer.isPlaying ? pausePlayButton.setButtonPause() : pausePlayButton.setButtonPlay()
+        spotifyAudioPlayer.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
     }
     
-    // build basic view for mini audio player
-    // todo: move to custom uiview
+    // add mini audio player view
     fileprivate func setupView() {
 
-        view.backgroundColor = UIColor.black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
         let verticalContainerStackView = UIStackView()
         verticalContainerStackView.axis = .vertical
         view.addSubview(verticalContainerStackView)
 
+        verticalContainerStackView.addArrangedSubview(miniSpotifyAudioPlayer)
         verticalContainerStackView.anchorSidesTo(view)
-        verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
-        verticalContainerStackView.heightAnchor.constraint(equalToConstant: 65.0).isActive = true
-        
-        let horizontalContainerStackView = UIStackView()
-        horizontalContainerStackView.axis = .horizontal
-        horizontalContainerStackView.distribution = .fill
-        horizontalContainerStackView.alignment = .center
-        horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        
-        let secondaryVerticalStackView = UIStackView()
-        secondaryVerticalStackView.axis = .vertical
-        
-        songLabel.textColor = UIColor.white
-        songLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)
-        
-        artistLabel.textColor = UIColor.white
-        artistLabel.font = UIFont(name: "Helvetica Neue", size: 10.0)
-        
-        secondaryVerticalStackView.addArrangedSubview(songLabel)
-        secondaryVerticalStackView.addArrangedSubview(artistLabel)
-        
-        verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
-        horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
-        
-        pausePlayButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
-        horizontalContainerStackView.addArrangedSubview(pausePlayButton)
     }
-    
-    func onPausePlayButtonTap() {
-        
-        togglePlay()
-    }
-    
+
     func setCurrentPlayerDisplay() {
     
-        let currentSong = spotifyAudioPlayer.trackQueue?[spotifyAudioPlayer.trackIndex]
-        artistLabel.text = currentSong?.albumArtistDisplay
-        songLabel.text = currentSong?.name
+        if let currentTrack = spotifyAudioPlayer.currentTrack {
+            miniSpotifyAudioPlayer.artistLabel.text = currentTrack.albumArtistDisplay
+            miniSpotifyAudioPlayer.songLabel.text = currentTrack.name
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -121,7 +48,24 @@ class SpotifyAudioPlayerViewController: UIViewController, SpotifyAudioControllab
     }
 }
 
-//MARK: SPTAudioStreamingDelegate and SPTAudioStreamingPlaybackDelegate methods
+// MARK: - MiniSpotifyAudioPlayerDelegate methods
+extension SpotifyAudioPlayerViewController: MiniSpotifyAudioPlayerDelegate {
+    
+    func togglePlay() {
+        
+        if spotifyAudioPlayer.isPlaying {
+            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
+            spotifyAudioPlayer.isPlaying = false
+            miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
+        } else {
+            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
+            spotifyAudioPlayer.isPlaying = true
+            miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
+        }
+    }
+}
+
+//MARK: - SPTAudioStreamingDelegate and SPTAudioStreamingPlaybackDelegate methods
 extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangePosition position: TimeInterval) {
@@ -132,7 +76,7 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
         spotifyAudioPlayer.isPlaying = true
-        pausePlayButton.setButtonPause()
+        miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {

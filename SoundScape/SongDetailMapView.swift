@@ -1,19 +1,24 @@
 
 import UIKit
 
+protocol SongDetailMapViewDelegate {
+    
+    func setAnnotationAudioPlayer(track: SpotifyTrack)
+}
 
-class SongDetailMapView: UIView, SpotifyAudioPlayable, SpotifyAudioControllable {
+class SongDetailMapView: UIView {
     
     let songNameLabel = UILabel()
     let artistLabel = UILabel()
-    let playButton = UIButton()
     let closeButton = UIButton()
     let verticalContainerStackView = UIStackView()
     let horizontalContainerStackView = UIStackView()
-    let pausePlayButton = AudioPausePlayButton()
+    let playTrackButton = UIButton()
+    let backgroundViewButton = UIButton()
 
     var spotifyTrack: SpotifyTrack?
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    //let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    var delegate: SongDetailMapViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -34,6 +39,11 @@ class SongDetailMapView: UIView, SpotifyAudioPlayable, SpotifyAudioControllable 
     }
     
     fileprivate func buildView() {
+        
+        self.addSubview(backgroundViewButton)
+        backgroundViewButton.anchorSidesTo(self)
+        backgroundViewButton.translatesAutoresizingMaskIntoConstraints = false
+        self.bringSubview(toFront: backgroundViewButton)
     
         self.layer.cornerRadius = 8.0
         self.backgroundColor = UIColor.black
@@ -64,41 +74,38 @@ class SongDetailMapView: UIView, SpotifyAudioPlayable, SpotifyAudioControllable 
         
         verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
         horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
-        
-        
-        setupButton()
+
+        addButton()
     }
     
-    func setupButton() {
+    func addButton() {
         
-        if let currentTrackId = spotifyAudioPlayer.currentTrackId,
-            let spotifyTrack = spotifyTrack {
-            if currentTrackId == spotifyTrack.id {
-                pausePlayButton.setButtonPause()
-            } else {
-                pausePlayButton.setButtonPlay()
-            }
-        } else {
-            pausePlayButton.setButtonPlay()
-        }
+        playTrackButton.widthAnchor.constraint(equalToConstant: 16.0).isActive = true
+        playTrackButton.tintColor = .white
+        playTrackButton.imageView?.contentMode = .scaleAspectFit
         
-        pausePlayButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
-        horizontalContainerStackView.addArrangedSubview(pausePlayButton)
+        let playImage = UIImage(named: "playlist.png")
+        let tintedPlayImage = playImage?.withRenderingMode(.alwaysTemplate)
+        playTrackButton.setImage(tintedPlayImage, for: .normal)
+        
+        playTrackButton.addTarget(self, action: #selector(onPlayButtonTap), for: .touchUpInside)
+        horizontalContainerStackView.addArrangedSubview(playTrackButton)
     }
     
-    func onPausePlayButtonTap() {
+    func onPlayButtonTap(_ sender: AudioPausePlayButton) {
         
-        if let currentTrackId = spotifyAudioPlayer.currentTrackId,
-            let spotifyTrack = spotifyTrack,
-            var queue = spotifyAudioPlayer.trackQueue {
-            
-            if currentTrackId == spotifyTrack.id {
-                togglePlay()
-            } else {
-                queue.insert(spotifyTrack, at: 0)
-                beginNewQueueWithSelection(trackQueue: queue)
-            }
+        guard let delegate = delegate,
+              let spotifyTrack = spotifyTrack else { return }
+        
+        delegate.setAnnotationAudioPlayer(track: spotifyTrack)
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        
+        if let result = playTrackButton.hitTest(convert(point, to: playTrackButton), with: event) {
+            return result
         }
+        return backgroundViewButton.hitTest(convert(point, to: backgroundViewButton), with: event)
     }
 }
 

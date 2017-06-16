@@ -142,7 +142,7 @@ class SongsSearchViewController: UIViewController {
     
 }
 
-// MARK: tableview delegate
+// MARK: - UITableViewDelegate and UITableViewDataSource methods 
 extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,7 +184,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-// MARK: searchbar delegate
+// MARK: - UISearchBarDelegate methods
 extension SongsSearchViewController: UISearchBarDelegate {
 
     func didChangeSearchText(_ query: String) {
@@ -197,7 +197,7 @@ extension SongsSearchViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: search results updating 
+// MARK: - UISearchResultsUpdating
 extension SongsSearchViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {

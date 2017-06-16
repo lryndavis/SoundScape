@@ -4,12 +4,11 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, SpotifyAudioPlayable {
+class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
     
-    var songItems = [SpotifyTrack]()
-    var songAnnotationItems = [SpotifyTrackAnnotation]()
+    var spotifyTracks = [SpotifyTrack]()
+    var spotifyTrackAnnotationItems = [SpotifyTrackAnnotation]()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
-    var currentQueue = [SpotifyTrack]()
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
@@ -19,6 +18,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
     let audioPlayerVC = SpotifyAudioPlayerViewController()
     let tableView = UITableView()
     let mapView = MKMapView()
+
     @IBOutlet weak var containerStackView: UIStackView!
     
     override func viewDidLoad() {
@@ -61,22 +61,11 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
         print(coordinate)
     }
 
-    
     func buildView() {
         
         // add mapview
         mapView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         containerStackView.addArrangedSubview(mapView)
-        
-//        let closeMapButton = UIButton()
-//        closeMapButton.frame = CGRect(x: 10, y: 10, width: 15, height: 15)
-//        closeMapButton.addTarget(self, action: #selector(toggleMap), for: .touchUpInside)
-//        closeMapButton.imageView?.contentMode = .scaleAspectFit
-//        closeMapButton.tintColor = .blue
-//        let closeImage = UIImage(named: "close.png")
-//        let tintedCloseImage = closeImage?.withRenderingMode(.alwaysTemplate)
-//        closeMapButton.setImage(tintedCloseImage, for: .normal)
-//        mapView.addSubview(closeMapButton)
 
         // add tableview
         tableView.register(SongTableViewCell.self, forCellReuseIdentifier: "SongCell")
@@ -97,23 +86,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
             audioPlayerVC.view.isHidden = true
         }
     }
-    
-    func showMusicPlayer() {
 
-        if audioPlayerVC.view.isHidden == true {
-            UIView.animate(withDuration: 0.3) {
-                self.audioPlayerVC.view.isHidden = false
-            }
-        }
-    }
-    
-    func toggleMap() {
-        
-        UIView.animate(withDuration: 0.3){
-            self.mapView.isHidden = !self.mapView.isHidden
-        }
-    }
-    
     func showNoResultsView() {
         
         noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
@@ -242,7 +215,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
                 
             } else {
                 
-                self.songItems.removeAll()
+                self.spotifyTracks.removeAll()
                 self.tableView.reloadData()
                 self.showNoResultsView()
             }
@@ -252,23 +225,23 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
     // add annotations to map view for relevant songs
     func addTrackAnnotations(nearbyAnnotations: [SpotifyTrackAnnotation]) {
         
-        if !songAnnotationItems.isEmpty {
-            let existingAnnotationIds = songAnnotationItems.map{ $0.spotifyTrack.id }
+        if !spotifyTrackAnnotationItems.isEmpty {
+            let existingAnnotationIds = spotifyTrackAnnotationItems.map{ $0.spotifyTrack.id }
             let newAnnotations = nearbyAnnotations.filter { !existingAnnotationIds.contains($0.spotifyTrack.id) }
             
-            songAnnotationItems.append(contentsOf: newAnnotations)
+            spotifyTrackAnnotationItems.append(contentsOf: newAnnotations)
             mapView.addAnnotations(newAnnotations)
         } else {
-            songAnnotationItems.append(contentsOf: nearbyAnnotations)
-            mapView.addAnnotations(self.songAnnotationItems)
+            spotifyTrackAnnotationItems.append(contentsOf: nearbyAnnotations)
+            mapView.addAnnotations(self.spotifyTrackAnnotationItems)
         }
     }
     
     // update nearby songs tableview
     func updateSongsList(nearbySongs: [SpotifyTrack]) {
         
-        songItems.removeAll()
-        songItems.append(contentsOf: nearbySongs)
+        spotifyTracks.removeAll()
+        spotifyTracks.append(contentsOf: nearbySongs)
         
         tableView.reloadData()
     }
@@ -294,18 +267,18 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UI
     }
 }
 
-// MARK: UITableViewDelegate + UITableViewDataSource methods
+// MARK: - UITableViewDelegate + UITableViewDataSource methods
 extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return songItems.count
+        return spotifyTracks.count
     }
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongTableViewCell
-        let songItem = songItems[indexPath.row]
+        let songItem = spotifyTracks[indexPath.row]
         
         cell.songLabel.text = songItem.name
         cell.artistLabel.text = songItem.albumArtistDisplay
@@ -324,13 +297,8 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let songItem = songItems[indexPath.row]
-        currentQueue = songItems
-        currentQueue.insert(songItem, at: 0)
-
-        beginNewQueueWithSelection(trackQueue: currentQueue)
-        audioPlayerVC.setCurrentPlayerDisplay()
-        showMusicPlayer()
+        let spotifyTrack = spotifyTracks[indexPath.row]
+        startNewQueueFromSelection(spotifyTrack: spotifyTrack)
     }
 }
 
@@ -354,6 +322,7 @@ extension NearbySongsViewController: MKMapViewDelegate {
         
         if annotationView == nil {
             annotationView = SongDetailAnnotationView(annotation: annotation, reuseIdentifier: "SongAnnotation")
+            (annotationView as! SongDetailAnnotationView).delegate = self
         } else {
             annotationView?.annotation = annotation
         }
@@ -372,18 +341,25 @@ extension NearbySongsViewController: MKMapViewDelegate {
     }
 }
 
-//extension NearbySongsViewController: SpotifyAudioPlayerDelegate {
-//    
-//    func togglePlay() {
-//        
-//        if spotifyAudioPlayer.isPlaying {
-//            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-//            spotifyAudioPlayer.isPlaying = false
-//            pausePlayButton.setButtonPlay()
-//        } else {
-//            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-//            spotifyAudioPlayer.isPlaying = true
-//            pausePlayButton.setButtonPause()
-//        }
-//    }
-//}
+// MARK: - SongDetailMapViewDelegate methods 
+extension NearbySongsViewController: SongDetailMapViewDelegate {
+    
+    func setAnnotationAudioPlayer(track: SpotifyTrack) {
+        startNewQueueFromSelection(spotifyTrack: track)
+    }
+}
+
+extension NearbySongsViewController: SpotifyAudioPlayable {
+    
+    func showMusicPlayer() {
+        
+        if audioPlayerVC.view.isHidden == true {
+            UIView.animate(withDuration: 0.3) {
+                self.audioPlayerVC.view.isHidden = false
+            }
+        }
+    }
+}
+
+
+
