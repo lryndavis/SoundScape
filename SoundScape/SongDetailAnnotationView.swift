@@ -70,7 +70,7 @@ class SongDetailAnnotationView: MKAnnotationView {
         let songDetailMapView = SongDetailMapView()
         
         if let trackAnnotation = annotation as? SpotifyTrackAnnotation {
-            songDetailMapView.setupWithTrack(spotifyTrack: trackAnnotation.spotifyTrackPartial)
+            songDetailMapView.setupWithTrack(spotifyTrack: trackAnnotation.spotifyTrack)
         }
         return songDetailMapView
     }

@@ -5,20 +5,20 @@ import MapKit
 class SpotifyTrackAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var spotifyTrackPartial: SpotifyTrack
+    var spotifyTrack: SpotifyTrack
     
-    init(coordinate: CLLocationCoordinate2D, spotifyTrackPartial: SpotifyTrack) {
+    init(coordinate: CLLocationCoordinate2D, spotifyTrack: SpotifyTrack) {
         
         self.coordinate           = coordinate
-        self.spotifyTrackPartial  = spotifyTrackPartial
+        self.spotifyTrack         = spotifyTrack
     }
     
     var title: String? {
-        return spotifyTrackPartial.name
+        return spotifyTrack.name
     }
     
     var subtitle: String? {
-        return spotifyTrackPartial.artist
+        return spotifyTrack.artist
     }
 }
 

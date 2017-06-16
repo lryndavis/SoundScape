@@ -4,10 +4,11 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
+class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, SpotifyAudioPlayable {
     
     var songItems = [SpotifyTrack]()
     var songAnnotationItems = [SpotifyTrackAnnotation]()
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var currentQueue = [SpotifyTrack]()
     var ref: DatabaseReference?
     var locationManager: CLLocationManager!
@@ -46,7 +47,20 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         determineCurrentUserLocation()
         buildView()
         addSpotifyMusicPlayerVC()
+        
+        //map gesture recognizer
+       let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
+        longPressGestureRecognizer.delegate = self
+        mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
+    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        
+        let location = gestureReconizer.location(in: mapView)
+        let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+        print(coordinate)
+    }
+
     
     func buildView() {
         
@@ -195,7 +209,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
                     geoFire?.getLocationForKey(songId, withCallback: { (location, error) in
                         if let location = location {
                             
-                            let newAnnotation = SpotifyTrackAnnotation(coordinate: location.coordinate, spotifyTrackPartial: newSong)
+                            let newAnnotation = SpotifyTrackAnnotation(coordinate: location.coordinate, spotifyTrack: newSong)
                             nearbyAnnotations.append(newAnnotation)
                         } else {
                             print("\(String(describing: error))")
@@ -239,8 +253,8 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     func addTrackAnnotations(nearbyAnnotations: [SpotifyTrackAnnotation]) {
         
         if !songAnnotationItems.isEmpty {
-            let existingAnnotationIds = songAnnotationItems.map{ $0.spotifyTrackPartial.id }
-            let newAnnotations = nearbyAnnotations.filter { !existingAnnotationIds.contains($0.spotifyTrackPartial.id) }
+            let existingAnnotationIds = songAnnotationItems.map{ $0.spotifyTrack.id }
+            let newAnnotations = nearbyAnnotations.filter { !existingAnnotationIds.contains($0.spotifyTrack.id) }
             
             songAnnotationItems.append(contentsOf: newAnnotations)
             mapView.addAnnotations(newAnnotations)
@@ -297,7 +311,7 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = songItem.albumArtistDisplay
         cell.selectionStyle = .none
         
-        let currentTrackId = audioPlayerVC.spotifyAudioPlayer.playerQueue?[safe:audioPlayerVC.spotifyAudioPlayer.trackIndex]?.spotifyId
+        let currentTrackId = spotifyAudioPlayer.trackQueue?[safe: spotifyAudioPlayer.trackIndex]?.spotifyId
         
         if songItem.spotifyId == currentTrackId {
             cell.songLabel.textColor = UIColor.blue
@@ -311,14 +325,11 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let songItem = songItems[indexPath.row]
-
         currentQueue = songItems
         currentQueue.insert(songItem, at: 0)
 
-        audioPlayerVC.spotifyAudioPlayer.trackIndex = 0
-        audioPlayerVC.setQueue(queue: currentQueue)
-        audioPlayerVC.playTrack(atIndex: audioPlayerVC.spotifyAudioPlayer.trackIndex)
-
+        beginNewQueueWithSelection(trackQueue: currentQueue)
+        audioPlayerVC.setCurrentPlayerDisplay()
         showMusicPlayer()
     }
 }
@@ -361,3 +372,18 @@ extension NearbySongsViewController: MKMapViewDelegate {
     }
 }
 
+//extension NearbySongsViewController: SpotifyAudioPlayerDelegate {
+//    
+//    func togglePlay() {
+//        
+//        if spotifyAudioPlayer.isPlaying {
+//            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
+//            spotifyAudioPlayer.isPlaying = false
+//            pausePlayButton.setButtonPlay()
+//        } else {
+//            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
+//            spotifyAudioPlayer.isPlaying = true
+//            pausePlayButton.setButtonPause()
+//        }
+//    }
+//}

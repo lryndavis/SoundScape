@@ -55,7 +55,7 @@ class SongsSearchViewController: UIViewController {
     // if the audio player has an active queue, add the audio player vc as a child
     func addAudioPlayer() {
         
-        if let queue = audioPlayerVC.spotifyAudioPlayer.playerQueue {
+        if let queue = audioPlayerVC.spotifyAudioPlayer.trackQueue {
             if queue.count > 0 {
                 audioPlayerVC.setCurrentPlayerDisplay()
                 containerStackView.axis = .vertical

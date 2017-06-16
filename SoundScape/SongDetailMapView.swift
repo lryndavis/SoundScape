@@ -1,9 +1,8 @@
 
 import UIKit
 
-//TODO: delegate for playing song
 
-class SongDetailMapView: UIView {
+class SongDetailMapView: UIView, SpotifyAudioPlayable, SpotifyAudioControllable {
     
     let songNameLabel = UILabel()
     let artistLabel = UILabel()
@@ -11,8 +10,10 @@ class SongDetailMapView: UIView {
     let closeButton = UIButton()
     let verticalContainerStackView = UIStackView()
     let horizontalContainerStackView = UIStackView()
-    
+    let pausePlayButton = AudioPausePlayButton()
+
     var spotifyTrack: SpotifyTrack?
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     
     init() {
         super.init(frame: .zero)
@@ -33,7 +34,7 @@ class SongDetailMapView: UIView {
     }
     
     fileprivate func buildView() {
-        
+    
         self.layer.cornerRadius = 8.0
         self.backgroundColor = UIColor.black
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +64,41 @@ class SongDetailMapView: UIView {
         
         verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
         horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
+        
+        
+        setupButton()
+    }
+    
+    func setupButton() {
+        
+        if let currentTrackId = spotifyAudioPlayer.currentTrackId,
+            let spotifyTrack = spotifyTrack {
+            if currentTrackId == spotifyTrack.id {
+                pausePlayButton.setButtonPause()
+            } else {
+                pausePlayButton.setButtonPlay()
+            }
+        } else {
+            pausePlayButton.setButtonPlay()
+        }
+        
+        pausePlayButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
+        horizontalContainerStackView.addArrangedSubview(pausePlayButton)
+    }
+    
+    func onPausePlayButtonTap() {
+        
+        if let currentTrackId = spotifyAudioPlayer.currentTrackId,
+            let spotifyTrack = spotifyTrack,
+            var queue = spotifyAudioPlayer.trackQueue {
+            
+            if currentTrackId == spotifyTrack.id {
+                togglePlay()
+            } else {
+                queue.insert(spotifyTrack, at: 0)
+                beginNewQueueWithSelection(trackQueue: queue)
+            }
+        }
     }
 }
 

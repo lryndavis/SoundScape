@@ -1,11 +1,49 @@
 
 import UIKit
 
-class SpotifyAudioPlayerViewController: UIViewController {
+
+protocol SpotifyAudioPlayable {
+    
+    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
+}
+
+extension SpotifyAudioPlayable {
+    
+    func beginNewQueueWithSelection(trackQueue: [SpotifyTrack]) {
+        
+        spotifyAudioPlayer.trackIndex = 0
+        spotifyAudioPlayer.setTrackQueue(trackQueue: trackQueue)
+        spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)
+    }
+}
+
+protocol SpotifyAudioControllable {
+    
+    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
+    var pausePlayButton: AudioPausePlayButton { get }
+}
+
+extension SpotifyAudioControllable {
+    
+    func togglePlay() {
+        
+        if spotifyAudioPlayer.isPlaying {
+            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
+            spotifyAudioPlayer.isPlaying = false
+            pausePlayButton.setButtonPlay()
+        } else {
+            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
+            spotifyAudioPlayer.isPlaying = true
+            pausePlayButton.setButtonPause()
+        }
+    }
+}
+
+class SpotifyAudioPlayerViewController: UIViewController, SpotifyAudioControllable {
     
     let artistLabel = UILabel()
     let songLabel = UILabel()
-    let pausePlayButton = UIButton()
+    let pausePlayButton = AudioPausePlayButton()
 
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     
@@ -21,7 +59,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        spotifyAudioPlayer.isPlaying ? setButtonPause() : setButtonPlay()
+        spotifyAudioPlayer.isPlaying ? pausePlayButton.setButtonPause() : pausePlayButton.setButtonPlay()
     }
     
     // build basic view for mini audio player
@@ -57,79 +95,33 @@ class SpotifyAudioPlayerViewController: UIViewController {
         
         secondaryVerticalStackView.addArrangedSubview(songLabel)
         secondaryVerticalStackView.addArrangedSubview(artistLabel)
-
-        pausePlayButton.widthAnchor.constraint(equalToConstant: 12.0).isActive = true
-        pausePlayButton.addTarget(self, action: #selector(togglePlay), for: .touchUpInside)
-        pausePlayButton.tintColor = .white
-        pausePlayButton.imageView?.contentMode = .scaleAspectFit
         
         verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
         horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
+        
+        pausePlayButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
         horizontalContainerStackView.addArrangedSubview(pausePlayButton)
     }
     
-    func setQueue(queue: [SpotifyTrack]) {
-        spotifyAudioPlayer.playerQueue = queue
-    }
-
-    func setButtonPlay() {
+    func onPausePlayButtonTap() {
         
-        let playImage = UIImage(named: "play.png")
-        let tintedPlayImage = playImage?.withRenderingMode(.alwaysTemplate)
-    
-        pausePlayButton.setImage(tintedPlayImage, for: .normal)
-    }
-    
-    func setButtonPause() {
-        
-        let pauseImage = UIImage(named: "pause.png")
-        let tintedPauseImage = pauseImage?.withRenderingMode(.alwaysTemplate)
-        
-        pausePlayButton.setImage(tintedPauseImage, for: .normal)
-    }
-    
-    func togglePlay() {
-        
-        if spotifyAudioPlayer.isPlaying {
-            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-            spotifyAudioPlayer.isPlaying = false
-            setButtonPlay()
-        } else {
-            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-            spotifyAudioPlayer.isPlaying = true
-            setButtonPause()
-        }
+        togglePlay()
     }
     
     func setCurrentPlayerDisplay() {
     
-        let currentSong = spotifyAudioPlayer.playerQueue?[spotifyAudioPlayer.trackIndex]
+        let currentSong = spotifyAudioPlayer.trackQueue?[spotifyAudioPlayer.trackIndex]
         artistLabel.text = currentSong?.albumArtistDisplay
         songLabel.text = currentSong?.name
     }
     
-    func playTrack(atIndex: Int) {
-        
-        setCurrentPlayerDisplay()
-
-        let currentSong = spotifyAudioPlayer.playerQueue?[spotifyAudioPlayer.trackIndex]
-        
-        self.spotifyAudioPlayer.player?.playSpotifyURI(currentSong?.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
-
-            if error != nil {
-                print("error playing track: \(String(describing: error))")
-            } else {
-                print("playing: \(String(describing: self.spotifyAudioPlayer.playerQueue?[self.spotifyAudioPlayer.trackIndex].name))")
-            }
-        })
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 }
 
+//MARK: SPTAudioStreamingDelegate and SPTAudioStreamingPlaybackDelegate methods
 extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangePosition position: TimeInterval) {
@@ -140,17 +132,18 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
         spotifyAudioPlayer.isPlaying = true
-        setButtonPause()
+        pausePlayButton.setButtonPause()
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
         
         spotifyAudioPlayer.trackIndex += 1
         
-        if let playerQueue = spotifyAudioPlayer.playerQueue {
+        if let trackQueue = spotifyAudioPlayer.trackQueue {
             
-            if spotifyAudioPlayer.trackIndex < playerQueue.count {
-                playTrack(atIndex: spotifyAudioPlayer.trackIndex)
+            if spotifyAudioPlayer.trackIndex < trackQueue.count {
+                setCurrentPlayerDisplay()
+                spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)
             } else {
                 spotifyAudioPlayer.isPlaying = false
             }

@@ -9,7 +9,7 @@ class SpotifyAudioPlayer {
     var player = SPTAudioStreamingController.sharedInstance()
     var session: SPTSession!
     
-    var playerQueue: [SpotifyTrack]?
+    var trackQueue: [SpotifyTrack]?
     var trackIndex: Int = 0
     var isPlaying = Bool()
 
@@ -34,3 +34,30 @@ class SpotifyAudioPlayer {
         }
     }
 }
+
+extension SpotifyAudioPlayer {
+    
+    public var currentTrackId: String? {
+        return self.trackQueue?[safe: self.trackIndex]?.spotifyId
+    }
+    
+     public func playTrack(atIndex: Int) {
+
+        let currentSong = self.trackQueue?[self.trackIndex]
+        
+        self.player?.playSpotifyURI(currentSong?.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
+            
+            if error != nil {
+                print("error playing track: \(String(describing: error))")
+            } else {
+                print("playing: \(String(describing: self.trackQueue?[self.trackIndex].name))")
+            }
+        })
+    }
+    
+    public func setTrackQueue(trackQueue: [SpotifyTrack]) {
+        self.trackQueue = trackQueue
+    }
+}
+
+
