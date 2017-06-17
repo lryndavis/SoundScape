@@ -4,7 +4,8 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
+
+class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, SpotifyAudioPlayable {
     
     var spotifyTracks = [SpotifyTrack]()
     var spotifyTrackAnnotationItems = [SpotifyTrackAnnotation]()
@@ -15,9 +16,10 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
     let noResultsLabel = UILabel()
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
-    let audioPlayerVC = SpotifyAudioPlayerViewController()
+    var audioPlayerVC: SpotifyAudioPlayerViewController?
     let tableView = UITableView()
     let mapView = MKMapView()
+    //var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
 
     @IBOutlet weak var containerStackView: UIStackView!
     
@@ -46,14 +48,13 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
     
         // build views
         buildView()
-        addSpotifyMusicPlayerVC()
         
         //map gesture recognizer
        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
         longPressGestureRecognizer.delegate = self
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
-
+    
     func buildView() {
         
         // add mapview
@@ -67,19 +68,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate {
         containerStackView.addArrangedSubview(tableView)
     }
     
-    func addSpotifyMusicPlayerVC() {
-        
-        containerStackView.axis = .vertical
-        addChildViewController(audioPlayerVC)
-        
-        audioPlayerVC.didMove(toParentViewController: self)
-        containerStackView.addArrangedSubview(audioPlayerVC.view)
-        
-        if !audioPlayerVC.spotifyAudioPlayer.isPlaying {
-            audioPlayerVC.view.isHidden = true
-        }
-    }
-
     func showNoResultsView() {
         
         noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
@@ -384,17 +372,6 @@ extension NearbySongsViewController: SongDetailMapViewDelegate {
     }
 }
 
-extension NearbySongsViewController: SpotifyAudioPlayable {
-    
-    func showMusicPlayer() {
-        
-        if audioPlayerVC.view.isHidden == true {
-            UIView.animate(withDuration: 0.3) {
-                self.audioPlayerVC.view.isHidden = false
-            }
-        }
-    }
-}
 
 
 

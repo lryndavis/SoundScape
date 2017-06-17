@@ -4,8 +4,8 @@ import UIKit
 class SpotifyAudioPlayerViewController: UIViewController {
 
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
-
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
     
     override func viewDidLoad() {
         
@@ -14,7 +14,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
         miniSpotifyAudioPlayer.delegate = self
         spotifyAudioPlayer.player?.delegate = self
         spotifyAudioPlayer.player?.playbackDelegate = self
-        
+    
         setupView()
     }
     
@@ -32,6 +32,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
 
         verticalContainerStackView.addArrangedSubview(miniSpotifyAudioPlayer)
         verticalContainerStackView.anchorSidesTo(view)
+        
     }
 
     func setCurrentPlayerDisplay() {
@@ -75,8 +76,14 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
+        
         spotifyAudioPlayer.isPlaying = true
         miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
+        setCurrentPlayerDisplay()
+        
+        if let delegate = spotifyAudioPlayerDelegate {
+            delegate.showAudioPlayer()
+        }
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {

@@ -19,11 +19,11 @@
                         <viewControllerLayoutGuide type="bottom" id="pI5-Jv-oV9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="W8x-tt-Bco">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pg8-4R-Ktz">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="528"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -133,6 +133,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLoginButtonTap:" destination="srK-lE-kuK" eventType="touchUpInside" id="Fbn-fT-o1T"/>
+                                    <segue destination="3n6-vF-dZf" kind="show" identifier="LoginToSongView" id="dAI-01-6Kg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -145,12 +146,60 @@
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="jKf-zF-u35" id="nBW-SS-x3e"/>
-                        <segue destination="hg2-Hs-rHl" kind="show" identifier="LoginToSongView" id="aLk-ls-rgx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="24b-yp-Y6b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1108" y="-424"/>
+            <point key="canvasLocation" x="-2217" y="-424"/>
+        </scene>
+        <!--Base Container View Controller-->
+        <scene sceneID="Pg1-kh-sI6">
+            <objects>
+                <viewController id="3n6-vF-dZf" customClass="BaseContainerViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9rt-ti-630"/>
+                        <viewControllerLayoutGuide type="bottom" id="cpK-Fg-Fj9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zaJ-3g-H4J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YDj-Tt-Kk8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="omX-LP-OYJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="592"/>
+                                        <connections>
+                                            <segue destination="hg2-Hs-rHl" kind="embed" id="R2s-Et-b7X"/>
+                                        </connections>
+                                    </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hW-54-4Zr">
+                                        <rect key="frame" x="0.0" y="592" width="375" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="5O1-QE-DSl"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="czO-xF-dH3" kind="embed" identifier="AudioSegue" id="Wlg-EL-1fJ"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YDj-Tt-Kk8" firstAttribute="bottom" secondItem="cpK-Fg-Fj9" secondAttribute="top" id="0Di-jR-xhS"/>
+                            <constraint firstItem="YDj-Tt-Kk8" firstAttribute="top" secondItem="zaJ-3g-H4J" secondAttribute="top" id="HU0-IZ-gp4"/>
+                            <constraint firstItem="YDj-Tt-Kk8" firstAttribute="leading" secondItem="zaJ-3g-H4J" secondAttribute="leading" id="QjB-ns-MC5"/>
+                            <constraint firstAttribute="trailing" secondItem="YDj-Tt-Kk8" secondAttribute="trailing" id="w7b-ca-Lke"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="audioPlayerContainerView" destination="2hW-54-4Zr" id="qzN-WZ-3Tc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VeH-uk-Zbi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1287.2" y="-422.33883058470769"/>
         </scene>
         <!--Modal Nav Controller-->
         <scene sceneID="PWi-8f-Ltu">
@@ -175,10 +224,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hg2-Hs-rHl" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="IP5-7r-Hgn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="IP5-7r-Hgn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.85882352939999995" green="0.86274509799999999" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                             <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
@@ -192,6 +241,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a0J-xc-Qch" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-319" y="-424"/>
+        </scene>
+        <!--Spotify Audio Player View Controller-->
+        <scene sceneID="dsr-OE-3XE">
+            <objects>
+                <viewController id="czO-xF-dH3" customClass="SpotifyAudioPlayerViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bKJ-Ce-feQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Qf-XA-bA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1287" y="63"/>
         </scene>
     </scenes>
 </document>

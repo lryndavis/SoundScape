@@ -92,6 +92,22 @@ class SongDetailMapView: UIView {
         horizontalContainerStackView.addArrangedSubview(playTrackButton)
     }
     
+//    func animateButton() {
+//        
+//        playTrackButton.tintColor = .cyan
+//
+//        let pulse = CASpringAnimation(keyPath: "transform.scale")
+//        pulse.duration = 2.0
+//        pulse.fromValue = 0.95
+//        pulse.toValue = 1.15
+//        pulse.autoreverses = true
+//        pulse.repeatCount = 2
+//        pulse.initialVelocity = 0.5
+//        pulse.damping = 1.0
+//        
+//        playTrackButton.layer.add(pulse, forKey: "pulse")
+//    }
+    
     func onPlayButtonTap(_ sender: AudioPausePlayButton) {
         
         guard let delegate = delegate,

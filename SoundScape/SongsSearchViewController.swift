@@ -11,7 +11,7 @@ class SongsSearchViewController: UIViewController {
     var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
     var searchTimer: Timer?
-    let audioPlayerVC = SpotifyAudioPlayerViewController()
+    //let audioPlayerVC = SpotifyAudioPlayerViewController()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var containerStackView: UIStackView!
@@ -43,7 +43,7 @@ class SongsSearchViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
         
-        addAudioPlayer()
+        //addAudioPlayer()
     }
     
     // prevent search controller warning
@@ -55,16 +55,16 @@ class SongsSearchViewController: UIViewController {
     // if the audio player has an active queue, add the audio player vc as a child
     func addAudioPlayer() {
         
-        if let queue = audioPlayerVC.spotifyAudioPlayer.trackQueue {
-            if queue.count > 0 {
-                audioPlayerVC.setCurrentPlayerDisplay()
-                containerStackView.axis = .vertical
-                addChildViewController(audioPlayerVC)
-                
-                audioPlayerVC.didMove(toParentViewController: self)
-                containerStackView.addArrangedSubview(audioPlayerVC.view)
-            }
-        }
+//        if let queue = audioPlayerVC.spotifyAudioPlayer.trackQueue {
+//            if queue.count > 0 {
+//                audioPlayerVC.setCurrentPlayerDisplay()
+//                containerStackView.axis = .vertical
+//                addChildViewController(audioPlayerVC)
+//                
+//                audioPlayerVC.didMove(toParentViewController: self)
+//                containerStackView.addArrangedSubview(audioPlayerVC.view)
+//            }
+//        }
     }
 
     // begin search
