@@ -6,6 +6,7 @@ class SongTableViewCell: UITableViewCell {
     var songLabel = UILabel()
     var artistLabel = UILabel()
     var verticalContainerStackView = UIStackView()
+    var albumImage = UIImageView()
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -18,8 +19,7 @@ class SongTableViewCell: UITableViewCell {
     }
     
     fileprivate func buildCell() {
-        
-        let imageView = UIImageView()
+
         let horizontalContainerStackView = UIStackView()
         horizontalContainerStackView.axis = .horizontal
         horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
@@ -28,13 +28,11 @@ class SongTableViewCell: UITableViewCell {
         horizontalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(horizontalContainerStackView)
         horizontalContainerStackView.anchorSidesTo(self)
-        
-        imageView.image = UIImage(named: "headphones.png")
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
-        imageView.clipsToBounds = true
-        imageView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-        horizontalContainerStackView.addArrangedSubview(imageView)
+
+        albumImage.clipsToBounds = true
+        albumImage.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+        albumImage.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        horizontalContainerStackView.addArrangedSubview(albumImage)
         
         verticalContainerStackView.axis = .vertical
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true

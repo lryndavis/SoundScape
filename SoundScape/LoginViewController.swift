@@ -17,11 +17,10 @@ class LoginViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessful"), object: nil)
 
+        loginButton.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        loginButton.isHidden = true
         
         let authManager = SpotifyAuthManager()
         authManager.refreshSession { (success) in

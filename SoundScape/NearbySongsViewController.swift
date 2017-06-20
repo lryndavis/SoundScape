@@ -9,9 +9,9 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     var spotifyTracks = [SpotifyTrack]()
     var spotifyTrackAnnotationItems = [SpotifyTrackAnnotation]()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
-    var ref: DatabaseReference?
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
+    let nearbySongsDataSource = NearbySongsDataSource()
     
     let noResultsLabel = UILabel()
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
@@ -24,8 +24,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        
-        ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         
         // navigation bar
         self.navigationItem.title = "Songs near You"
@@ -104,8 +102,8 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     func loadLocalSongIds() {
         
         if let location = self.locationManager.location {
-            self.queryLocalSongs(location: location,
-                                 completionHandler: {
+            nearbySongsDataSource.queryLocalSongs(location: location,
+                                 completion: {
                                     (keys) in
                                     if let keys = keys {
                                         self.localSongIds = keys
@@ -114,74 +112,11 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
             })
         }
     }
-
-    // query geofire to find all songs in radius
-    func queryLocalSongs(location: CLLocation, completionHandler: @escaping (_ songData: [String]?) -> Void) {
-        
-        var songData: [String] = []
-        let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
-        
-        if let geoFire = geoFire {
-            
-            let circleQuery = geoFire.query(at: location, withRadius: 25.0)
-            
-            _ = circleQuery?.observe(.keyEntered, with: { (key, location) in
-                
-                if let key = key {
-                    songData.insert(key, at: 0)
-                }
-            })
-            
-            circleQuery?.observeReady({
-                completionHandler(songData)
-            })
-        }
-    }
-    
-    // creat new track and annotation objects from returned song objects
-    func returnSongsFromId(songsByKey: [String], completionHandler: @escaping (_ nearbySongs: [SpotifyTrack], _ nearbyAnnotations: [SpotifyTrackAnnotation]) -> Void) {
-        
-        let dispatchGroup = DispatchGroup()
-        var nearbySongs: [SpotifyTrack] = []
-        var nearbyAnnotations: [SpotifyTrackAnnotation] = []
-        
-        for songId in songsByKey {
-            
-            dispatchGroup.enter()
-            
-            self.ref?.child(songId).observeSingleEvent(of: .value, with: { snapshot in
-                
-                if let _ = snapshot.value as? [String: Any] {
-                    
-                    let newSong = SpotifyTrack(snapshot: snapshot)
-                    nearbySongs.append(newSong)
-                    
-                    let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
-                    
-                    geoFire?.getLocationForKey(songId, withCallback: { (location, error) in
-                        if let location = location {
-                            
-                            let newAnnotation = SpotifyTrackAnnotation(coordinate: location.coordinate, spotifyTrack: newSong)
-                            nearbyAnnotations.append(newAnnotation)
-                        } else {
-                            print("\(String(describing: error))")
-                        }
-                        
-                        dispatchGroup.leave()
-                    })
-                }
-            })
-        }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            completionHandler(nearbySongs, nearbyAnnotations)
-        }
-    }
     
     // once songs are returned, call methods for updating UI
     func updateSongItems() {
         
-        self.returnSongsFromId(songsByKey: self.localSongIds) {
+        nearbySongsDataSource.returnSongsFromId(songsByKey: self.localSongIds) {
             nearbySongs, nearbyAnnotations in
             
             if !self.localSongIds.isEmpty {
@@ -277,6 +212,10 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             cell.songLabel.textColor = UIColor.black
         }
+        
+        ImageDataRequest.getAlbumCoverImage(imageUrl: songItem.smallestAlbumCoverURL, completion: { (image) in
+            cell.albumImage.image = image
+        })
         
         return cell
     }
