@@ -20,5 +20,16 @@ class SpotifyTrackAnnotation: NSObject, MKAnnotation {
     var subtitle: String? {
         return spotifyTrack.artist
     }
+    
+    var isCurrentlyPlaying: Bool {
+        
+        let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+        if let currentSpotifyTrackId = spotifyAudioPlayer.currentTrackId {
+            if self.spotifyTrack.id == currentSpotifyTrackId {
+                return true
+            }
+        }
+        return false 
+    }
 }
 

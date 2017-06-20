@@ -17,7 +17,7 @@ class SongDetailMapView: UIView {
     let backgroundViewButton = UIButton()
 
     var spotifyTrack: SpotifyTrack?
-    //let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var delegate: SongDetailMapViewDelegate?
     
     init() {
@@ -91,6 +91,7 @@ class SongDetailMapView: UIView {
         playTrackButton.addTarget(self, action: #selector(onPlayButtonTap), for: .touchUpInside)
         horizontalContainerStackView.addArrangedSubview(playTrackButton)
     }
+    
     
 //    func animateButton() {
 //        

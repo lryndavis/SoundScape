@@ -4,7 +4,6 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-
 class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, SpotifyAudioPlayable {
     
     var spotifyTracks = [SpotifyTrack]()
@@ -19,7 +18,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     var audioPlayerVC: SpotifyAudioPlayerViewController?
     let tableView = UITableView()
     let mapView = MKMapView()
-    //var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
 
     @IBOutlet weak var containerStackView: UIStackView!
     
@@ -311,6 +309,7 @@ extension NearbySongsViewController: MKMapViewDelegate {
         if annotationView == nil {
             annotationView = SongDetailAnnotationView(annotation: annotation, reuseIdentifier: "SongAnnotation")
             (annotationView as! SongDetailAnnotationView).delegate = self
+
         } else {
             annotationView?.annotation = annotation
         }

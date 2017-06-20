@@ -17,9 +17,11 @@ class SpotifyAudioPlayer {
         
         let userDefaults = UserDefaults.standard
         let sessionObj: Any? = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey)
-        let sessionDataObj = sessionObj as! Data
-        
-        self.session = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        let sessionDataObj = sessionObj as? Data
+    
+        if let sessionDataObj = sessionDataObj {
+            self.session = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        }
         
         initializePlayer()
     }

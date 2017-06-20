@@ -19,11 +19,26 @@ class SongTableViewCell: UITableViewCell {
     
     fileprivate func buildCell() {
         
+        let imageView = UIImageView()
+        let horizontalContainerStackView = UIStackView()
+        horizontalContainerStackView.axis = .horizontal
+        horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        horizontalContainerStackView.layoutMargins = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0)
+        horizontalContainerStackView.spacing = 8.0
+        horizontalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(horizontalContainerStackView)
+        horizontalContainerStackView.anchorSidesTo(self)
+        
+        imageView.image = UIImage(named: "headphones.png")
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
+        imageView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        horizontalContainerStackView.addArrangedSubview(imageView)
+        
         verticalContainerStackView.axis = .vertical
-        self.addSubview(verticalContainerStackView)
-        verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
+        verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalContainerStackView.spacing = 8.0
         
         songLabel.textColor = UIColor.black
@@ -34,6 +49,8 @@ class SongTableViewCell: UITableViewCell {
         
         verticalContainerStackView.addArrangedSubview(songLabel)
         verticalContainerStackView.addArrangedSubview(artistLabel)
+        
+        horizontalContainerStackView.addArrangedSubview(verticalContainerStackView)
     }
 }
 

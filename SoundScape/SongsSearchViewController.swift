@@ -11,7 +11,6 @@ class SongsSearchViewController: UIViewController {
     var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
     var searchTimer: Timer?
-    //let audioPlayerVC = SpotifyAudioPlayerViewController()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var containerStackView: UIStackView!
@@ -49,22 +48,6 @@ class SongsSearchViewController: UIViewController {
     // prevent search controller warning
     deinit {
         self.searchController.view.removeFromSuperview()
-    }
-    
-    
-    // if the audio player has an active queue, add the audio player vc as a child
-    func addAudioPlayer() {
-        
-//        if let queue = audioPlayerVC.spotifyAudioPlayer.trackQueue {
-//            if queue.count > 0 {
-//                audioPlayerVC.setCurrentPlayerDisplay()
-//                containerStackView.axis = .vertical
-//                addChildViewController(audioPlayerVC)
-//                
-//                audioPlayerVC.didMove(toParentViewController: self)
-//                containerStackView.addArrangedSubview(audioPlayerVC.view)
-//            }
-//        }
     }
 
     // begin search
@@ -181,6 +164,25 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        
+        let playAction = UITableViewRowAction(style: .normal, title: "") { action, index in
+            print("more button tapped")
+        }
+        playAction.backgroundColor = .lightGray
+        
+        let addAction = UITableViewRowAction(style: .normal, title: "") { action, index in
+            print("share button tapped")
+        }
+        addAction.backgroundColor = .blue
+        
+        return [addAction, playAction]
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
 
