@@ -19,8 +19,6 @@ class SongDetailAnnotationView: MKAnnotationView {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.canShowCallout = false
         self.image = kMapPinImage
-
-        //animateWithPulse()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,25 +27,6 @@ class SongDetailAnnotationView: MKAnnotationView {
         self.canShowCallout = false
         self.image = kMapPinImage
     }
-
-//    func animateWithPulse() {
-//        
-//        let pulsator = Pulsator()
-//        pulsator.position = CGPoint(x: 17, y: 19)
-//        pulsator.numPulse = 9
-//        pulsator.radius = 32
-//        pulsator.animationDuration = 5.9
-//        pulsator.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
-//        layer.addSublayer(pulsator)
-//
-//        if let trackAnnotation = annotation as? SpotifyTrackAnnotation {
-//            if trackAnnotation.isCurrentlyPlaying {
-//                pulsator.start()
-//            } else {
-//                pulsator.stop()
-//            }
-//        }
-//    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         

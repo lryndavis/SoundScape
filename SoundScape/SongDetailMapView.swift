@@ -54,14 +54,17 @@ class SongDetailMapView: UIView {
         verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
         verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
+        verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         horizontalContainerStackView.axis = .horizontal
         horizontalContainerStackView.distribution = .fill
         horizontalContainerStackView.alignment = .center
         horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        horizontalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let secondaryVerticalStackView = UIStackView()
         secondaryVerticalStackView.axis = .vertical
+        secondaryVerticalStackView.translatesAutoresizingMaskIntoConstraints = false 
         
         songNameLabel.textColor = UIColor.white
         songNameLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)
@@ -91,23 +94,6 @@ class SongDetailMapView: UIView {
         playTrackButton.addTarget(self, action: #selector(onPlayButtonTap), for: .touchUpInside)
         horizontalContainerStackView.addArrangedSubview(playTrackButton)
     }
-    
-    
-//    func animateButton() {
-//        
-//        playTrackButton.tintColor = .cyan
-//
-//        let pulse = CASpringAnimation(keyPath: "transform.scale")
-//        pulse.duration = 2.0
-//        pulse.fromValue = 0.95
-//        pulse.toValue = 1.15
-//        pulse.autoreverses = true
-//        pulse.repeatCount = 2
-//        pulse.initialVelocity = 0.5
-//        pulse.damping = 1.0
-//        
-//        playTrackButton.layer.add(pulse, forKey: "pulse")
-//    }
     
     func onPlayButtonTap(_ sender: AudioPausePlayButton) {
         

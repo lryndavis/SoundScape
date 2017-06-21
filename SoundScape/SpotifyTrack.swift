@@ -3,7 +3,6 @@ import Foundation
 import Firebase
 
 
-
 struct SpotifyTrack {
 
     let artist: String

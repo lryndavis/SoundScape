@@ -34,12 +34,6 @@
 		D4ABCE0A1EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */; };
 		D4ABCE0D1EF4A559002C0EF6 /* BaseContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */; };
 		D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */; };
-		D4D1AE1C1EEF088600D10685 /* home.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE1B1EEF088600D10685 /* home.gpx */; };
-		D4D1AE1E1EEF0A8B00D10685 /* home1.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE1D1EEF0A8B00D10685 /* home1.gpx */; };
-		D4D1AE201EEF0ACA00D10685 /* home2.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE1F1EEF0ACA00D10685 /* home2.gpx */; };
-		D4D1AE221EEF0AF400D10685 /* home3.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE211EEF0AF400D10685 /* home3.gpx */; };
-		D4D1AE241EEF0B2000D10685 /* home4.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE231EEF0B2000D10685 /* home4.gpx */; };
-		D4D1AE261EEF0B4900D10685 /* home5.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D4D1AE251EEF0B4900D10685 /* home5.gpx */; };
 		D4D1AE281EEF453600D10685 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE271EEF453600D10685 /* NoResultsView.swift */; };
 		D4F5DEBA1ED61D8D008FA0C1 /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */; };
 		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
@@ -84,12 +78,6 @@
 		D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniSpotifyAudioPlayer.swift; sourceTree = "<group>"; };
 		D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseContainerViewController.swift; sourceTree = "<group>"; };
 		D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
-		D4D1AE1B1EEF088600D10685 /* home.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home.gpx; sourceTree = "<group>"; };
-		D4D1AE1D1EEF0A8B00D10685 /* home1.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home1.gpx; sourceTree = "<group>"; };
-		D4D1AE1F1EEF0ACA00D10685 /* home2.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home2.gpx; sourceTree = "<group>"; };
-		D4D1AE211EEF0AF400D10685 /* home3.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home3.gpx; sourceTree = "<group>"; };
-		D4D1AE231EEF0B2000D10685 /* home4.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home4.gpx; sourceTree = "<group>"; };
-		D4D1AE251EEF0B4900D10685 /* home5.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = home5.gpx; sourceTree = "<group>"; };
 		D4D1AE271EEF453600D10685 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
 		D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
 		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -190,12 +178,6 @@
 				D43B13601ED61B2F00A78A77 /* Info.plist */,
 				D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */,
 				D4F5DEC81ED79351008FA0C1 /* SoundScape-Bridging-Header.h */,
-				D4D1AE251EEF0B4900D10685 /* home5.gpx */,
-				D4D1AE231EEF0B2000D10685 /* home4.gpx */,
-				D4D1AE211EEF0AF400D10685 /* home3.gpx */,
-				D4D1AE1F1EEF0ACA00D10685 /* home2.gpx */,
-				D4D1AE1D1EEF0A8B00D10685 /* home1.gpx */,
-				D4D1AE1B1EEF088600D10685 /* home.gpx */,
 			);
 			path = SoundScape;
 			sourceTree = "<group>";
@@ -339,14 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43B135F1ED61B2F00A78A77 /* LaunchScreen.storyboard in Resources */,
-				D4D1AE241EEF0B2000D10685 /* home4.gpx in Resources */,
 				D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */,
-				D4D1AE221EEF0AF400D10685 /* home3.gpx in Resources */,
-				D4D1AE1C1EEF088600D10685 /* home.gpx in Resources */,
 				D43B135C1ED61B2F00A78A77 /* Assets.xcassets in Resources */,
-				D4D1AE1E1EEF0A8B00D10685 /* home1.gpx in Resources */,
-				D4D1AE201EEF0ACA00D10685 /* home2.gpx in Resources */,
-				D4D1AE261EEF0B4900D10685 /* home5.gpx in Resources */,
 				D43B135A1ED61B2F00A78A77 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

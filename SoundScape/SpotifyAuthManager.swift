@@ -3,7 +3,7 @@ import Foundation
 
 
 class SpotifyAuthManager {
-    //TODO: Move clientid
+
     static let kRedirectURL = "soundscape://returnAfterLogin/"
     static let kUserDefaultsKey = "SpotifySession"
     static let kClientId = "68e2248cfb344dfab559a940dd05f5f2"
