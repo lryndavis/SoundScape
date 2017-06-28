@@ -7,46 +7,46 @@ class SpotifyAuthManager {
     static let kRedirectURL = "soundscape://returnAfterLogin/"
     static let kUserDefaultsKey = "SpotifySession"
     static let kClientId = "68e2248cfb344dfab559a940dd05f5f2"
+    static let kSwapURL = "http://localhost:1234/swap"
+    static let kRefreshURL = "http://localhost:1234/refresh"
     
     let loginURL: URL!
     
     init() {
+        let auth = SPTAuth.defaultInstance()!
         
-        let auth = SPTAuth.defaultInstance()
+        auth.clientID = SpotifyAuthManager.kClientId
+        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
+        auth.sessionUserDefaultsKey = SpotifyAuthManager.kUserDefaultsKey
+        auth.redirectURL = URL(string: SpotifyAuthManager.kRedirectURL)
+        auth.tokenSwapURL = URL(string: SpotifyAuthManager.kSwapURL)
+        auth.tokenRefreshURL = URL(string: SpotifyAuthManager.kRefreshURL)
         
-        auth?.clientID = SpotifyAuthManager.kClientId
-        auth?.redirectURL = URL(string: SpotifyAuthManager.kRedirectURL)
-        auth?.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
-        auth?.sessionUserDefaultsKey = SpotifyAuthManager.kUserDefaultsKey
-        
-        self.loginURL = auth?.spotifyWebAuthenticationURL()
+        self.loginURL = auth.spotifyWebAuthenticationURL()
     }
     
-     func refreshSession(segueToInitialView: @escaping (Bool) -> Void) {
+     func refreshSession(isSessionValid: @escaping (Bool) -> Void) {
         
         guard let session = SPTAuth.defaultInstance().session else {
-            segueToInitialView(false)
+            isSessionValid(false)
             return
         }
         if session.isValid() {
-            segueToInitialView(true)
+            isSessionValid(true)
         } else {
             SPTAuth.defaultInstance().renewSession(session, callback: { (error, sessionData) in
+                
                 guard let _ = sessionData, error == nil else {
-                    print("error: session not renewed")
-                    segueToInitialView(false)
+                    print("\(String(describing: error)): session not renewed")
+                    isSessionValid(false)
                     return
                 }
-                segueToInitialView(true)
+                SPTAuth.defaultInstance().session = session
+                isSessionValid(true)
             })
         }
     }
     
-    static func endSession() {
-        
-        let auth = SPTAuth.defaultInstance()
-        auth?.session = nil
-    }
 }
 
 

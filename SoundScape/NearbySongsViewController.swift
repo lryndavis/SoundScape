@@ -54,6 +54,8 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     func buildView() {
         
         // add mapview
+        containerStackView.isLayoutMarginsRelativeArrangement = true
+        containerStackView.translatesAutoresizingMaskIntoConstraints = false
         mapView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         containerStackView.addArrangedSubview(mapView)
 
@@ -212,11 +214,11 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             cell.songLabel.textColor = UIColor.black
         }
-        
-        ImageDataRequest.getAlbumCoverImage(imageUrl: songItem.smallestAlbumCoverURL, completion: { (image) in
-            cell.albumImage.image = image
-        })
-        
+        if let imageURL = songItem.smallestAlbumCoverURL {
+            ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
+                cell.albumImage.image = image
+            })
+        }
         return cell
     }
     

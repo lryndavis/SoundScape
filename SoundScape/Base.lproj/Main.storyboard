@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="srK-lE-kuK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ef-QS-OH7">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,7 @@
         <!--Nearby Songs View Controller-->
         <scene sceneID="spp-th-M01">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="5fP-6H-O61" customClass="NearbySongsViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NearbySongsViewController" automaticallyAdjustsScrollViewInsets="NO" id="5fP-6H-O61" customClass="NearbySongsViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cgJ-Sx-9Ne"/>
                         <viewControllerLayoutGuide type="bottom" id="pI5-Jv-oV9"/>
@@ -112,10 +112,28 @@
             </objects>
             <point key="canvasLocation" x="1784.8" y="328.78560719640183"/>
         </scene>
+        <!--Main View Controller-->
+        <scene sceneID="Evc-J7-le9">
+            <objects>
+                <viewController id="8ef-QS-OH7" customClass="MainViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d9V-AB-4qw"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mhz-Hl-vBL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dDx-eZ-tAN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XwT-bj-5Lv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3098" y="-413"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="Zj0-72-o8Y">
             <objects>
-                <viewController id="srK-lE-kuK" userLabel="Login View Controller" customClass="LoginViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="srK-lE-kuK" userLabel="Login View Controller" customClass="LoginViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IZt-or-SE0"/>
                         <viewControllerLayoutGuide type="bottom" id="WJo-cZ-hlu"/>
@@ -133,7 +151,6 @@
                                 </state>
                                 <connections>
                                     <action selector="onLoginButtonTap:" destination="srK-lE-kuK" eventType="touchUpInside" id="Fbn-fT-o1T"/>
-                                    <segue destination="3n6-vF-dZf" kind="show" identifier="LoginToSongView" id="dAI-01-6Kg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -155,7 +172,7 @@
         <!--Base Container View Controller-->
         <scene sceneID="Pg1-kh-sI6">
             <objects>
-                <viewController id="3n6-vF-dZf" customClass="BaseContainerViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BaseContainerViewController" id="3n6-vF-dZf" customClass="BaseContainerViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9rt-ti-630"/>
                         <viewControllerLayoutGuide type="bottom" id="cpK-Fg-Fj9"/>
@@ -246,6 +263,10 @@
         <scene sceneID="dsr-OE-3XE">
             <objects>
                 <viewController id="czO-xF-dH3" customClass="SpotifyAudioPlayerViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ivN-Hs-wum"/>
+                        <viewControllerLayoutGuide type="bottom" id="3vN-Kz-cHi"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bKJ-Ce-feQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

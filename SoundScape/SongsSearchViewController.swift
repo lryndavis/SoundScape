@@ -3,6 +3,7 @@ import UIKit
 import Firebase
 import GeoFire
 
+
 class SongsSearchViewController: UIViewController {
     
     var songs: [SpotifyTrack] = []
@@ -34,8 +35,6 @@ class SongsSearchViewController: UIViewController {
         tableView.register(SongTableViewCell.self, forCellReuseIdentifier: "SongCell")
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
-        
-        //addAudioPlayer()
     }
     
     // prevent search controller warning
@@ -76,7 +75,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = songItem.albumArtistDisplay
         cell.selectionStyle = .none
         
-        ImageDataRequest.getAlbumCoverImage(imageUrl: songItem.smallestAlbumCoverURL, completion: { (image) in
+        ImageDataRequest.getAlbumCoverImage(imageUrl: songItem.smallestAlbumCoverURL!, completion: { (image) in
             cell.albumImage.image = image
         })
         

@@ -36,16 +36,19 @@ class MiniSpotifyAudioPlayer: UIView {
         
         verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
-        verticalContainerStackView.heightAnchor.constraint(equalToConstant: 65.0).isActive = true
         
         horizontalContainerStackView.axis = .horizontal
         horizontalContainerStackView.distribution = .fill
         horizontalContainerStackView.alignment = .center
         horizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        horizontalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let secondaryVerticalStackView = UIStackView()
         secondaryVerticalStackView.axis = .vertical
+        secondaryVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        secondaryVerticalStackView.isLayoutMarginsRelativeArrangement = true
         
         songLabel.textColor = UIColor.white
         songLabel.font = UIFont(name: "Helvetica Neue", size: 14.0)

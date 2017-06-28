@@ -14,8 +14,8 @@ struct SpotifyTrack {
     let id: String
     let albumName: String
     let albumSpotifyId: String
-    let largestAlbumCoverURL: String
-    let smallestAlbumCoverURL: String
+    let largestAlbumCoverURL: String?
+    let smallestAlbumCoverURL: String?
     let albumUri: String
     
     init(snapshot: DataSnapshot) {
@@ -31,8 +31,8 @@ struct SpotifyTrack {
         id                          = snapshotValue["id"] as! String
         albumName                   = snapshotValue["albumName"] as! String
         albumSpotifyId              = snapshotValue["albumSpotifyId"] as! String
-        largestAlbumCoverURL        = snapshotValue["largestAlbumCoverURL"] as! String
-        smallestAlbumCoverURL       = snapshotValue["smallestAlbumCoverURL"] as! String
+        largestAlbumCoverURL        = snapshotValue["largestAlbumCoverURL"] as? String
+        smallestAlbumCoverURL       = snapshotValue["smallestAlbumCoverURL"] as? String
         albumUri                    = snapshotValue["albumUri"] as! String
     }
     
@@ -68,8 +68,8 @@ struct SpotifyTrack {
             "id": key,
             "albumName": albumName,
             "albumSpotifyId": albumSpotifyId,
-            "largestAlbumCoverURL": largestAlbumCoverURL,
-            "smallestAlbumCoverURL": smallestAlbumCoverURL,
+            "largestAlbumCoverURL": largestAlbumCoverURL ?? "",
+            "smallestAlbumCoverURL": smallestAlbumCoverURL ?? "",
             "albumUri": albumUri
         ]
     }

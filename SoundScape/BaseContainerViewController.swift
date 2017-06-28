@@ -1,7 +1,6 @@
 
 import UIKit
 
-
 class BaseContainerViewController: UIViewController {
 
     @IBOutlet weak var audioPlayerContainerView: UIView!
