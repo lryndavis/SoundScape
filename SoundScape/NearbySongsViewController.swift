@@ -14,7 +14,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     let nearbySongsDataSource = NearbySongsDataSource()
     
     let noResultsLabel = UILabel()
-    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
     var audioPlayerVC: SpotifyAudioPlayerViewController?
     let tableView = UITableView()
     let mapView = MKMapView()
@@ -177,17 +176,6 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         vc.coordinate = coordinate
         navigationController?.pushViewController(vc, animated: true)
     }
-
-    //TODO: redo this functionality
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        super.prepare(for: segue, sender: sender)
-//        
-//        self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
-//        
-//        segue.destination.modalPresentationStyle = .custom
-//        segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
-//    }
 }
 
 // MARK: - UITableViewDelegate + UITableViewDataSource methods

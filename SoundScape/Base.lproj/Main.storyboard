@@ -110,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVh-QH-iCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1784.8" y="328.78560719640183"/>
+            <point key="canvasLocation" x="-348" y="540"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Zj0-72-o8Y">
@@ -216,7 +216,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFn-gi-xym" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="845.60000000000002" y="328.78560719640183"/>
+            <point key="canvasLocation" x="-1287" y="540"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vUM-rU-gSF">
@@ -252,12 +252,30 @@
                     <view key="view" contentMode="scaleToFill" id="bKJ-Ce-feQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHm-Pm-US2">
+                                <rect key="frame" x="0.0" y="0.0" width="339" height="75"/>
+                                <connections>
+                                    <action selector="onAudioPlayerTap:" destination="czO-xF-dH3" eventType="touchUpInside" id="zVc-C9-kh8"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VHm-Pm-US2" firstAttribute="bottom" secondItem="3vN-Kz-cHi" secondAttribute="top" id="Duz-So-lPd"/>
+                            <constraint firstItem="VHm-Pm-US2" firstAttribute="leading" secondItem="bKJ-Ce-feQ" secondAttribute="leading" id="KEc-fT-yCt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VHm-Pm-US2" secondAttribute="trailing" constant="20" id="Ohf-YC-7St"/>
+                            <constraint firstItem="VHm-Pm-US2" firstAttribute="top" secondItem="ivN-Hs-wum" secondAttribute="bottom" id="jj1-2t-qX0"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="audioPlayerButton" destination="VHm-Pm-US2" id="G66-XD-Vme"/>
+                        <segue destination="g1i-gc-CqH" kind="presentation" identifier="halfModalSegue" id="ryX-41-cLo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Qf-XA-bA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1287" y="63"/>
+            <point key="canvasLocation" x="-1287.2" y="62.518740629685162"/>
         </scene>
     </scenes>
 </document>

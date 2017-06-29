@@ -6,6 +6,10 @@ class SpotifyAudioPlayerViewController: UIViewController {
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
+    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
+    
+
+    @IBOutlet weak var audioPlayerButton: UIButton!
     
     override func viewDidLoad() {
         
@@ -14,10 +18,10 @@ class SpotifyAudioPlayerViewController: UIViewController {
         miniSpotifyAudioPlayer.delegate = self
         spotifyAudioPlayer.player?.delegate = self
         spotifyAudioPlayer.player?.playbackDelegate = self
-    
+
         setupView()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         
         spotifyAudioPlayer.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
@@ -25,14 +29,15 @@ class SpotifyAudioPlayerViewController: UIViewController {
     
     // add mini audio player view
     fileprivate func setupView() {
-
+        
         let verticalContainerStackView = UIStackView()
         verticalContainerStackView.axis = .vertical
         view.addSubview(verticalContainerStackView)
 
         verticalContainerStackView.addArrangedSubview(miniSpotifyAudioPlayer)
         verticalContainerStackView.anchorSidesTo(view)
-        
+    
+        self.view.bringSubview(toFront: audioPlayerButton)
     }
 
     func setCurrentPlayerDisplay() {
@@ -40,6 +45,23 @@ class SpotifyAudioPlayerViewController: UIViewController {
         if let currentTrack = spotifyAudioPlayer.currentTrack {
             miniSpotifyAudioPlayer.artistLabel.text = currentTrack.albumArtistDisplay
             miniSpotifyAudioPlayer.songLabel.text = currentTrack.name
+        }
+    }
+    
+    @IBAction func onAudioPlayerTap(_ sender: Any) {
+        
+        performSegue(withIdentifier: "halfModalSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "halfModalSegue" {
+            super.prepare(for: segue, sender: sender)
+
+            self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+
+            segue.destination.modalPresentationStyle = .custom
+            segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
         }
     }
     
