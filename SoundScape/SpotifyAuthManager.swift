@@ -7,6 +7,7 @@ class SpotifyAuthManager {
     static let kRedirectURL = "soundscape://returnAfterLogin/"
     static let kUserDefaultsKey = "SpotifySession"
     static let kClientId = "68e2248cfb344dfab559a940dd05f5f2"
+    //todo: temporary
     static let kSwapURL = "http://localhost:1234/swap"
     static let kRefreshURL = "http://localhost:1234/refresh"
     
@@ -16,7 +17,10 @@ class SpotifyAuthManager {
         let auth = SPTAuth.defaultInstance()!
         
         auth.clientID = SpotifyAuthManager.kClientId
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
+        auth.requestedScopes = [SPTAuthStreamingScope,
+                                SPTAuthPlaylistReadPrivateScope,
+                                SPTAuthPlaylistModifyPublicScope,
+                                SPTAuthPlaylistModifyPrivateScope]
         auth.sessionUserDefaultsKey = SpotifyAuthManager.kUserDefaultsKey
         auth.redirectURL = URL(string: SpotifyAuthManager.kRedirectURL)
         auth.tokenSwapURL = URL(string: SpotifyAuthManager.kSwapURL)

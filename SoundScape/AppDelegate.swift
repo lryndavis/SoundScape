@@ -14,25 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let authManager = SpotifyAuthManager()
         
-        authManager.refreshSession { (success) in
-            if success {
-                // if spotify user is logged in or token is successfully refreshed, bypass login
-                let baseVC = storyboard.instantiateViewController(withIdentifier: "BaseContainerViewController")
-                self.window?.rootViewController = baseVC
-                self.window?.makeKeyAndVisible()
-                
-            } else {
-                // if no token, show login VC
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-                self.window?.rootViewController = loginVC
-                self.window?.makeKeyAndVisible()
-            }
+        window = UIWindow(frame: UIScreen.main.bounds)
+        if let window = window {
+            let rootViewController = RootViewController()
+            window.rootViewController = rootViewController
+            window.makeKeyAndVisible()
         }
+
         return true
     }
 

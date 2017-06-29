@@ -4,9 +4,10 @@ import Firebase
 import GeoFire
 
 
-class SongsSearchViewController: UIViewController {
+class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
     
-    var songs: [SpotifyTrack] = []
+    var spotifyTracks: [SpotifyTrack] = []
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
     var searchTimer: Timer?
@@ -50,12 +51,33 @@ class SongsSearchViewController: UIViewController {
                 
                 dataSource.searchSpotify(query: query, completion: {
                     (spotifyTracks) in
-                    self.songs.removeAll()
-                    self.songs.append(contentsOf: spotifyTracks)
+                    self.spotifyTracks.removeAll()
+                    self.spotifyTracks.append(contentsOf: spotifyTracks)
                     self.tableView.reloadData()
                 })
             }
         }
+    }
+    
+    func presentSaveSongAlert(song: SpotifyTrack) {
+
+        let alert = UIAlertController(title: nil,
+                                      message: "Do you want to add \(song.name) to this location?",
+            preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            if let coordinates = self.coordinate {
+                self.dataSource.saveSongToLocation(song: song, coordinate: coordinates)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .default)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -63,13 +85,13 @@ class SongsSearchViewController: UIViewController {
 extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songs.count
+        return spotifyTracks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongTableViewCell
-        let songItem = songs[indexPath.row]
+        let songItem = spotifyTracks[indexPath.row]
         
         cell.songLabel.text = songItem.name
         cell.artistLabel.text = songItem.albumArtistDisplay
@@ -84,38 +106,26 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let songItem = songs[indexPath.row]
-        
-        let alert = UIAlertController(title: nil,
-                                      message: "Do you want to add \(songItem.name) to this location?",
-            preferredStyle: .alert)
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            if let coordinates = self.coordinate {
-                self.dataSource.saveSongToLocation(song: songItem, coordinate: coordinates)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .default)
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        print("cell tapped")
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         
+        let songItem = spotifyTracks[editActionsForRowAt.row]
+        
         let playAction = UITableViewRowAction(style: .normal, title: "") { action, index in
-            print("more button tapped")
+            self.startNewQueueFromSelection(spotifyTrack: songItem, isSampleSelection: true)
         }
-        playAction.backgroundColor = .lightGray
+        
+        playAction.backgroundColor = .black
+        playAction.title = ">>"
         
         let addAction = UITableViewRowAction(style: .normal, title: "") { action, index in
-            print("share button tapped")
+            self.presentSaveSongAlert(song: songItem)
         }
+        
         addAction.backgroundColor = .blue
+        addAction.title = "+"
         
         return [addAction, playAction]
     }

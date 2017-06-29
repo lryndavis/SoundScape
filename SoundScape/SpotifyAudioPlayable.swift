@@ -9,11 +9,15 @@ protocol SpotifyAudioPlayable {
 
 extension SpotifyAudioPlayable {
     
-    func startNewQueueFromSelection(spotifyTrack: SpotifyTrack) {
-            
-        var newQueue = spotifyTracks
-        newQueue.insert(spotifyTrack, at: 0)
+    func startNewQueueFromSelection(spotifyTrack: SpotifyTrack, isSampleSelection: Bool = false) {
         
+        var newQueue = [SpotifyTrack]()
+
+        if !isSampleSelection {
+            newQueue = spotifyTracks
+        }
+        
+        newQueue.insert(spotifyTrack, at: 0)
         spotifyAudioPlayer.trackIndex = 0
         spotifyAudioPlayer.setTrackQueue(trackQueue: newQueue)
         spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)

@@ -6,6 +6,7 @@ class LoginViewController: UIViewController {
     var auth = SPTAuth.defaultInstance()!
     var session: SPTSession!
     var loginUrl: URL?
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     @IBOutlet weak var loginButton: UIButton!
 
@@ -24,10 +25,6 @@ class LoginViewController: UIViewController {
             let sessionDataObj = sessionObj as! Data
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "BaseContainerViewController")
-            present(controller, animated: true, completion: nil)
         }
     }
     
@@ -41,6 +38,7 @@ class LoginViewController: UIViewController {
             
             if success {
                 if (auth?.canHandle(auth?.redirectURL))! {
+                    self.loginButton.isHidden = true 
                     print("success: can handle redirect")
                 } else {
                     print("error: cannot handle recirect")
