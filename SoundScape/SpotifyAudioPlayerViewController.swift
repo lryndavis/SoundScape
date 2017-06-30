@@ -19,6 +19,8 @@ class SpotifyAudioPlayerViewController: UIViewController {
         spotifyAudioPlayer.player?.playbackDelegate = self
 
         setupView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setCurrentPlayerDisplay), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -100,11 +102,12 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
         
         spotifyAudioPlayer.isPlaying = true
         miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
-        setCurrentPlayerDisplay()
         
         if let delegate = spotifyAudioPlayerDelegate {
             delegate.showAudioPlayer()
         }
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "trackChanged"), object: nil)
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
@@ -115,7 +118,7 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
             
             if spotifyAudioPlayer.trackIndex < trackQueue.count {
                 setCurrentPlayerDisplay()
-                spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)
+                spotifyAudioPlayer.playTrack()
             } else {
                 spotifyAudioPlayer.isPlaying = false
             }

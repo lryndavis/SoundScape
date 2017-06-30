@@ -38,6 +38,7 @@
 		D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */; };
 		D4D1AE281EEF453600D10685 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE271EEF453600D10685 /* NoResultsView.swift */; };
 		D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */; };
+		D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */; };
 		D4F5DEBA1ED61D8D008FA0C1 /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */; };
 		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
 		D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */; };
@@ -85,6 +86,7 @@
 		D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		D4D1AE271EEF453600D10685 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
 		D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackableSpacerView.swift; sourceTree = "<group>"; };
+		D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalAudioButton.swift; sourceTree = "<group>"; };
 		D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
 		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -193,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */,
-				D43616921EF3730500FD1070 /* AudioPausePlayButton.swift */,
 				D4ABCE071EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift */,
 				D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */,
 			);
@@ -269,7 +270,9 @@
 		D4E11FD61F05C04D00708E34 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				D43616921EF3730500FD1070 /* AudioPausePlayButton.swift */,
 				D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */,
+				D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				D493323B1EF0C5D0009B4671 /* SongDetailAnnotationView.swift in Sources */,
 				D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */,
 				D43C32871EE0B58500B8E202 /* AudioModalViewController.swift in Sources */,
+				D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */,
 				D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */,
 				D43C32851EE0B57900B8E202 /* AudioModalNavController.swift in Sources */,
 				D43C327F1EE0B52C00B8E202 /* AudioHalfModalInteractiveTransition.swift in Sources */,

@@ -47,18 +47,28 @@ extension SpotifyAudioPlayer {
         return self.trackQueue?[safe: self.trackIndex]?.spotifyId
     }
     
-     public func playTrack(atIndex: Int) {
+     public func playTrack() {
 
         if let currentTrack = self.currentTrack {
-        
             self.player?.playSpotifyURI(currentTrack.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
-            
                 if error != nil {
                     print("error playing track: \(String(describing: error))")
                 } else {
                     print("playing: \(String(describing: self.trackQueue?[self.trackIndex].name))")
                 }
             })
+        }
+    }
+    
+    public func skipTrack() {
+        trackIndex += 1
+        playTrack()
+    }
+    
+    public func playPreviousTrack() {
+        if trackIndex != 0 {
+            trackIndex -= 1
+            playTrack()
         }
     }
     

@@ -20,7 +20,7 @@ extension SpotifyAudioPlayable {
         newQueue.insert(spotifyTrack, at: 0)
         spotifyAudioPlayer.trackIndex = 0
         spotifyAudioPlayer.setTrackQueue(trackQueue: newQueue)
-        spotifyAudioPlayer.playTrack(atIndex: spotifyAudioPlayer.trackIndex)
+        spotifyAudioPlayer.playTrack()
         spotifyAudioPlayer.isPlaying = true
     }
 }

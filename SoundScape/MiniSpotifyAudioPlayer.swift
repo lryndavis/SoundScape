@@ -67,9 +67,7 @@ class MiniSpotifyAudioPlayer: UIView {
     }
     
     func onPausePlayButtonTap() {
-        
         guard let delegate = delegate else { return }
-        
         delegate.togglePlay()
     }
 }
