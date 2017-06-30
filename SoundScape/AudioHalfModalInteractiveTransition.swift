@@ -1,7 +1,7 @@
 
 import UIKit
 
-class HalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
+class AudioHalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     var viewController: UIViewController
     var presentingViewController: UIViewController?
@@ -33,6 +33,7 @@ class HalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
     }
     
     func onPan(pan: UIPanGestureRecognizer) -> Void {
+        
         let translation = pan.translation(in: pan.view?.superview)
         
         switch pan.state {

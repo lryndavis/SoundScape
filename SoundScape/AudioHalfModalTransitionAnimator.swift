@@ -1,7 +1,7 @@
 
 import UIKit
 
-class HalfModalTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class AudioHalfModalTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var type: HalfModalTransitionAnimatorType
     
@@ -10,6 +10,7 @@ class HalfModalTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
     }
     
     @objc func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        
         let _ = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         let from = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
         

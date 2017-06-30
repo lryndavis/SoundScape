@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ModalNavController: UINavigationController, HalfModalPresentable {
+class AudioModalNavController: UINavigationController, HalfModalPresentable {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         

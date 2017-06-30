@@ -28,7 +28,7 @@ class MiniSpotifyAudioPlayer: UIView {
     
     fileprivate func buildView() {
         
-        self.backgroundColor = UIColor.black
+        self.backgroundColor = .black
         self.translatesAutoresizingMaskIntoConstraints = false
         
         verticalContainerStackView.axis = .vertical

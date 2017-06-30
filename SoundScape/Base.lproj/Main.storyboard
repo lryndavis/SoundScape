@@ -82,18 +82,29 @@
             </objects>
             <point key="canvasLocation" x="1269.5999999999999" y="-424.13793103448279"/>
         </scene>
-        <!--Modal View Controller-->
+        <!--Audio Modal View Controller-->
         <scene sceneID="1pO-Nq-Hgr">
             <objects>
-                <viewController id="b4N-rZ-TR9" customClass="ModalViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="b4N-rZ-TR9" customClass="AudioModalViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mhg-L3-4IP"/>
                         <viewControllerLayoutGuide type="bottom" id="bhv-Du-rN5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Bh0-pe-2zk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ing-q9-nVW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ing-q9-nVW" firstAttribute="leading" secondItem="Bh0-pe-2zk" secondAttribute="leading" id="Eo8-1P-Fvv"/>
+                            <constraint firstItem="ing-q9-nVW" firstAttribute="bottom" secondItem="bhv-Du-rN5" secondAttribute="top" id="e9V-Vt-hwE"/>
+                            <constraint firstAttribute="trailing" secondItem="ing-q9-nVW" secondAttribute="trailing" id="fH6-uL-4Ab"/>
+                            <constraint firstItem="ing-q9-nVW" firstAttribute="top" secondItem="mhg-L3-4IP" secondAttribute="bottom" id="j3q-vg-2XQ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KUg-vW-f2e">
                         <barButtonItem key="leftBarButtonItem" title="+ " id="Kwg-Es-M6N">
@@ -107,10 +118,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="containerStackView" destination="ing-q9-nVW" id="Dsc-ie-JaY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVh-QH-iCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-348" y="540"/>
+            <point key="canvasLocation" x="-348" y="539.28035982008998"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Zj0-72-o8Y">
@@ -200,14 +214,16 @@
             </objects>
             <point key="canvasLocation" x="-1287.2" y="-422.33883058470769"/>
         </scene>
-        <!--Modal Nav Controller-->
+        <!--Audio Modal Nav Controller-->
         <scene sceneID="PWi-8f-Ltu">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g1i-gc-CqH" customClass="ModalNavController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g1i-gc-CqH" customClass="AudioModalNavController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e7W-jS-GlL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e7W-jS-GlL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

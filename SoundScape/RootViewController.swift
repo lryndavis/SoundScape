@@ -3,7 +3,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    //  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
 
     lazy private var loginVC: LoginViewController! = {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

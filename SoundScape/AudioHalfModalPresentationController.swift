@@ -1,7 +1,7 @@
 
 import UIKit
 
-class HalfModalPresentationController : UIPresentationController {
+class AudioHalfModalPresentationController : UIPresentationController {
     
     var isMaximized: Bool = false
     
@@ -22,7 +22,7 @@ class HalfModalPresentationController : UIPresentationController {
         // Vibrancy Effect
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyEffectView.frame = view.bounds
+       // vibrancyEffectView.frame = view.bounds
         
         // Add the vibrancy view to the blur view
         blurEffectView.contentView.addSubview(vibrancyEffectView)
@@ -55,6 +55,7 @@ class HalfModalPresentationController : UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
+        
         let dimmedView = dimmingView
         
         if let containerView = self.containerView, let coordinator = presentingViewController.transitionCoordinator {
@@ -98,7 +99,7 @@ protocol HalfModalPresentable { }
 
 extension HalfModalPresentable where Self: UIViewController {
     func maximizeToFullScreen() -> Void {
-        if let presetation = navigationController?.presentationController as? HalfModalPresentationController {
+        if let presetation = navigationController?.presentationController as? AudioHalfModalPresentationController {
             presetation.adjustToFullScreen()
         }
     }
@@ -106,7 +107,7 @@ extension HalfModalPresentable where Self: UIViewController {
 
 extension HalfModalPresentable where Self: UINavigationController {
     func isHalfModalMaximized() -> Bool {
-        if let presentationController = presentationController as? HalfModalPresentationController {
+        if let presentationController = presentationController as? AudioHalfModalPresentationController {
             return presentationController.isMaximized
         }
         

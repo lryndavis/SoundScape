@@ -6,9 +6,8 @@ class SpotifyAudioPlayerViewController: UIViewController {
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
-    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
+    var halfModalTransitioningDelegate: AudioHalfModalTransitioningDelegate?
     
-
     @IBOutlet weak var audioPlayerButton: UIButton!
     
     override func viewDidLoad() {
@@ -58,7 +57,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
         if segue.identifier == "halfModalSegue" {
             super.prepare(for: segue, sender: sender)
 
-            self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+            self.halfModalTransitioningDelegate = AudioHalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
 
             segue.destination.modalPresentationStyle = .custom
             segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
