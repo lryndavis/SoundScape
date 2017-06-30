@@ -11,6 +11,7 @@ class SpotifyAudioPlayer {
     
     var trackQueue: [SpotifyTrack]?
     var trackIndex: Int = 0
+    
     var isPlaying = Bool()
 
     private init() {
@@ -61,11 +62,16 @@ extension SpotifyAudioPlayer {
     }
     
     public func skipTrack() {
-        trackIndex += 1
-        playTrack()
+        
+        guard let trackQueue = trackQueue else { return }
+        if trackIndex < trackQueue.count {
+            trackIndex += 1
+            playTrack()
+        }
     }
     
     public func playPreviousTrack() {
+        
         if trackIndex != 0 {
             trackIndex -= 1
             playTrack()

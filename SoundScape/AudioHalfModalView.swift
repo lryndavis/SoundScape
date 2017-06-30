@@ -5,6 +5,7 @@ protocol AudioModalViewDelegate {
     
     func handlePlayNextTrack()
     func handlePlayPreviousTrack()
+    func togglePlay()
 }
 
 class AudioHalfModalView: UIView {
@@ -17,15 +18,14 @@ class AudioHalfModalView: UIView {
     let albumCoverImageView = UIImageView()
     let forwardButton = UIButton()
     let rewindButton = UIButton()
-    var audioButton: ModalAudioButton?
+    let audioButton = ModalAudioButton()
     
     var albumCoverImage: UIImage?
     var delegate: AudioModalViewDelegate?
     
-    init(albumCoverImage: UIImage?) {
+    init() {
         super.init(frame: .zero)
-        
-        self.albumCoverImage = albumCoverImage
+
         buildView()
     }
     
@@ -81,14 +81,9 @@ class AudioHalfModalView: UIView {
         setupControlButtons()
         controlsHorizontalStackView.addArrangedSubview(rewindButton)
         
-        
-        if let albumCoverImage = albumCoverImage {
-            audioButton = ModalAudioButton(backgroundImage: albumCoverImage)
-            if let audioButton = audioButton {
-                controlsHorizontalStackView.addArrangedSubview(audioButton)
-            }
-        }
-        
+        controlsHorizontalStackView.addArrangedSubview(audioButton)
+        audioButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
+
         controlsHorizontalStackView.addArrangedSubview(forwardButton)
     }
     
@@ -121,5 +116,10 @@ class AudioHalfModalView: UIView {
     func onRewindButtonTap() {
         guard let delegate = delegate else { return }
         delegate.handlePlayPreviousTrack()
+    }
+    
+    func onPausePlayButtonTap() {
+        guard let delegate = delegate else { return }
+        delegate.togglePlay()
     }
 }

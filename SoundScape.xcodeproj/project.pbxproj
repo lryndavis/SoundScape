@@ -39,6 +39,7 @@
 		D4D1AE281EEF453600D10685 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE271EEF453600D10685 /* NoResultsView.swift */; };
 		D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */; };
 		D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */; };
+		D4E11FDC1F06357100708E34 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */; };
 		D4F5DEBA1ED61D8D008FA0C1 /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */; };
 		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
 		D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */; };
@@ -87,6 +88,7 @@
 		D4D1AE271EEF453600D10685 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
 		D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackableSpacerView.swift; sourceTree = "<group>"; };
 		D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalAudioButton.swift; sourceTree = "<group>"; };
+		D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		D4F5DEB91ED61D8D008FA0C1 /* SpotifyTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
 		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				D41042471EE2296D009D620C /* UIViewExtensions.swift */,
 				D49332331EF050B3009B4671 /* ArrayExtensions.swift */,
 				D446ADF81EF237E500D89123 /* UIColorExtensions.swift */,
+				D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -176,7 +179,7 @@
 				D4A17E2B1ED7CEE300490D1A /* Login */,
 				D49332351EF05149009B4671 /* Song Search */,
 				D4D1AE181EEE621100D10685 /* Nearby Songs */,
-				D43C327B1EE0B4E400B8E202 /* Audio Player */,
+				D43C327B1EE0B4E400B8E202 /* Universal Mini Audio Player */,
 				D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */,
 				D41042461EE22952009D620C /* Extensions */,
 				D4A17E2A1ED7CED400490D1A /* Models */,
@@ -191,14 +194,14 @@
 			path = SoundScape;
 			sourceTree = "<group>";
 		};
-		D43C327B1EE0B4E400B8E202 /* Audio Player */ = {
+		D43C327B1EE0B4E400B8E202 /* Universal Mini Audio Player */ = {
 			isa = PBXGroup;
 			children = (
 				D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */,
 				D4ABCE071EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift */,
 				D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */,
 			);
-			name = "Audio Player";
+			name = "Universal Mini Audio Player";
 			sourceTree = "<group>";
 		};
 		D49332351EF05149009B4671 /* Song Search */ = {
@@ -422,6 +425,7 @@
 				D43C327F1EE0B52C00B8E202 /* AudioHalfModalInteractiveTransition.swift in Sources */,
 				D49332341EF050B3009B4671 /* ArrayExtensions.swift in Sources */,
 				D4ABCE081EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift in Sources */,
+				D4E11FDC1F06357100708E34 /* UIButtonExtensions.swift in Sources */,
 				D4ABCE0A1EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift in Sources */,
 				D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */,
 				D4ABCE0D1EF4A559002C0EF6 /* BaseContainerViewController.swift in Sources */,

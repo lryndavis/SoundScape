@@ -83,11 +83,11 @@ class SongDetailMapView: UIView {
     
     func addButton() {
         
-        playTrackButton.widthAnchor.constraint(equalToConstant: 16.0).isActive = true
+        playTrackButton.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
         playTrackButton.tintColor = .white
         playTrackButton.imageView?.contentMode = .scaleAspectFit
         
-        let playImage = UIImage(named: "playlist.png")
+        let playImage = UIImage(named: "eye.png")
         let tintedPlayImage = playImage?.withRenderingMode(.alwaysTemplate)
         playTrackButton.setImage(tintedPlayImage, for: .normal)
         

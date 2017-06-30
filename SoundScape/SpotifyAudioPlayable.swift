@@ -25,7 +25,25 @@ extension SpotifyAudioPlayable {
     }
 }
 
-protocol SpotifyAudioPlayerDelegate {
+protocol UniversalAudioPlayerDelegate {
     
     func showAudioPlayer()
+}
+
+protocol SpotifyAudioControllable {
+    
+    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
+}
+
+extension SpotifyAudioControllable {
+    
+    func setAudioPlay() {
+        spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
+        spotifyAudioPlayer.isPlaying = true
+    }
+    
+    func setAudioPause() {
+        spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
+        spotifyAudioPlayer.isPlaying = false
+    }
 }

@@ -21,7 +21,7 @@ class BaseContainerViewController: UIViewController {
     }
 }
 
-extension BaseContainerViewController: SpotifyAudioPlayerDelegate {
+extension BaseContainerViewController: UniversalAudioPlayerDelegate {
     
     func showAudioPlayer() {
         

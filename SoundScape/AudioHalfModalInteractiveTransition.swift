@@ -33,7 +33,6 @@ class AudioHalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition 
     }
     
     func onPan(pan: UIPanGestureRecognizer) -> Void {
-        
         let translation = pan.translation(in: pan.view?.superview)
         
         switch pan.state {
@@ -45,7 +44,7 @@ class AudioHalfModalInteractiveTransition: UIPercentDrivenInteractiveTransition 
         case .changed:
             let screenHeight = UIScreen.main.bounds.size.height - 50
             let dragAmount = screenHeight
-            let threshold: Float = 0.2
+            let threshold: Float = 0.3
             var percent: Float = Float(translation.y) / Float(dragAmount)
 
             percent = fmaxf(percent, 0.0)

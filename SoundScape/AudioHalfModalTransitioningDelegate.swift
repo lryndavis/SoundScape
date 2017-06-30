@@ -35,4 +35,3 @@ class AudioHalfModalTransitioningDelegate: NSObject, UIViewControllerTransitioni
     
 }
 
-extension UIViewController { }

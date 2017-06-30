@@ -85,7 +85,7 @@
         <!--Audio Modal View Controller-->
         <scene sceneID="1pO-Nq-Hgr">
             <objects>
-                <viewController id="b4N-rZ-TR9" customClass="AudioModalViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AudioModalViewController" id="b4N-rZ-TR9" customClass="AudioModalViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mhg-L3-4IP"/>
                         <viewControllerLayoutGuide type="bottom" id="bhv-Du-rN5"/>

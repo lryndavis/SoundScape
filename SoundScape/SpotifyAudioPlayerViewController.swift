@@ -1,11 +1,12 @@
 
 import UIKit
 
+
 class SpotifyAudioPlayerViewController: UIViewController {
 
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
-    var spotifyAudioPlayerDelegate: SpotifyAudioPlayerDelegate?
+    var spotifyAudioPlayerDelegate: UniversalAudioPlayerDelegate?
     var halfModalTransitioningDelegate: AudioHalfModalTransitioningDelegate?
     
     @IBOutlet weak var audioPlayerButton: UIButton!
@@ -21,11 +22,14 @@ class SpotifyAudioPlayerViewController: UIViewController {
         setupView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setCurrentPlayerDisplay), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setPlayButtonDisplay), name: NSNotification.Name(rawValue: "audioModalDismissed"), object: nil)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        spotifyAudioPlayer.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
+        setPlayButtonDisplay()
     }
     
     // add mini audio player view
@@ -47,6 +51,11 @@ class SpotifyAudioPlayerViewController: UIViewController {
             miniSpotifyAudioPlayer.artistLabel.text = currentTrack.albumArtistDisplay
             miniSpotifyAudioPlayer.songLabel.text = currentTrack.name
         }
+    }
+    
+    func setPlayButtonDisplay() {
+        
+        spotifyAudioPlayer.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
     }
     
     @IBAction func onAudioPlayerTap(_ sender: Any) {
@@ -73,18 +82,16 @@ class SpotifyAudioPlayerViewController: UIViewController {
 }
 
 // MARK: - MiniSpotifyAudioPlayerDelegate methods
-extension SpotifyAudioPlayerViewController: MiniSpotifyAudioPlayerDelegate {
+extension SpotifyAudioPlayerViewController: MiniSpotifyAudioPlayerDelegate, SpotifyAudioControllable {
     
     func togglePlay() {
         
         if spotifyAudioPlayer.isPlaying {
-            spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-            spotifyAudioPlayer.isPlaying = false
-            miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
+            setAudioPause()
+            miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay(animated: true)
         } else {
-            spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-            spotifyAudioPlayer.isPlaying = true
-            miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
+            setAudioPlay()
+            miniSpotifyAudioPlayer.pausePlayButton.setButtonPause(animated: true)
         }
     }
 }
@@ -128,3 +135,4 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
     }
 }
+

@@ -4,12 +4,9 @@ import UIKit
 
 class ModalAudioButton: UIButton {
     
-    var backgroundImage: UIImage?
-    
-    init(backgroundImage: UIImage) {
+    init() {
         super.init(frame: CGRect.zero)
-        
-        self.backgroundImage = backgroundImage
+
         buildView()
     }
     
@@ -21,9 +18,7 @@ class ModalAudioButton: UIButton {
 
         self.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
         self.heightAnchor.constraint(equalToConstant: 120.0).isActive = true
-        
-        updateBackgroundImage()
-        
+
         self.tintColor = .white
         let playImage = UIImage(named: "play.png")
         let tintedPlayImage = playImage?.withRenderingMode(.alwaysTemplate)
@@ -35,14 +30,11 @@ class ModalAudioButton: UIButton {
         self.adjustsImageWhenHighlighted = false 
     }
     
-    func updateBackgroundImage() {
-        
-        if let backgroundImage = backgroundImage {
-            self.setBackgroundImage(backgroundImage, for: .normal)
-            self.imageView?.contentMode = .scaleAspectFill
-        }
+    func updateBackgroundImage(image: UIImage) {
+
+        self.setBackgroundImage(image, for: .normal)
+        self.imageView?.contentMode = .scaleAspectFill
     }
-    
 }
 
 
