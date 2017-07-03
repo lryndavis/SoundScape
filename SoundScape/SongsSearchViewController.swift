@@ -10,7 +10,6 @@ class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
-    var searchTimer: Timer?
     let dataSource = SongsSearchDataSource()
     
     @IBOutlet weak var tableView: UITableView!
@@ -50,10 +49,12 @@ class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
             if !query.isEmpty {
                 
                 dataSource.searchSpotify(query: query, completion: {
-                    (spotifyTracks) in
-                    self.spotifyTracks.removeAll()
-                    self.spotifyTracks.append(contentsOf: spotifyTracks)
-                    self.tableView.reloadData()
+                    [weak self] (spotifyTracks) in
+                    if let strongSelf = self {
+                        strongSelf.spotifyTracks.removeAll()
+                        strongSelf.spotifyTracks.append(contentsOf: spotifyTracks)
+                        strongSelf.tableView.reloadData()
+                    }
                 })
             }
         }
@@ -97,10 +98,11 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = songItem.albumArtistDisplay
         cell.selectionStyle = .none
         
-        ImageDataRequest.getAlbumCoverImage(imageUrl: songItem.smallestAlbumCoverURL!, completion: { (image) in
-            cell.albumImage.image = image
-        })
-        
+        if let imageURL = songItem.smallestAlbumCoverURL {
+            ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
+                cell.albumImage.image = image
+            })
+        }
         return cell
     }
     
@@ -141,9 +143,8 @@ extension SongsSearchViewController: UISearchBarDelegate {
     func didChangeSearchText(_ query: String) {
         
         if query.characters.count > 2 {
-            
-            searchTimer?.invalidate()
-            searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(SongsSearchViewController.performSearch), userInfo: nil, repeats: false)
+
+            performSearch()
         }
     }
 }

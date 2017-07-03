@@ -2,12 +2,13 @@
 import UIKit
 
 
-class SpotifyAudioPlayerViewController: UIViewController {
+class SpotifyAudioPlayerViewController: UIViewController, ModalPresentationDelegate {
 
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
     let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
     var spotifyAudioPlayerDelegate: UniversalAudioPlayerDelegate?
     var halfModalTransitioningDelegate: AudioHalfModalTransitioningDelegate?
+
     
     @IBOutlet weak var audioPlayerButton: UIButton!
     
@@ -20,10 +21,7 @@ class SpotifyAudioPlayerViewController: UIViewController {
         spotifyAudioPlayer.player?.playbackDelegate = self
 
         setupView()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setCurrentPlayerDisplay), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setPlayButtonDisplay), name: NSNotification.Name(rawValue: "audioModalDismissed"), object: nil)
+        setupNotifications()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +42,17 @@ class SpotifyAudioPlayerViewController: UIViewController {
     
         self.view.bringSubview(toFront: audioPlayerButton)
     }
+    
+    func setupNotifications() {
+        
+        //delegate?
+        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setCurrentPlayerDisplay), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
+        
+        //unwind segue instead?
+        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setPlayButtonDisplay), name: NSNotification.Name(rawValue: "audioModalDismissed"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.presentAudioModal), name: NSNotification.Name(rawValue: "showModalTriggered"), object: nil)
+    }
 
     func setCurrentPlayerDisplay() {
     
@@ -59,7 +68,10 @@ class SpotifyAudioPlayerViewController: UIViewController {
     }
     
     @IBAction func onAudioPlayerTap(_ sender: Any) {
-        
+        presentAudioModal()
+    }
+    
+    func presentAudioModal() {
         performSegue(withIdentifier: "halfModalSegue", sender: self)
     }
     
@@ -100,9 +112,14 @@ extension SpotifyAudioPlayerViewController: MiniSpotifyAudioPlayerDelegate, Spot
 extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangePosition position: TimeInterval) {
+        
+        let didChangePositionNotification = Notification.Name(rawValue: "didChangePositionNotification")
+        let position = ["position" : position]
+        NotificationCenter.default.post(name: didChangePositionNotification, object: self, userInfo: position)
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChange metadata: SPTPlaybackMetadata!) {
+        ///
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
@@ -133,6 +150,7 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     }
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
+        ///
     }
 }
 

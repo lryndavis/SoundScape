@@ -4,6 +4,11 @@ import Firebase
 import CoreLocation
 import GeoFire
 
+protocol ModalPresentationDelegate {
+    
+    func presentAudioModal()
+}
+
 class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, SpotifyAudioPlayable {
     
     var spotifyTracks = [SpotifyTrack]()
@@ -12,9 +17,9 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     var locationManager: CLLocationManager!
     var localSongIds: [String] = []
     let nearbySongsDataSource = NearbySongsDataSource()
+    var delegate: ModalPresentationDelegate?
     
     let noResultsLabel = UILabel()
-    var audioPlayerVC: SpotifyAudioPlayerViewController?
     let tableView = UITableView()
     let mapView = MKMapView()
 
@@ -297,9 +302,10 @@ extension NearbySongsViewController: SongDetailMapViewDelegate {
     
     func setAnnotationAudioPlayer(track: SpotifyTrack) {
         startNewQueueFromSelection(spotifyTrack: track)
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "showModalTriggered"), object: nil)
     }
 }
-
 
 
 

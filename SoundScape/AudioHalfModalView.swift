@@ -1,5 +1,6 @@
 
 import UIKit
+import AVFoundation
 
 protocol AudioModalViewDelegate {
     
@@ -19,10 +20,13 @@ class AudioHalfModalView: UIView {
     let forwardButton = UIButton()
     let rewindButton = UIButton()
     let audioButton = ModalAudioButton()
+    let progressSlider = UISlider()
     
     var albumCoverImage: UIImage?
     var delegate: AudioModalViewDelegate?
-    
+    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    var isDragging: Bool = false
+
     init() {
         super.init(frame: .zero)
 
@@ -41,7 +45,7 @@ class AudioHalfModalView: UIView {
         verticalContainerStackView.axis = .vertical
         verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(0.0, 16.0, 8.0, 16.0)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(0.0, 16.0, 16.0, 16.0)
         verticalContainerStackView.spacing = 16.0
         
         self.addSubview(verticalContainerStackView)
@@ -51,7 +55,7 @@ class AudioHalfModalView: UIView {
         songInfoContainerStackView.axis = .vertical
         songInfoContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         songInfoContainerStackView.isLayoutMarginsRelativeArrangement = true
-        songInfoContainerStackView.spacing = 8.0
+        songInfoContainerStackView.spacing = 4.0
         verticalContainerStackView.addArrangedSubview(songInfoContainerStackView)
         
         artistLabel.textColor = .white
@@ -70,6 +74,7 @@ class AudioHalfModalView: UIView {
     
     private func addControlsStackView() {
         
+        // setup controls stack view
         controlsHorizontalStackView.axis = .horizontal
         controlsHorizontalStackView.isLayoutMarginsRelativeArrangement = true
         controlsHorizontalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +82,7 @@ class AudioHalfModalView: UIView {
         controlsHorizontalStackView.alignment = .center
         controlsHorizontalStackView.layoutMargins = UIEdgeInsetsMake(16.0, 0.0, 16.0, 0.0)
         
+        // add buttons
         verticalContainerStackView.addArrangedSubview(controlsHorizontalStackView)
         setupControlButtons()
         controlsHorizontalStackView.addArrangedSubview(rewindButton)
@@ -85,6 +91,42 @@ class AudioHalfModalView: UIView {
         audioButton.addTarget(self, action: #selector(onPausePlayButtonTap), for: .touchUpInside)
 
         controlsHorizontalStackView.addArrangedSubview(forwardButton)
+        
+        // add audio progress slider
+        progressSlider.thumbTintColor = .red
+        verticalContainerStackView.addArrangedSubview(progressSlider)
+        self.bringSubview(toFront: progressSlider)
+        progressSlider.addTarget(self, action: #selector(seekTrack), for: .allEvents)
+        progressSlider.isContinuous = true
+
+    }
+    
+    func updateProgressSlider(position: TimeInterval) {
+        
+        if !isDragging {
+            guard let currentTrack = spotifyAudioPlayer.currentTrack else { return }
+            let duration = currentTrack.duration
+
+            progressSlider.value = Float(position / duration)
+        }
+    }
+    
+    func seekTrack(sender: UISlider, for event: UIEvent) {
+
+        isDragging = false
+        
+        guard let touchEvents = event.allTouches else { return }
+        for touchEvent in touchEvents {
+            if touchEvent.phase == .began || touchEvent.phase == .moved {
+                isDragging = true
+            }
+        }
+        
+        if !isDragging {
+            guard let currentTrack = spotifyAudioPlayer.currentTrack else { return }
+            let targetTime = currentTrack.duration * Double(progressSlider.value)
+            spotifyAudioPlayer.player?.seek(to: TimeInterval(targetTime), callback: nil)
+        }
     }
     
     private func setupControlButtons() {

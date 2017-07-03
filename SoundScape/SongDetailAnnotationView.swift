@@ -41,7 +41,7 @@ class SongDetailAnnotationView: MKAnnotationView {
             
             NSLayoutConstraint.activate([
                 newCustomCalloutView.bottomAnchor.constraint(equalTo: self.topAnchor, constant: -5),
-                newCustomCalloutView.widthAnchor.constraint(equalToConstant: 200),
+                newCustomCalloutView.widthAnchor.constraint(equalToConstant: 225),
                 newCustomCalloutView.heightAnchor.constraint(equalToConstant: 75),
                 newCustomCalloutView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: self.calloutOffset.x)
                 ])

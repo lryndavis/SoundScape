@@ -12,10 +12,9 @@ class AudioModalViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .black
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(AudioModalViewController.updateModalPlayerView), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
-        
+    
         setupView()
+        setupNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +33,18 @@ class AudioModalViewController: UIViewController {
 
         containerStackView.addArrangedSubview(audioHalfModalView)
         updateModalPlayerView()
+    }
+    
+    func setupNotifications() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AudioModalViewController.updateModalPlayerView), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "didChangePositionNotification"), object: nil, queue: OperationQueue.main) {  [weak self] (notification) in
+            if let strongSelf = self {
+                guard let position = notification.userInfo?["position"] as? TimeInterval else { return }
+                strongSelf.audioHalfModalView.updateProgressSlider(position: position)
+            }
+        }
     }
     
     func getAlbumImage() {

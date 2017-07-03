@@ -260,9 +260,9 @@
 		D4D1AE181EEE621100D10685 /* Nearby Songs */ = {
 			isa = PBXGroup;
 			children = (
-				D43B13561ED61B2F00A78A77 /* NearbySongsViewController.swift */,
 				D4F7AFA81EF9C56100A6E7ED /* NearbySongsDataSource.swift */,
 				D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */,
+				D43B13561ED61B2F00A78A77 /* NearbySongsViewController.swift */,
 				D4D1AE271EEF453600D10685 /* NoResultsView.swift */,
 				D49332381EF0C085009B4671 /* SongDetailMapView.swift */,
 				D493323A1EF0C5D0009B4671 /* SongDetailAnnotationView.swift */,

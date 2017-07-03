@@ -51,8 +51,8 @@ struct SpotifyTrack {
         id                      = ""
         albumName               = spotifyAlbum.name
         albumSpotifyId          = spotifyAlbum.identifier
-        largestAlbumCoverURL    = spotifyAlbum.largestCover.imageURL.absoluteString
-        smallestAlbumCoverURL   = spotifyAlbum.smallestCover.imageURL.absoluteString
+        largestAlbumCoverURL    = spotifyAlbum.largestCover?.imageURL?.absoluteString
+        smallestAlbumCoverURL   = spotifyAlbum.smallestCover?.imageURL?.absoluteString
         albumUri                = spotifyAlbum.uri.absoluteString
     }
     

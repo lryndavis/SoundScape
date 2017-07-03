@@ -101,7 +101,7 @@ extension HalfModalPresentable where Self: UIViewController {
     func maximizeToFullScreen() -> Void {
         if let presetation = navigationController?.presentationController as? AudioHalfModalPresentationController {
             presetation.adjustToFullScreen()
-        }
+        } 
     }
 }
 
