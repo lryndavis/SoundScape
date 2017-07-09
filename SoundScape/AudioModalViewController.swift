@@ -3,7 +3,7 @@ import UIKit
 
 class AudioModalViewController: UIViewController {
     
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    let spotifyManager = SpotifyManager.sharedInstance
     var audioHalfModalView = AudioHalfModalView()
     
     @IBOutlet weak var containerStackView: UIStackView!
@@ -32,6 +32,7 @@ class AudioModalViewController: UIViewController {
         containerStackView.layoutMargins = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0)
 
         containerStackView.addArrangedSubview(audioHalfModalView)
+        
         updateModalPlayerView()
     }
     
@@ -49,8 +50,8 @@ class AudioModalViewController: UIViewController {
     
     func getAlbumImage() {
         
-        if let currentTrack = spotifyAudioPlayer.currentTrack {
-            if let imageURL = currentTrack.largestAlbumCoverURL {
+        if let currentTrack = spotifyManager.currentTrack {
+            if let imageURL = currentTrack.albumCoverImageURLLarge {
                 ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { [weak self] (image)  in
                     if let strongSelf = self {
                         
@@ -66,12 +67,12 @@ class AudioModalViewController: UIViewController {
     
     func updateModalPlayerView() {
 
-        if let currentTrack = spotifyAudioPlayer.currentTrack {
-            audioHalfModalView.artistLabel.text = currentTrack.albumArtistDisplay
-            audioHalfModalView.songLabel.text = currentTrack.name
+        if let currentTrack = spotifyManager.currentTrack {
+            audioHalfModalView.artistLabel.text = currentTrack.albumArtistDisplayStr
+            audioHalfModalView.songLabel.text = currentTrack.track.name
         }
         
-        spotifyAudioPlayer.isPlaying ? audioHalfModalView.audioButton.setButtonPause() : audioHalfModalView.audioButton.setButtonPlay()
+        spotifyManager.isPlaying ? audioHalfModalView.audioButton.setButtonPause() : audioHalfModalView.audioButton.setButtonPlay()
         getAlbumImage()
     }
 }
@@ -82,6 +83,8 @@ extension AudioModalViewController: HalfModalPresentable {
     @IBAction func maximizeButtonTapped(_ sender: Any) {
         
         maximizeToFullScreen()
+        
+        //spacerView.isHidden = false
     }
     
     @IBAction func minimizeButtonTapped(_ sender: Any) {
@@ -100,16 +103,16 @@ extension AudioModalViewController: HalfModalPresentable {
 extension AudioModalViewController: AudioModalViewDelegate, SpotifyAudioControllable {
     
     func handlePlayPreviousTrack() {
-        spotifyAudioPlayer.playPreviousTrack()
+        spotifyManager.playPreviousTrack()
     }
     
     func handlePlayNextTrack() {
-        spotifyAudioPlayer.skipTrack()
+        spotifyManager.skipTrack()
     }
 
     func togglePlay() {
         
-        if spotifyAudioPlayer.isPlaying {
+        if spotifyManager.isPlaying {
             setAudioPause()
             audioHalfModalView.audioButton.setButtonPlay()
         } else {

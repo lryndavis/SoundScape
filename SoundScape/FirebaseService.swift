@@ -11,6 +11,7 @@ class FirebaseService {
     enum ChildRef: String {
         case songs              = "songs"
         case songLocations      = "song_locations"
+        case songUser           = "users"
     }
 }
 

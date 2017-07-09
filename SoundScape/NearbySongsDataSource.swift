@@ -1,17 +1,42 @@
 
 import Foundation
-import AlamofireImage
-import Alamofire
 import CoreLocation
 import GeoFire
 import Firebase
+import BoltsSwift
 
-class NearbySongsDataSource {
-
-    // query geofire to find all songs in radius
-    func queryLocalSongs(location: CLLocation, completion: @escaping (_ songData: [String]?) -> Void) {
+class NearbySongsDataSource: SpotifyDataSource {
+    
+    var spotifyTracksExtended: [SpotifyTrackExtended]?
+    var spotifyTrackAnnotations: [SpotifyTrackAnnotation]?
+    
+    func loadNearbyTrackData(location: CLLocation, completion: @escaping (Bool) -> ()) {
         
-        var songData: [String] = []
+        self.getLocalTracks(location: location).continueOnSuccessWithTask { keys -> Task<[SpotifyTrack]> in
+        
+            return self.getSpotifyTracksByKey(trackKeys: keys)
+        
+        }.continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
+        
+            return self.getExtendedSpotifyTracks(nearbyTracks: tracks)
+        
+        }.continueOnSuccessWithTask { extendedTracks -> Task<[SpotifyTrackAnnotation]> in
+            
+            self.spotifyTracksExtended = extendedTracks
+            return self.getTrackAnnotations(spotifyTracksExtended: extendedTracks)
+            
+        }.continueOnSuccessWith { annotations in
+            
+            self.spotifyTrackAnnotations = annotations
+            completion(true)
+        }
+    }
+    
+    // find all track objects in vicinity
+    func getLocalTracks(location: CLLocation) -> Task<[String]> {
+        
+        let taskCompletionSource = TaskCompletionSource<[String]>()
+        var trackKeys: [String] = []
         let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
         
         if let geoFire = geoFire {
@@ -21,54 +46,104 @@ class NearbySongsDataSource {
             _ = circleQuery?.observe(.keyEntered, with: { (key, location) in
                 
                 if let key = key {
-                    songData.insert(key, at: 0)
+                    trackKeys.insert(key, at: 0)
                 }
             })
             
             circleQuery?.observeReady({
-                completion(songData)
+                taskCompletionSource.trySet(result: trackKeys)
             })
         }
+        return taskCompletionSource.task
     }
     
-    // creat new track and annotation objects from returned song objects
-    func returnSongsFromId(songsByKey: [String], completion: @escaping (_ nearbySongs: [SpotifyTrack], _ nearbyAnnotations: [SpotifyTrackAnnotation]) -> Void) {
+    // create simplified track objects from keys returned from location query
+    func getSpotifyTracksByKey(trackKeys: [String]) -> Task<[SpotifyTrack]> {
         
+        let taskCompletionSource = TaskCompletionSource<[SpotifyTrack]>()
         let ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
         let dispatchGroup = DispatchGroup()
-        var nearbySongs: [SpotifyTrack] = []
-        var nearbyAnnotations: [SpotifyTrackAnnotation] = []
+        var nearbyTracks: [SpotifyTrack] = []
         
-        for songId in songsByKey {
+        for key in trackKeys {
             
             dispatchGroup.enter()
             
-            ref.child(songId).observeSingleEvent(of: .value, with: { snapshot in
-                
+            ref.child(key).observeSingleEvent(of: .value, with: { snapshot in
                 if let _ = snapshot.value as? [String: Any] {
                     
-                    let newSong = SpotifyTrack(snapshot: snapshot)
-                    nearbySongs.append(newSong)
-                    
-                    let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
-                    
-                    geoFire?.getLocationForKey(songId, withCallback: { (location, error) in
-                        if let location = location {
-                            let newAnnotation = SpotifyTrackAnnotation(coordinate: location.coordinate, spotifyTrack: newSong)
-                            nearbyAnnotations.append(newAnnotation)
-                        } else {
-                            print("\(String(describing: error))")
-                        }
+                    let newTrack = SpotifyTrack(snapshot: snapshot)
+                    nearbyTracks.append(newTrack)
                         
-                        dispatchGroup.leave()
-                    })
+                    dispatchGroup.leave()
                 }
             })
         }
-        
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion(nearbySongs, nearbyAnnotations)
+            taskCompletionSource.trySet(result: nearbyTracks)
         }
+        return taskCompletionSource.task
+    }
+
+    // use simplified track objects to get SPTTracks anc SPTUsers, merge these into an extended track object
+    func getExtendedSpotifyTracks(nearbyTracks: [SpotifyTrack]) -> Task<[SpotifyTrackExtended]> {
+        
+       let taskCompletionSource = TaskCompletionSource<[SpotifyTrackExtended]>()
+       var nearbyExtendedSpotifyTracks = [SpotifyTrackExtended]()
+       let dispatchGroup = DispatchGroup()
+        
+        for nearbyTrack in nearbyTracks {
+            
+            dispatchGroup.enter()
+            
+            self.getSPTTrack(track: nearbyTrack, completion: {
+                track in
+                
+                self.getSPTUser(track: nearbyTrack, completion: {
+                    user in
+                    
+                    let newSpotifyTrackExtended = SpotifyTrackExtended(track: track, user: user, soundScapeId: nearbyTrack.id, trackType: .soundScapeTrack)
+                    nearbyExtendedSpotifyTracks.insert(newSpotifyTrackExtended, at: 0)
+                    
+                    dispatchGroup.leave()
+                })
+            })
+        }
+        dispatchGroup.notify(queue: .main) {
+            taskCompletionSource.trySet(result: nearbyExtendedSpotifyTracks)
+        }
+        return taskCompletionSource.task
+    }
+    
+    // get annotations from nearby extended track objects
+    func getTrackAnnotations(spotifyTracksExtended: [SpotifyTrackExtended]) -> Task<[SpotifyTrackAnnotation]> {
+        
+        let taskCompletionSource = TaskCompletionSource<[SpotifyTrackAnnotation]>()
+        let dispatchGroup = DispatchGroup()
+        var nearbyAnnotations = [SpotifyTrackAnnotation]()
+        
+        for track in spotifyTracksExtended {
+            
+            dispatchGroup.enter()
+            
+            let key = track.soundScapeId
+            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+            
+            geoFire?.getLocationForKey(key, withCallback: { (location, error) in
+                if let location = location {
+                    let newAnnotation = SpotifyTrackAnnotation(coordinate: location.coordinate, spotifyTrackExtended: track)
+                    nearbyAnnotations.append(newAnnotation)
+                } else {
+                    print("error getting locations: \(String(describing: error))")
+                }
+                
+                dispatchGroup.leave()
+            })
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            taskCompletionSource.trySet(result: nearbyAnnotations)
+        }
+        return taskCompletionSource.task
     }
     
 }

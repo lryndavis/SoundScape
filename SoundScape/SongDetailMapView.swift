@@ -3,21 +3,22 @@ import UIKit
 
 protocol SongDetailMapViewDelegate {
     
-    func setAnnotationAudioPlayer(track: SpotifyTrack)
+    func setAnnotationAudioPlayer(track: SpotifyTrackExtended)
 }
 
 class SongDetailMapView: UIView {
     
     let songNameLabel = UILabel()
     let artistLabel = UILabel()
+    let userLabel = UILabel()
     let closeButton = UIButton()
     let verticalContainerStackView = UIStackView()
     let horizontalContainerStackView = UIStackView()
     let playTrackButton = UIButton()
     let backgroundViewButton = UIButton()
 
-    var spotifyTrack: SpotifyTrack?
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    var spotifyTrackExtended: SpotifyTrackExtended?
+    let spotifyManager = SpotifyManager.sharedInstance
     var delegate: SongDetailMapViewDelegate?
     
     init() {
@@ -30,12 +31,13 @@ class SongDetailMapView: UIView {
         fatalError()
     }
     
-    func setupWithTrack(spotifyTrack: SpotifyTrack) {
+    func setupWithTrack(spotifyTrackExtended: SpotifyTrackExtended) {
         
-        self.spotifyTrack = spotifyTrack
+        self.spotifyTrackExtended = spotifyTrackExtended
         
-        songNameLabel.text = spotifyTrack.name
-        artistLabel.text = spotifyTrack.artist
+        songNameLabel.text = spotifyTrackExtended.track.name
+        artistLabel.text = spotifyTrackExtended.primaryArtistDisplayStr
+        userLabel.text = "Placed By: \(spotifyTrackExtended.userDisplayStr)"
     }
     
     fileprivate func buildView() {
@@ -72,8 +74,12 @@ class SongDetailMapView: UIView {
         artistLabel.textColor = UIColor.white
         artistLabel.font = UIFont(name: "Helvetica Neue", size: 10.0)
         
+        userLabel.textColor = UIColor.white
+        userLabel.font = UIFont(name: "Helvetica Neue", size: 10.0)
+        
         secondaryVerticalStackView.addArrangedSubview(songNameLabel)
         secondaryVerticalStackView.addArrangedSubview(artistLabel)
+        secondaryVerticalStackView.addArrangedSubview(userLabel)
         
         verticalContainerStackView.addArrangedSubview(horizontalContainerStackView)
         horizontalContainerStackView.addArrangedSubview(secondaryVerticalStackView)
@@ -98,9 +104,9 @@ class SongDetailMapView: UIView {
     func onPlayButtonTap(_ sender: AudioPausePlayButton) {
         
         guard let delegate = delegate,
-              let spotifyTrack = spotifyTrack else { return }
+              let spotifyTrackExtended = spotifyTrackExtended else { return }
         
-        delegate.setAnnotationAudioPlayer(track: spotifyTrack)
+        delegate.setAnnotationAudioPlayer(track: spotifyTrackExtended)
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

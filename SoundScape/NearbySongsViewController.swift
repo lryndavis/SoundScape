@@ -4,20 +4,14 @@ import Firebase
 import CoreLocation
 import GeoFire
 
-protocol ModalPresentationDelegate {
-    
-    func presentAudioModal()
-}
 
 class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, SpotifyAudioPlayable {
     
-    var spotifyTracks = [SpotifyTrack]()
+    var spotifyTracks = [SpotifyTrackExtended]()
     var spotifyTrackAnnotationItems = [SpotifyTrackAnnotation]()
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    let spotifyManager = SpotifyManager.sharedInstance
     var locationManager: CLLocationManager!
-    var localSongIds: [String] = []
-    let nearbySongsDataSource = NearbySongsDataSource()
-    var delegate: ModalPresentationDelegate?
+    let dataSource = NearbySongsDataSource()
     
     let noResultsLabel = UILabel()
     let tableView = UITableView()
@@ -94,7 +88,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        loadLocalSongIds()
+        loadTracksInVicinity()
     }
     
     internal func locationManager(_ manager:CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -104,66 +98,86 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         }
     }
     
-    // get songs from query and update 
-    func loadLocalSongIds() {
-        
+    // get local tracks from query and update
+    func loadTracksInVicinity() {
+
         if let location = self.locationManager.location {
-            nearbySongsDataSource.queryLocalSongs(location: location,
-                                 completion: {
-                                    (keys) in
-                                    if let keys = keys {
-                                        self.localSongIds = keys
-                                        self.updateSongItems()
-                                    }
+            dataSource.loadNearbyTrackData(location: location, completion: {
+                [weak self] (success) in
+                if success {
+                    if let strongSelf = self,
+                        let trackAnnotations = strongSelf.dataSource.spotifyTrackAnnotations,
+                        let tracks = strongSelf.dataSource.spotifyTracksExtended {
+
+                        strongSelf.updateTracksList(nearbyTracks: tracks)
+                        strongSelf.updateTrackAnnotations(nearbyAnnotations: trackAnnotations)
+                    }
+                }
             })
         }
     }
     
-    // once songs are returned, call methods for updating UI
-    func updateSongItems() {
+    // add annotations to map view for relevant songs
+    func updateTrackAnnotations(nearbyAnnotations: [SpotifyTrackAnnotation]) {
         
-        nearbySongsDataSource.returnSongsFromId(songsByKey: self.localSongIds) {
-            nearbySongs, nearbyAnnotations in
+        if !nearbyAnnotations.isEmpty {
+            let existingAnnotationIds = spotifyTrackAnnotationItems.flatMap{ $0.spotifyTrackExtended.soundScapeId }
+            let newAnnotations = nearbyAnnotations.filter { (nearbyAnnotation) -> Bool in
+                if let id = nearbyAnnotation.spotifyTrackExtended.soundScapeId {
+                    if !existingAnnotationIds.contains(id) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                    
+                }
+            }
             
-            if !self.localSongIds.isEmpty {
-                
-                self.tableView.separatorStyle = .singleLine
-                self.tableView.backgroundView = nil
-                
-                self.updateSongsList(nearbySongs: nearbySongs)
-                self.addTrackAnnotations(nearbyAnnotations: nearbyAnnotations)
-                
-            } else {
-                
-                self.spotifyTracks.removeAll()
-                self.tableView.reloadData()
-                self.showNoResultsView()
+            if !newAnnotations.isEmpty {
+                spotifyTrackAnnotationItems = nearbyAnnotations
+                mapView.addAnnotations(newAnnotations)
             }
         }
     }
     
-    // add annotations to map view for relevant songs
-    func addTrackAnnotations(nearbyAnnotations: [SpotifyTrackAnnotation]) {
-        
-        if !spotifyTrackAnnotationItems.isEmpty {
-            let existingAnnotationIds = spotifyTrackAnnotationItems.map{ $0.spotifyTrack.id }
-            let newAnnotations = nearbyAnnotations.filter { !existingAnnotationIds.contains($0.spotifyTrack.id) }
-            
-            spotifyTrackAnnotationItems.append(contentsOf: newAnnotations)
-            mapView.addAnnotations(newAnnotations)
-        } else {
-            spotifyTrackAnnotationItems.append(contentsOf: nearbyAnnotations)
-            mapView.addAnnotations(self.spotifyTrackAnnotationItems)
-        }
-    }
-    
     // update nearby songs tableview
-    func updateSongsList(nearbySongs: [SpotifyTrack]) {
+    func updateTracksList(nearbyTracks: [SpotifyTrackExtended]) {
         
-        spotifyTracks.removeAll()
-        spotifyTracks.append(contentsOf: nearbySongs)
-        
-        tableView.reloadData()
+        if !nearbyTracks.isEmpty {
+            
+            self.tableView.separatorStyle = .singleLine
+            self.tableView.backgroundView = nil
+            
+            let existingTrackIds = spotifyTracks.flatMap{ $0.soundScapeId }
+            //let newTracks = nearbyTracks.filter { !existingTrackIds.contains( $0.soundScapeId) }
+            
+            let newTracks = nearbyTracks.filter { (nearbyTrack) -> Bool in
+                if let id = nearbyTrack.soundScapeId {
+                    if !existingTrackIds.contains(id) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                    
+                }
+            }
+            
+            if !newTracks.isEmpty {
+                
+                spotifyTracks.removeAll()
+                spotifyTracks = nearbyTracks
+                
+                tableView.reloadData()
+            }
+        } else {
+            spotifyTracks.removeAll()
+            tableView.reloadData()
+            showNoResultsView()
+        }
     }
     
     func addSongButtonTapped() {
@@ -194,20 +208,21 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongTableViewCell
-        let songItem = spotifyTracks[indexPath.row]
+        let trackItem = spotifyTracks[indexPath.row]
         
-        cell.songLabel.text = songItem.name
-        cell.artistLabel.text = songItem.albumArtistDisplay
+        cell.songLabel.text = trackItem.track.name
+        cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        let currentTrackId = spotifyAudioPlayer.trackQueue?[safe: spotifyAudioPlayer.trackIndex]?.spotifyId
-        
-        if songItem.spotifyId == currentTrackId {
-            cell.songLabel.textColor = UIColor.blue
-        } else {
-            cell.songLabel.textColor = UIColor.black
+        if let currentTrackId = spotifyManager.currentTrack?.soundScapeId {
+            if trackItem.soundScapeId == currentTrackId {
+                cell.songLabel.textColor = UIColor.blue
+            } else {
+                cell.songLabel.textColor = UIColor.black
+            }
         }
-        if let imageURL = songItem.smallestAlbumCoverURL {
+        
+        if let imageURL = trackItem.albumCoverImageURLSmall {
             ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })
@@ -217,8 +232,8 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let spotifyTrack = spotifyTracks[indexPath.row]
-        startNewQueueFromSelection(spotifyTrack: spotifyTrack)
+        let trackItem = spotifyTracks[indexPath.row]
+        startNewQueueFromSelection(sptTrack: trackItem)
     }
 }
 
@@ -300,8 +315,9 @@ extension NearbySongsViewController: UIGestureRecognizerDelegate {
 // MARK: - SongDetailMapViewDelegate methods 
 extension NearbySongsViewController: SongDetailMapViewDelegate {
     
-    func setAnnotationAudioPlayer(track: SpotifyTrack) {
-        startNewQueueFromSelection(spotifyTrack: track)
+    func setAnnotationAudioPlayer(track: SpotifyTrackExtended) {
+        
+        startNewQueueFromSelection(sptTrack: track)
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "showModalTriggered"), object: nil)
     }

@@ -6,8 +6,8 @@ import GeoFire
 
 class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
     
-    var spotifyTracks: [SpotifyTrack] = []
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    var spotifyTracks: [SpotifyTrackExtended] = []
+    let spotifyManager = SpotifyManager.sharedInstance
     var coordinate: CLLocationCoordinate2D?
     let searchController = UISearchController(searchResultsController: nil)
     let dataSource = SongsSearchDataSource()
@@ -60,15 +60,15 @@ class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
         }
     }
     
-    func presentSaveSongAlert(song: SpotifyTrack) {
+    func presentSaveSongAlert(spotifyTrack: SpotifyTrackExtended) {
 
         let alert = UIAlertController(title: nil,
-                                      message: "Do you want to add \(song.name) to this location?",
+                                      message: "Do you want to add \(spotifyTrack.track.name) to this location?",
             preferredStyle: .alert)
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             if let coordinates = self.coordinate {
-                self.dataSource.saveSongToLocation(song: song, coordinate: coordinates)
+                self.dataSource.saveSongToLocation(spotifyTrack: spotifyTrack, coordinate: coordinates)
             }
         }
         
@@ -92,14 +92,15 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongTableViewCell
-        let songItem = spotifyTracks[indexPath.row]
+        let trackItem = spotifyTracks[indexPath.row]
         
-        cell.songLabel.text = songItem.name
-        cell.artistLabel.text = songItem.albumArtistDisplay
+        cell.artistLabel.text = trackItem.albumArtistDisplayStr
+        cell.songLabel.text = trackItem.track.name
         cell.selectionStyle = .none
         
-        if let imageURL = songItem.smallestAlbumCoverURL {
-            ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
+        let url = trackItem.albumCoverImageURLSmall
+        if let url = url {
+            ImageDataRequest.getAlbumCoverImage(imageUrl: url, completion: { (image) in
                 cell.albumImage.image = image
             })
         }
@@ -113,17 +114,17 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         
-        let songItem = spotifyTracks[editActionsForRowAt.row]
+        let trackItem = spotifyTracks[editActionsForRowAt.row]
         
         let playAction = UITableViewRowAction(style: .normal, title: "") { action, index in
-            self.startNewQueueFromSelection(spotifyTrack: songItem, isSampleSelection: true)
+            self.startNewQueueFromSelection(sptTrack: trackItem, isSampleSelection: true)
         }
         
         playAction.backgroundColor = .black
         playAction.title = ">>"
         
         let addAction = UITableViewRowAction(style: .normal, title: "") { action, index in
-            self.presentSaveSongAlert(song: songItem)
+            self.presentSaveSongAlert(spotifyTrack: trackItem)
         }
         
         addAction.backgroundColor = .blue

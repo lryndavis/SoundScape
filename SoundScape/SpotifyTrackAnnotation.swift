@@ -5,31 +5,20 @@ import MapKit
 class SpotifyTrackAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var spotifyTrack: SpotifyTrack
+    var spotifyTrackExtended: SpotifyTrackExtended
     
-    init(coordinate: CLLocationCoordinate2D, spotifyTrack: SpotifyTrack) {
+    init(coordinate: CLLocationCoordinate2D, spotifyTrackExtended: SpotifyTrackExtended) {
         
-        self.coordinate           = coordinate
-        self.spotifyTrack         = spotifyTrack
+        self.coordinate                 = coordinate
+        self.spotifyTrackExtended       = spotifyTrackExtended
     }
     
     var title: String? {
-        return spotifyTrack.name
+        return spotifyTrackExtended.track.name
     }
     
     var subtitle: String? {
-        return spotifyTrack.artist
-    }
-    
-    var isCurrentlyPlaying: Bool {
-        
-        let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
-        if let currentSpotifyTrackId = spotifyAudioPlayer.currentTrackId {
-            if self.spotifyTrack.id == currentSpotifyTrackId {
-                return true
-            }
-        }
-        return false 
+        return spotifyTrackExtended.primaryArtistDisplayStr
     }
 }
 

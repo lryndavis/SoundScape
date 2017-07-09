@@ -3,25 +3,24 @@ import Foundation
 
 protocol SpotifyAudioPlayable {
     
-    var spotifyTracks: [SpotifyTrack] { get }
-    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
+    var spotifyTracks: [SpotifyTrackExtended] { get }
+    var spotifyManager: SpotifyManager { get }
 }
 
 extension SpotifyAudioPlayable {
     
-    func startNewQueueFromSelection(spotifyTrack: SpotifyTrack, isSampleSelection: Bool = false) {
+    func startNewQueueFromSelection(sptTrack: SpotifyTrackExtended, isSampleSelection: Bool = false) {
         
-        var newQueue = [SpotifyTrack]()
+        var newQueue = [SpotifyTrackExtended]()
 
         if !isSampleSelection {
             newQueue = spotifyTracks
         }
         
-        newQueue.insert(spotifyTrack, at: 0)
-        spotifyAudioPlayer.trackIndex = 0
-        spotifyAudioPlayer.setTrackQueue(trackQueue: newQueue)
-        spotifyAudioPlayer.playTrack()
-        spotifyAudioPlayer.isPlaying = true
+        newQueue.insert(sptTrack, at: 0)
+        spotifyManager.trackIndex = 0
+        spotifyManager.setTrackQueue(trackQueue: newQueue)
+        spotifyManager.playTrack()
     }
 }
 
@@ -32,18 +31,16 @@ protocol UniversalAudioPlayerDelegate {
 
 protocol SpotifyAudioControllable {
     
-    var spotifyAudioPlayer: SpotifyAudioPlayer { get }
+    var spotifyManager: SpotifyManager { get }
 }
 
 extension SpotifyAudioControllable {
     
     func setAudioPlay() {
-        spotifyAudioPlayer.player?.setIsPlaying(true, callback: nil)
-        spotifyAudioPlayer.isPlaying = true
+        spotifyManager.player?.setIsPlaying(true, callback: nil)
     }
     
     func setAudioPause() {
-        spotifyAudioPlayer.player?.setIsPlaying(false, callback: nil)
-        spotifyAudioPlayer.isPlaying = false
+        spotifyManager.player?.setIsPlaying(false, callback: nil)
     }
 }

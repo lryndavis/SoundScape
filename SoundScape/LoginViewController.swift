@@ -20,11 +20,16 @@ class LoginViewController: UIViewController {
         
         let userDefaults = UserDefaults.standard
 
-        if let sessionObj:AnyObject = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey) as AnyObject? {
+        if let sessionObj: AnyObject = userDefaults.object(forKey: SpotifyAuthManager.kUserDefaultsKey) as AnyObject? {
 
             let sessionDataObj = sessionObj as! Data
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
+            
+            SpotifyManager.getCurrentUser(session: session, completion: { (user) in
+                let userRef = FirebaseService.baseRef.child(FirebaseService.ChildRef.songUser.rawValue)
+                userRef.child(user.canonicalUserName).setValue(SpotifyUser.toAnyObject(trackKey: nil, user: user))
+            })
         }
     }
     

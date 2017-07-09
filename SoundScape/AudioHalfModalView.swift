@@ -24,7 +24,7 @@ class AudioHalfModalView: UIView {
     
     var albumCoverImage: UIImage?
     var delegate: AudioModalViewDelegate?
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    let spotifyManager = SpotifyManager.sharedInstance
     var isDragging: Bool = false
 
     init() {
@@ -104,8 +104,8 @@ class AudioHalfModalView: UIView {
     func updateProgressSlider(position: TimeInterval) {
         
         if !isDragging {
-            guard let currentTrack = spotifyAudioPlayer.currentTrack else { return }
-            let duration = currentTrack.duration
+            guard let currentTrack = spotifyManager.currentTrack else { return }
+            let duration = currentTrack.track.duration
 
             progressSlider.value = Float(position / duration)
         }
@@ -123,9 +123,9 @@ class AudioHalfModalView: UIView {
         }
         
         if !isDragging {
-            guard let currentTrack = spotifyAudioPlayer.currentTrack else { return }
-            let targetTime = currentTrack.duration * Double(progressSlider.value)
-            spotifyAudioPlayer.player?.seek(to: TimeInterval(targetTime), callback: nil)
+            guard let currentTrack = spotifyManager.currentTrack else { return }
+            let targetTime = currentTrack.track.duration * Double(progressSlider.value)
+            spotifyManager.player?.seek(to: TimeInterval(targetTime), callback: nil)
         }
     }
     

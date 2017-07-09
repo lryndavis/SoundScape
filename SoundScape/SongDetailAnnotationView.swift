@@ -73,7 +73,7 @@ class SongDetailAnnotationView: MKAnnotationView {
         songDetailMapView.delegate = self.delegate
         
         if let trackAnnotation = annotation as? SpotifyTrackAnnotation {
-            songDetailMapView.setupWithTrack(spotifyTrack: trackAnnotation.spotifyTrack)
+           songDetailMapView.setupWithTrack(spotifyTrackExtended: trackAnnotation.spotifyTrackExtended)
         }
         return songDetailMapView
     }

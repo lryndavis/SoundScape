@@ -2,13 +2,12 @@
 import UIKit
 
 
-class SpotifyAudioPlayerViewController: UIViewController, ModalPresentationDelegate {
+class SpotifyAudioPlayerViewController: UIViewController {
 
     let miniSpotifyAudioPlayer = MiniSpotifyAudioPlayer()
-    let spotifyAudioPlayer = SpotifyAudioPlayer.sharedInstance
+    let spotifyManager = SpotifyManager.sharedInstance
     var spotifyAudioPlayerDelegate: UniversalAudioPlayerDelegate?
     var halfModalTransitioningDelegate: AudioHalfModalTransitioningDelegate?
-
     
     @IBOutlet weak var audioPlayerButton: UIButton!
     
@@ -17,8 +16,8 @@ class SpotifyAudioPlayerViewController: UIViewController, ModalPresentationDeleg
         super.viewDidLoad()
         
         miniSpotifyAudioPlayer.delegate = self
-        spotifyAudioPlayer.player?.delegate = self
-        spotifyAudioPlayer.player?.playbackDelegate = self
+        spotifyManager.player?.delegate = self
+        spotifyManager.player?.playbackDelegate = self
 
         setupView()
         setupNotifications()
@@ -43,12 +42,11 @@ class SpotifyAudioPlayerViewController: UIViewController, ModalPresentationDeleg
         self.view.bringSubview(toFront: audioPlayerButton)
     }
     
+    //todo: refactor these
     func setupNotifications() {
         
-        //delegate?
         NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setCurrentPlayerDisplay), name: NSNotification.Name(rawValue: "trackChanged"), object: nil)
         
-        //unwind segue instead?
         NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.setPlayButtonDisplay), name: NSNotification.Name(rawValue: "audioModalDismissed"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(SpotifyAudioPlayerViewController.presentAudioModal), name: NSNotification.Name(rawValue: "showModalTriggered"), object: nil)
@@ -56,15 +54,15 @@ class SpotifyAudioPlayerViewController: UIViewController, ModalPresentationDeleg
 
     func setCurrentPlayerDisplay() {
     
-        if let currentTrack = spotifyAudioPlayer.currentTrack {
-            miniSpotifyAudioPlayer.artistLabel.text = currentTrack.albumArtistDisplay
-            miniSpotifyAudioPlayer.songLabel.text = currentTrack.name
+        if let currentTrack = spotifyManager.currentTrack {
+            miniSpotifyAudioPlayer.artistLabel.text = currentTrack.albumArtistDisplayStr
+            miniSpotifyAudioPlayer.songLabel.text = currentTrack.track.name
         }
     }
     
     func setPlayButtonDisplay() {
         
-        spotifyAudioPlayer.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
+        spotifyManager.isPlaying ? miniSpotifyAudioPlayer.pausePlayButton.setButtonPause() : miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay()
     }
     
     @IBAction func onAudioPlayerTap(_ sender: Any) {
@@ -98,7 +96,7 @@ extension SpotifyAudioPlayerViewController: MiniSpotifyAudioPlayerDelegate, Spot
     
     func togglePlay() {
         
-        if spotifyAudioPlayer.isPlaying {
+        if spotifyManager.isPlaying {
             setAudioPause()
             miniSpotifyAudioPlayer.pausePlayButton.setButtonPlay(animated: true)
         } else {
@@ -119,12 +117,10 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChange metadata: SPTPlaybackMetadata!) {
-        ///
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
-        
-        spotifyAudioPlayer.isPlaying = true
+
         miniSpotifyAudioPlayer.pausePlayButton.setButtonPause()
         
         if let delegate = spotifyAudioPlayerDelegate {
@@ -136,21 +132,18 @@ extension SpotifyAudioPlayerViewController: SPTAudioStreamingDelegate, SPTAudioS
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
         
-        spotifyAudioPlayer.trackIndex += 1
+        spotifyManager.trackIndex += 1
         
-        if let trackQueue = spotifyAudioPlayer.trackQueue {
+        if let trackQueue = spotifyManager.trackQueue {
             
-            if spotifyAudioPlayer.trackIndex < trackQueue.count {
+            if spotifyManager.trackIndex < trackQueue.count {
                 setCurrentPlayerDisplay()
-                spotifyAudioPlayer.playTrack()
-            } else {
-                spotifyAudioPlayer.isPlaying = false
+                spotifyManager.playTrack()
             }
         }
     }
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
-        ///
     }
 }
 

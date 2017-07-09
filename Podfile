@@ -10,5 +10,6 @@ target 'SoundScape' do
  pod 'GeoFire', :git => 'https://github.com/firebase/geofire-objc.git'
  pod 'Pulsator'
  pod 'AlamofireImage', '~> 3.1'
+ pod 'Bolts-Swift'
 
 end
