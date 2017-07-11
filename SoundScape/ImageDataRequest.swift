@@ -6,6 +6,7 @@ import Alamofire
 
 struct ImageDataRequest {
     
+    // load album cover image data 
     static func getAlbumCoverImage(imageUrl: String, completion: @escaping (_ image: UIImage?) -> ()) {
         
         let dispatchGroup = DispatchGroup()

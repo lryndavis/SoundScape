@@ -1,7 +1,9 @@
 
 import Foundation
 
-
+// handles the spotify player singleton
+// grabs the current spotify user, used when adding new tracks to location 
+// contains player controls such as current track info, the track queue, fast forward, rewind, and play 
 class SpotifyManager {
     
     static let sharedInstance = SpotifyManager()

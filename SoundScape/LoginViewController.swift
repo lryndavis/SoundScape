@@ -33,6 +33,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+    //initial login and handle redirect from spotify 
     @IBAction func onLoginButtonTap(_ sender: Any) {
         
         let spotifyAuthManager = SpotifyAuthManager()

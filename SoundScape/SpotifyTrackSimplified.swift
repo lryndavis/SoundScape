@@ -2,7 +2,7 @@
 import Foundation
 import Firebase
 
-
+// base track object for persisting info in firebase 
 struct SpotifyTrack {
     
     let name: String

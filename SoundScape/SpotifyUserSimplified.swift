@@ -2,7 +2,7 @@
 import Foundation
 import Firebase
 
-
+// base user object for persisting user info in firebase
 struct SpotifyUser {
     
     let canonicalUserName: String

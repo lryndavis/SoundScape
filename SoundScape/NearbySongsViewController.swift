@@ -54,7 +54,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         // add mapview
         containerStackView.isLayoutMarginsRelativeArrangement = true
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        mapView.heightAnchor.constraint(equalToConstant: 225).isActive = true
         containerStackView.addArrangedSubview(mapView)
 
         // add tableview
@@ -64,6 +64,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         containerStackView.addArrangedSubview(tableView)
     }
     
+    //TODO: rebuild the no results view
     func showNoResultsView() {
         
         noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
@@ -214,13 +215,13 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        if let currentTrackId = spotifyManager.currentTrack?.soundScapeId {
-            if trackItem.soundScapeId == currentTrackId {
-                cell.songLabel.textColor = UIColor.blue
-            } else {
-                cell.songLabel.textColor = UIColor.black
-            }
-        }
+//        if let currentTrackId = spotifyManager.currentTrack?.soundScapeId {
+//            if trackItem.soundScapeId == currentTrackId {
+//                cell.songLabel.textColor = UIColor.blue
+//            } else {
+//                cell.songLabel.textColor = UIColor.black
+//            }
+//        }
         
         if let imageURL = trackItem.albumCoverImageURLSmall {
             ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
@@ -278,6 +279,7 @@ extension NearbySongsViewController: MKMapViewDelegate {
 }
 
 // MARK: - UIGestureRecognizerDelegate methods
+// to add a song directly on the map rather than via the "+", tap and hold any place on the mapview
 extension NearbySongsViewController: UIGestureRecognizerDelegate {
     
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
@@ -313,6 +315,7 @@ extension NearbySongsViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - SongDetailMapViewDelegate methods 
+// begins a new track queue in the player after a track is selected 
 extension NearbySongsViewController: SongDetailMapViewDelegate {
     
     func setAnnotationAudioPlayer(track: SpotifyTrackExtended) {

@@ -255,10 +255,10 @@
 		D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */ = {
 			isa = PBXGroup;
 			children = (
+				D43C32821EE0B53600B8E202 /* AudioHalfModalPresentationController.swift */,
 				D43C32861EE0B58500B8E202 /* AudioModalViewController.swift */,
 				D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */,
 				D43C32841EE0B57900B8E202 /* AudioModalNavController.swift */,
-				D43C32821EE0B53600B8E202 /* AudioHalfModalPresentationController.swift */,
 				D43C327C1EE0B52C00B8E202 /* AudioHalfModalInteractiveTransition.swift */,
 				D43C327D1EE0B52C00B8E202 /* AudioHalfModalTransitionAnimator.swift */,
 				D43C327E1EE0B52C00B8E202 /* AudioHalfModalTransitioningDelegate.swift */,

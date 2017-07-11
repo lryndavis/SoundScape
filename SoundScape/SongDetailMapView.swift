@@ -1,6 +1,7 @@
 
 import UIKit
 
+// build the annotation (map pin) view 
 protocol SongDetailMapViewDelegate {
     
     func setAnnotationAudioPlayer(track: SpotifyTrackExtended)

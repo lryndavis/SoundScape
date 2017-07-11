@@ -1,6 +1,8 @@
 
 import UIKit
 
+// base container view controller which handles the universal mini player to be present on all screens
+// mini player is hidden until first track is played 
 class BaseContainerViewController: UIViewController {
 
     @IBOutlet weak var audioPlayerContainerView: UIView!

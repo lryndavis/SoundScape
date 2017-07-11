@@ -7,6 +7,7 @@ enum TrackType {
     case soundScapeTrack
 }
 
+// extended spotify class for use throughout app 
 struct SpotifyTrackExtended {
     
     let track: SPTTrack

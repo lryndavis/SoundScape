@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import GeoFire
 
-
+// handles spotify queries for adding new tracks at desired location 
 class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
     
     var spotifyTracks: [SpotifyTrackExtended] = []
@@ -112,6 +112,8 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         print("cell tapped")
     }
     
+    
+    //swipe left on cell for controls; play the track to sample or add the track at desired location 
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         
         let trackItem = spotifyTracks[editActionsForRowAt.row]

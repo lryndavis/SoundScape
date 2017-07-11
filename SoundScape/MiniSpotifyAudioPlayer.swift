@@ -37,7 +37,7 @@ class MiniSpotifyAudioPlayer: UIView {
         verticalContainerStackView.anchorSidesTo(self)
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
         verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16)
+        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(8, 16, 8, 16)
         
         horizontalContainerStackView.axis = .horizontal
         horizontalContainerStackView.distribution = .fill

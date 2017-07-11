@@ -10,6 +10,7 @@ class NearbySongsDataSource: SpotifyDataSource {
     var spotifyTracksExtended: [SpotifyTrackExtended]?
     var spotifyTrackAnnotations: [SpotifyTrackAnnotation]?
     
+    //load all nearby track objects once user location is available
     func loadNearbyTrackData(location: CLLocation, completion: @escaping (Bool) -> ()) {
         
         self.getLocalTracks(location: location).continueOnSuccessWithTask { keys -> Task<[SpotifyTrack]> in
@@ -32,7 +33,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         }
     }
     
-    // find all track objects in vicinity
+    // query firebase to find all track objects in location radius
     func getLocalTracks(location: CLLocation) -> Task<[String]> {
         
         let taskCompletionSource = TaskCompletionSource<[String]>()
@@ -57,7 +58,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         return taskCompletionSource.task
     }
     
-    // create simplified track objects from keys returned from location query
+    // create simplified track objects from firebase keys returned from location query
     func getSpotifyTracksByKey(trackKeys: [String]) -> Task<[SpotifyTrack]> {
         
         let taskCompletionSource = TaskCompletionSource<[SpotifyTrack]>()
@@ -85,7 +86,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         return taskCompletionSource.task
     }
 
-    // use simplified track objects to get SPTTracks anc SPTUsers, merge these into an extended track object
+    // use simplified track objects to get SPTTracks and SPTUsers, merge these into an extended track object
     func getExtendedSpotifyTracks(nearbyTracks: [SpotifyTrack]) -> Task<[SpotifyTrackExtended]> {
         
        let taskCompletionSource = TaskCompletionSource<[SpotifyTrackExtended]>()
@@ -115,7 +116,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         return taskCompletionSource.task
     }
     
-    // get annotations from nearby extended track objects
+    // create annotations (map pins) from nearby extended track objects
     func getTrackAnnotations(spotifyTracksExtended: [SpotifyTrackExtended]) -> Task<[SpotifyTrackAnnotation]> {
         
         let taskCompletionSource = TaskCompletionSource<[SpotifyTrackAnnotation]>()

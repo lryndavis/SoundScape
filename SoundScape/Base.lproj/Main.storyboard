@@ -19,11 +19,11 @@
                         <viewControllerLayoutGuide type="bottom" id="pI5-Jv-oV9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="W8x-tt-Bco">
-                        <rect key="frame" x="0.0" y="64" width="375" height="528"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pg8-4R-Ktz">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="528"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -181,15 +181,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="omX-LP-OYJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="592"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="612"/>
                                         <connections>
                                             <segue destination="hg2-Hs-rHl" kind="embed" id="R2s-Et-b7X"/>
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hW-54-4Zr">
-                                        <rect key="frame" x="0.0" y="592" width="375" height="75"/>
+                                        <rect key="frame" x="0.0" y="612" width="375" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="75" id="5O1-QE-DSl"/>
+                                            <constraint firstAttribute="height" constant="55" id="qbu-bF-TBQ"/>
                                         </constraints>
                                         <connections>
                                             <segue destination="czO-xF-dH3" kind="embed" identifier="AudioSegue" id="Wlg-EL-1fJ"/>
@@ -266,11 +266,11 @@
                         <viewControllerLayoutGuide type="bottom" id="3vN-Kz-cHi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bKJ-Ce-feQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHm-Pm-US2">
-                                <rect key="frame" x="0.0" y="0.0" width="339" height="75"/>
+                                <rect key="frame" x="0.0" y="0.0" width="339" height="55"/>
                                 <connections>
                                     <action selector="onAudioPlayerTap:" destination="czO-xF-dH3" eventType="touchUpInside" id="zVc-C9-kh8"/>
                                 </connections>

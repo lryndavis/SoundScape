@@ -1,6 +1,7 @@
 
 import UIKit
 
+// handles the root (initial) view; if session is valid present base VC, if session is not valid present login vc
 class RootViewController: UIViewController {
 
     lazy private var loginVC: LoginViewController! = {

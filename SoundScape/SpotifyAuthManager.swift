@@ -4,10 +4,11 @@ import Foundation
 
 class SpotifyAuthManager {
 
+    //TODO: move these out
     static let kRedirectURL = "soundscape://returnAfterLogin/"
     static let kUserDefaultsKey = "SpotifySession"
     static let kClientId = "68e2248cfb344dfab559a940dd05f5f2"
-    //todo: temporary
+    //TODO: temporary token refresh implementation
     static let kSwapURL = "http://localhost:1234/swap"
     static let kRefreshURL = "http://localhost:1234/refresh"
     
@@ -29,6 +30,7 @@ class SpotifyAuthManager {
         self.loginURL = auth.spotifyWebAuthenticationURL()
     }
     
+    //check if session is valid, refresh if possible 
      func refreshSession(isSessionValid: @escaping (Bool) -> Void) {
         
         guard let session = SPTAuth.defaultInstance().session else {

@@ -1,6 +1,7 @@
 
 import Foundation
 
+// data source class used for all spotify queries
 class SpotifyDataSource {
     
     var session: SPTSession!
