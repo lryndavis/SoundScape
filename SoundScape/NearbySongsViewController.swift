@@ -23,6 +23,8 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
 
         super.viewDidLoad()
         
+        self.extendedLayoutIncludesOpaqueBars = false
+        
         // navigation bar
         self.navigationItem.title = "Songs near You"
         let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))

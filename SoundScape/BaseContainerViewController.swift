@@ -26,9 +26,13 @@ class BaseContainerViewController: UIViewController {
 extension BaseContainerViewController: UniversalAudioPlayerDelegate {
     
     func showAudioPlayer() {
-        
+    
         if audioPlayerContainerView.isHidden == true {
-            UIView.animate(withDuration: 0.3) {
+            
+            self.audioPlayerContainerView.alpha = 0
+            
+            UIView.animate(withDuration: 0.2) {
+                self.audioPlayerContainerView.alpha = 1
                 self.audioPlayerContainerView.isHidden = false
             }
         }

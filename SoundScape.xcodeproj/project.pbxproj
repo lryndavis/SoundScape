@@ -32,6 +32,7 @@
 		D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */; };
 		D48558161F11E56A00C6AB42 /* SpotifyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48558151F11E56A00C6AB42 /* SpotifyDataSource.swift */; };
 		D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */; };
+		D49251261F16AF9C006D29DB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49251251F16AF9C006D29DB /* TabBarController.swift */; };
 		D49332341EF050B3009B4671 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49332331EF050B3009B4671 /* ArrayExtensions.swift */; };
 		D49332391EF0C085009B4671 /* SongDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49332381EF0C085009B4671 /* SongDetailMapView.swift */; };
 		D493323B1EF0C5D0009B4671 /* SongDetailAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D493323A1EF0C5D0009B4671 /* SongDetailAnnotationView.swift */; };
@@ -84,6 +85,7 @@
 		D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHalfModalView.swift; sourceTree = "<group>"; };
 		D48558151F11E56A00C6AB42 /* SpotifyDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyDataSource.swift; sourceTree = "<group>"; };
 		D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsSearchViewController.swift; sourceTree = "<group>"; };
+		D49251251F16AF9C006D29DB /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		D49332331EF050B3009B4671 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		D49332381EF0C085009B4671 /* SongDetailMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongDetailMapView.swift; sourceTree = "<group>"; };
 		D493323A1EF0C5D0009B4671 /* SongDetailAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongDetailAnnotationView.swift; sourceTree = "<group>"; };
@@ -182,7 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				D4A17E2C1ED7CEF100490D1A /* Services and Managers */,
-				D4A17E2B1ED7CEE300490D1A /* Login */,
+				D4A17E2B1ED7CEE300490D1A /* Root / Login */,
 				D49332351EF05149009B4671 /* Song Search */,
 				D4D1AE181EEE621100D10685 /* Nearby Songs */,
 				D43C327B1EE0B4E400B8E202 /* Universal Mini Audio Player */,
@@ -230,14 +232,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		D4A17E2B1ED7CEE300490D1A /* Login */ = {
+		D4A17E2B1ED7CEE300490D1A /* Root / Login */ = {
 			isa = PBXGroup;
 			children = (
 				D4F5DECF1ED79F53008FA0C1 /* LoginViewController.swift */,
 				D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */,
 				D4391CA01F0479F2002F2D66 /* RootViewController.swift */,
+				D49251251F16AF9C006D29DB /* TabBarController.swift */,
 			);
-			name = Login;
+			name = "Root / Login";
 			sourceTree = "<group>";
 		};
 		D4A17E2C1ED7CEF100490D1A /* Services and Managers */ = {
@@ -441,6 +444,7 @@
 				D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */,
 				D4ABCE0D1EF4A559002C0EF6 /* BaseContainerViewController.swift in Sources */,
 				D4391CA11F0479F2002F2D66 /* RootViewController.swift in Sources */,
+				D49251261F16AF9C006D29DB /* TabBarController.swift in Sources */,
 				D43C32831EE0B53600B8E202 /* AudioHalfModalPresentationController.swift in Sources */,
 				D446ADF91EF237E500D89123 /* UIColorExtensions.swift in Sources */,
 				D4F5DED01ED79F53008FA0C1 /* LoginViewController.swift in Sources */,
