@@ -1,6 +1,6 @@
 # SoundScape
 
-SoundScape is a currently in progress music discovery app that uses the Spotify API to create immersive, location-based listening experiences. 
+SoundScape is an in progress music discovery app that uses the Spotify API to create immersive, location-based listening experiences. 
 
 ### Tech
 
@@ -14,7 +14,7 @@ SoundScape is a currently in progress music discovery app that uses the Spotify 
 
 ### Installation
 
-Because this app uses the Spotify SDK for streaming audio, you will need a valid Spotify account to successfully use the app. 
+Because this app uses the Spotify SDK for streaming audio, you will need a valid Spotify account.
 
 First, install the necessary gems for use with the Sinatra dev server. 
 ```sh
@@ -30,11 +30,12 @@ When running the app in the Xcode, you will be prompted to input your Spotify lo
 
 ### Todos
 
- - Improved error handling and login flow
- - Production server environment 
+ - Improved login flow
+ - Improved error handling
  - Flesh out UI/UX/overall aesthetic 
  - Tests!
  - Add ability to favorite songs and create playlists
  - Add feature for generating roadtrip playlists using location based tracks between start and end destinations
+ - Production server environment 
  - Overall clean up and refactor
  - And more!
