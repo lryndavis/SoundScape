@@ -92,5 +92,45 @@ struct SpotifyUser {
         }
         return nil
     }
+    
+    static func getCurrentUser(session: SPTSession, isFirstLogin: Bool = false, completion: @escaping (_ user: SPTUser?) -> ()) {
+        
+        do {
+            let userRequest: URLRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: session.accessToken)
+            SPTRequest.sharedHandler().perform(userRequest, callback: { (error, response, data) in
+                if error != nil {
+                    print("error fetching user: \(String(describing: error))")
+                }
+                else {
+                    do {
+                        let user: SPTUser = try SPTUser(from: data, with: response)
+                        completion(user)
+                    }
+                    catch {
+                        print("error creating user: \(error)")
+                    }
+                }
+            })
+        }
+        catch {
+            print("error fetching user: \(error)")
+        }
+    }
+    
+    static func getFirebaseUser(sptUser: SPTUser, completion: @escaping (_ user: SpotifyUser?) -> ()) {
+        
+        let ref = FirebaseService.baseRef.child(FirebaseService.FirebasePaths.users.rawValue)
+        ref.queryOrdered(byChild: "canonicalUserName").queryEqual(toValue: sptUser.canonicalUserName)
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            var matchingUsers = [SpotifyUser]()
+            for item in snapshot.children {
+                if let user = SpotifyUser(snapshot: item as! DataSnapshot) {
+                    matchingUsers.append(user)
+                }
+            }
+            let currentUser = matchingUsers.first
+            completion(currentUser)
+        })
+    }
 
 }

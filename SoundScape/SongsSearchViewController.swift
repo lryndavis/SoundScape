@@ -104,7 +104,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.albumImage.image = image
             })
         }
-        return cell
+        return cell 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

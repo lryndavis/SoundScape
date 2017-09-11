@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
             
-            SpotifyManager.getCurrentUser(session: session, isFirstLogin: true, completion: { (user) in
+            SpotifyUser.getCurrentUser(session: session, isFirstLogin: true, completion: { (user) in
                 if let user = user,
                     let uri = user.uri {
                         var newUser = SpotifyUser(canonicalUserName: user.canonicalUserName, uri: uri.absoluteString)

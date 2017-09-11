@@ -27,10 +27,10 @@ class SpotifyManager {
         
         initializePlayer()
         
-        SpotifyManager.getCurrentUser(session: self.session, completion: {
+        SpotifyUser.getCurrentUser(session: self.session, completion: {
             [weak self] (user) in
             if let user = user {
-                SpotifyManager.getFirebaseUser(sptUser: user, completion: {
+                SpotifyUser.getFirebaseUser(sptUser: user, completion: {
                     [weak self] (firebaseUser) in
                     if let strongSelf = self {
                         strongSelf.currentUser = firebaseUser
@@ -48,46 +48,6 @@ class SpotifyManager {
         } catch {
             print("error: failed to login to Spotify player: \(error)")
         } 
-    }
-    
-    static func getCurrentUser(session: SPTSession, isFirstLogin: Bool = false, completion: @escaping (_ user: SPTUser?) -> ()) {
-     
-        do {
-            let userRequest: URLRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: session.accessToken)
-                SPTRequest.sharedHandler().perform(userRequest, callback: { (error, response, data) in
-                    if error != nil {
-                        print("error fetching user: \(String(describing: error))")
-                    }
-                    else {
-                        do {
-                            let user: SPTUser = try SPTUser(from: data, with: response)
-                            completion(user)
-                        }
-                        catch {
-                            print("error creating user: \(error)")
-                        }
-                    }
-                })
-            }
-            catch {
-                print("error fetching user: \(error)")
-            }
-        }
-    
-    static func getFirebaseUser(sptUser: SPTUser, completion: @escaping (_ user: SpotifyUser?) -> ()) {
-        
-        let ref = FirebaseService.baseRef.child(FirebaseService.FirebasePaths.users.rawValue)
-        ref.queryOrdered(byChild: "canonicalUserName").queryEqual(toValue: sptUser.canonicalUserName)
-        ref.observeSingleEvent(of: .value, with: { snapshot in
-            var matchingUsers = [SpotifyUser]()
-            for item in snapshot.children {
-                if let user = SpotifyUser(snapshot: item as! DataSnapshot) {
-                    matchingUsers.append(user)
-                }
-            }
-            let currentUser = matchingUsers.first
-            completion(currentUser)
-        })
     }
     
 }

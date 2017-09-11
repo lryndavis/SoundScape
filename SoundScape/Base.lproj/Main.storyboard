@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="-1110" y="-92"/>
         </scene>
-        <!--Roadtrip-->
+        <!--Songs Search View Controller-->
         <scene sceneID="p2g-Lx-iK3">
             <objects>
                 <viewController storyboardIdentifier="SongsSearchViewController" id="5db-yh-fdK" customClass="SongsSearchViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
@@ -73,7 +73,6 @@
                             <constraint firstItem="dXM-W4-udC" firstAttribute="leading" secondItem="5Pc-Og-KI3" secondAttribute="leading" id="vbh-vg-Sc4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Roadtrip" image="playlist" selectedImage="plus" id="OUE-Oa-JHL"/>
                     <connections>
                         <outlet property="containerStackView" destination="dXM-W4-udC" id="dAm-VE-vWN"/>
                         <outlet property="tableView" destination="OPr-jM-QXH" id="PJp-wD-fkb"/>
@@ -186,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="-1364" y="-888"/>
         </scene>
-        <!--View Controller-->
+        <!--Favorite Tracks View Controller-->
         <scene sceneID="zjI-2I-d7R">
             <objects>
-                <viewController id="syj-Ny-xOY" sceneMemberID="viewController">
+                <viewController id="syj-Ny-xOY" customClass="FavoriteTracksViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8g3-Dp-Gco"/>
                         <viewControllerLayoutGuide type="bottom" id="dDE-M1-Bqz"/>
@@ -197,13 +196,34 @@
                     <view key="view" contentMode="scaleToFill" id="HcD-dD-Lax">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pAn-iW-ekN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bXL-Ns-z00">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pAn-iW-ekN" secondAttribute="trailing" id="3Cr-py-mXS"/>
+                            <constraint firstItem="pAn-iW-ekN" firstAttribute="leading" secondItem="HcD-dD-Lax" secondAttribute="leading" id="Hbh-fr-yZs"/>
+                            <constraint firstItem="dDE-M1-Bqz" firstAttribute="top" secondItem="pAn-iW-ekN" secondAttribute="bottom" id="KsK-jo-ZBq"/>
+                            <constraint firstItem="pAn-iW-ekN" firstAttribute="top" secondItem="8g3-Dp-Gco" secondAttribute="bottom" id="yCY-Jb-mr4"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="star" selectedImage="star" id="etK-j4-lzA"/>
+                    <connections>
+                        <outlet property="containerStackView" destination="pAn-iW-ekN" id="E2t-v8-I90"/>
+                        <outlet property="tableView" destination="bXL-Ns-z00" id="rmP-e6-xTM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecb-fY-zBp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-439" y="-1590"/>
+            <point key="canvasLocation" x="-439.19999999999999" y="-1590.8545727136434"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="GKH-Dh-PIz">
@@ -278,7 +298,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g1i-gc-CqH" customClass="AudioModalNavController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="e7W-jS-GlL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e7W-jS-GlL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <edgeInsets key="layoutMargins" top="0.0" left="8" bottom="0.0" right="8"/>
@@ -357,8 +377,6 @@
     <resources>
         <image name="eye" width="32" height="22"/>
         <image name="map" width="32" height="32"/>
-        <image name="playlist" width="32" height="32"/>
-        <image name="plus" width="32" height="32"/>
         <image name="star" width="32" height="32"/>
     </resources>
 </document>
