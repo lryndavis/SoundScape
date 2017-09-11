@@ -7,6 +7,7 @@ protocol AudioModalViewDelegate {
     func handlePlayNextTrack()
     func handlePlayPreviousTrack()
     func togglePlay()
+    func toggleFavoriteSong()
 }
 
 class AudioHalfModalView: UIView {
@@ -14,13 +15,14 @@ class AudioHalfModalView: UIView {
     let artistLabel = UILabel()
     let songLabel = UILabel()
     let pausePlayButton = UIButton()
-    let verticalContainerStackView = UIStackView()
+    let mainVerticalContainerStackView = UIStackView()
     let controlsHorizontalStackView = UIStackView()
     let albumCoverImageView = UIImageView()
     let forwardButton = UIButton()
     let rewindButton = UIButton()
     let audioButton = ModalAudioButton()
     let progressSlider = UISlider()
+    let favoriteButton = FavoriteSongButton()
     
     var albumCoverImage: UIImage?
     var delegate: AudioModalViewDelegate?
@@ -42,32 +44,51 @@ class AudioHalfModalView: UIView {
         self.backgroundColor = .black
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        verticalContainerStackView.axis = .vertical
-        verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsetsMake(0.0, 16.0, 16.0, 16.0)
-        verticalContainerStackView.spacing = 16.0
+        mainVerticalContainerStackView.axis = .vertical
+        mainVerticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
+        mainVerticalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        mainVerticalContainerStackView.layoutMargins = UIEdgeInsetsMake(0.0, 16.0, 16.0, 16.0)
+        mainVerticalContainerStackView.spacing = 8.0
         
-        self.addSubview(verticalContainerStackView)
-        verticalContainerStackView.anchorSidesTo(self)
+        self.addSubview(mainVerticalContainerStackView)
+        mainVerticalContainerStackView.anchorSidesTo(self)
+        
+        let secondaryVerticalContainerStackView = UIStackView()
+        secondaryVerticalContainerStackView.axis = .vertical
+        secondaryVerticalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        secondaryVerticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
+        mainVerticalContainerStackView.addArrangedSubview(secondaryVerticalContainerStackView)
+        //secondaryVerticalContainerStackView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        
+        let secondaryHorizontalContainerStackView = UIStackView()
+        secondaryHorizontalContainerStackView.axis = .horizontal
+        secondaryHorizontalContainerStackView.distribution = .fill
+        secondaryHorizontalContainerStackView.alignment = .center
+        secondaryHorizontalContainerStackView.isLayoutMarginsRelativeArrangement = true
+        secondaryHorizontalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let songInfoContainerStackView = UIStackView()
         songInfoContainerStackView.axis = .vertical
         songInfoContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         songInfoContainerStackView.isLayoutMarginsRelativeArrangement = true
         songInfoContainerStackView.spacing = 4.0
-        verticalContainerStackView.addArrangedSubview(songInfoContainerStackView)
         
         artistLabel.textColor = .white
         artistLabel.font = UIFont(name: "Helvetica Neue", size: 12.0)
         artistLabel.textAlignment = .left
         
         songLabel.textColor = .white
-        songLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
+        songLabel.font = UIFont(name: "Helvetica Neue", size: 16.0)
         songLabel.textAlignment = .left
         
         songInfoContainerStackView.addArrangedSubview(artistLabel)
         songInfoContainerStackView.addArrangedSubview(songLabel)
+        
+    
+        secondaryVerticalContainerStackView.addArrangedSubview(secondaryHorizontalContainerStackView)
+        secondaryHorizontalContainerStackView.addArrangedSubview(songInfoContainerStackView)
+        secondaryHorizontalContainerStackView.addArrangedSubview(favoriteButton)
+        favoriteButton.addTarget(self, action: #selector(onFavoriteButtonTap), for: .touchUpInside)
         
         addControlsStackView()
     }
@@ -83,7 +104,7 @@ class AudioHalfModalView: UIView {
         controlsHorizontalStackView.layoutMargins = UIEdgeInsetsMake(16.0, 0.0, 16.0, 0.0)
         
         // add buttons
-        verticalContainerStackView.addArrangedSubview(controlsHorizontalStackView)
+        mainVerticalContainerStackView.addArrangedSubview(controlsHorizontalStackView)
         setupControlButtons()
         controlsHorizontalStackView.addArrangedSubview(rewindButton)
         
@@ -94,7 +115,7 @@ class AudioHalfModalView: UIView {
         
         // add audio progress slider
         progressSlider.thumbTintColor = .red
-        verticalContainerStackView.addArrangedSubview(progressSlider)
+        mainVerticalContainerStackView.addArrangedSubview(progressSlider)
         self.bringSubview(toFront: progressSlider)
         progressSlider.addTarget(self, action: #selector(seekTrack), for: .allEvents)
         progressSlider.isContinuous = true
@@ -163,5 +184,10 @@ class AudioHalfModalView: UIView {
     func onPausePlayButtonTap() {
         guard let delegate = delegate else { return }
         delegate.togglePlay()
+    }
+    
+    func onFavoriteButtonTap() {
+        guard let delegate = delegate else { return }
+        delegate.toggleFavoriteSong()
     }
 }

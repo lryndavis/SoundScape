@@ -6,7 +6,6 @@ class LoginViewController: UIViewController {
     var auth = SPTAuth.defaultInstance()!
     var session: SPTSession!
     var loginUrl: URL?
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     @IBOutlet weak var loginButton: UIButton!
 
@@ -26,9 +25,12 @@ class LoginViewController: UIViewController {
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
             
-            SpotifyManager.getCurrentUser(session: session, completion: { (user) in
-                let userRef = FirebaseService.baseRef.child(FirebaseService.ChildRef.songUser.rawValue)
-                userRef.child(user.canonicalUserName).setValue(SpotifyUser.toAnyObject(trackKey: nil, user: user))
+            SpotifyManager.getCurrentUser(session: session, isFirstLogin: true, completion: { (user) in
+                if let user = user,
+                    let uri = user.uri {
+                        var newUser = SpotifyUser(canonicalUserName: user.canonicalUserName, uri: uri.absoluteString)
+                        newUser.createUserInFirebase()
+                }
             })
         }
     }

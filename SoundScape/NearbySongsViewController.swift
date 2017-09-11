@@ -217,14 +217,6 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-//        if let currentTrackId = spotifyManager.currentTrack?.soundScapeId {
-//            if trackItem.soundScapeId == currentTrackId {
-//                cell.songLabel.textColor = UIColor.blue
-//            } else {
-//                cell.songLabel.textColor = UIColor.black
-//            }
-//        }
-        
         if let imageURL = trackItem.albumCoverImageURLSmall {
             ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
@@ -247,7 +239,7 @@ extension NearbySongsViewController: MKMapViewDelegate {
         
         if let userLocation = userLocation.location {
 
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 5000, 5000)
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000)
             mapView.setRegion(coordinateRegion, animated: true)
         }
     }

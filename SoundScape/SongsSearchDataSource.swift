@@ -6,7 +6,7 @@ import GeoFire
 class SongsSearchDataSource: SpotifyDataSource {
     
     var spotifyTracks: [SpotifyTrackExtended]?
-    var ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
+    var ref = FirebaseService.baseRef.child(FirebaseService.FirebasePaths.songs.rawValue)
     
     // query spotify
     func searchSpotify(query: String, completion: @escaping (_ spotifyTracks: [SpotifyTrackExtended]) -> ()) {
@@ -67,7 +67,7 @@ class SongsSearchDataSource: SpotifyDataSource {
         let userKey = user?.canonicalUserName ?? ""
         ref.child(key).setValue(SpotifyTrack.toAnyObject(track: spotifyTrack.track, userKey: userKey, key: key))
 
-        let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+        let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.FirebasePaths.songLocations.rawValue))
     
         geoFire?.setLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), forKey: key)
     }

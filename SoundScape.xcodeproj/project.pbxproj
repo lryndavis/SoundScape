@@ -25,10 +25,11 @@
 		D43C32831EE0B53600B8E202 /* AudioHalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43C32821EE0B53600B8E202 /* AudioHalfModalPresentationController.swift */; };
 		D43C32851EE0B57900B8E202 /* AudioModalNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43C32841EE0B57900B8E202 /* AudioModalNavController.swift */; };
 		D43C32871EE0B58500B8E202 /* AudioModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43C32861EE0B58500B8E202 /* AudioModalViewController.swift */; };
+		D446721B1F33EF220048DDD5 /* FavoriteSongButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446721A1F33EF220048DDD5 /* FavoriteSongButton.swift */; };
 		D446ADF91EF237E500D89123 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446ADF81EF237E500D89123 /* UIColorExtensions.swift */; };
 		D45700571F10200D00E4DC9D /* SpotifyTrackExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45700561F10200D00E4DC9D /* SpotifyTrackExtended.swift */; };
-		D45700591F10203500E4DC9D /* SpotifyUserSimplified.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45700581F10203500E4DC9D /* SpotifyUserSimplified.swift */; };
-		D457005B1F10204800E4DC9D /* SpotifyTrackSimplified.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457005A1F10204800E4DC9D /* SpotifyTrackSimplified.swift */; };
+		D45700591F10203500E4DC9D /* SpotifyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45700581F10203500E4DC9D /* SpotifyUser.swift */; };
+		D457005B1F10204800E4DC9D /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457005A1F10204800E4DC9D /* SpotifyTrack.swift */; };
 		D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */; };
 		D48558161F11E56A00C6AB42 /* SpotifyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48558151F11E56A00C6AB42 /* SpotifyDataSource.swift */; };
 		D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */; };
@@ -45,6 +46,7 @@
 		D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */; };
 		D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */; };
 		D4E11FDC1F06357100708E34 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */; };
+		D4E85FB51F301840009BB58A /* AudioModalSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E85FB41F301840009BB58A /* AudioModalSelectionView.swift */; };
 		D4F5DEBC1ED62326008FA0C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */; };
 		D4F5DEBF1ED78508008FA0C1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */; };
 		D4F5DEC21ED79138008FA0C1 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */; };
@@ -78,10 +80,11 @@
 		D43C32821EE0B53600B8E202 /* AudioHalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHalfModalPresentationController.swift; sourceTree = "<group>"; };
 		D43C32841EE0B57900B8E202 /* AudioModalNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModalNavController.swift; sourceTree = "<group>"; };
 		D43C32861EE0B58500B8E202 /* AudioModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModalViewController.swift; sourceTree = "<group>"; };
+		D446721A1F33EF220048DDD5 /* FavoriteSongButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSongButton.swift; sourceTree = "<group>"; };
 		D446ADF81EF237E500D89123 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		D45700561F10200D00E4DC9D /* SpotifyTrackExtended.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrackExtended.swift; sourceTree = "<group>"; };
-		D45700581F10203500E4DC9D /* SpotifyUserSimplified.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyUserSimplified.swift; sourceTree = "<group>"; };
-		D457005A1F10204800E4DC9D /* SpotifyTrackSimplified.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrackSimplified.swift; sourceTree = "<group>"; };
+		D45700581F10203500E4DC9D /* SpotifyUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyUser.swift; sourceTree = "<group>"; };
+		D457005A1F10204800E4DC9D /* SpotifyTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
 		D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHalfModalView.swift; sourceTree = "<group>"; };
 		D48558151F11E56A00C6AB42 /* SpotifyDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyDataSource.swift; sourceTree = "<group>"; };
 		D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsSearchViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackableSpacerView.swift; sourceTree = "<group>"; };
 		D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalAudioButton.swift; sourceTree = "<group>"; };
 		D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
+		D4E85FB41F301840009BB58A /* AudioModalSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModalSelectionView.swift; sourceTree = "<group>"; };
 		D4F5DEBB1ED62326008FA0C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F5DEBE1ED78508008FA0C1 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D4F5DEC01ED79138008FA0C1 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				D4A17E2B1ED7CEE300490D1A /* Root / Login */,
 				D49332351EF05149009B4671 /* Song Search */,
 				D4D1AE181EEE621100D10685 /* Nearby Songs */,
+				D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */,
 				D43C327B1EE0B4E400B8E202 /* Universal Mini Audio Player */,
 				D41042461EE22952009D620C /* Extensions */,
 				D4A17E2A1ED7CED400490D1A /* Models */,
@@ -207,7 +212,6 @@
 				D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */,
 				D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */,
 				D4ABCE071EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift */,
-				D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */,
 			);
 			name = "Universal Mini Audio Player";
 			sourceTree = "<group>";
@@ -226,8 +230,8 @@
 			children = (
 				D417B5AF1EEE4960000E17F6 /* SpotifyTrackAnnotation.swift */,
 				D45700561F10200D00E4DC9D /* SpotifyTrackExtended.swift */,
-				D45700581F10203500E4DC9D /* SpotifyUserSimplified.swift */,
-				D457005A1F10204800E4DC9D /* SpotifyTrackSimplified.swift */,
+				D45700581F10203500E4DC9D /* SpotifyUser.swift */,
+				D457005A1F10204800E4DC9D /* SpotifyTrack.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -265,6 +269,7 @@
 				D43C327C1EE0B52C00B8E202 /* AudioHalfModalInteractiveTransition.swift */,
 				D43C327D1EE0B52C00B8E202 /* AudioHalfModalTransitionAnimator.swift */,
 				D43C327E1EE0B52C00B8E202 /* AudioHalfModalTransitioningDelegate.swift */,
+				D4E85FB41F301840009BB58A /* AudioModalSelectionView.swift */,
 			);
 			name = "Audio Modal ";
 			sourceTree = "<group>";
@@ -288,6 +293,7 @@
 				D43616921EF3730500FD1070 /* AudioPausePlayButton.swift */,
 				D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */,
 				D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */,
+				D446721A1F33EF220048DDD5 /* FavoriteSongButton.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -426,14 +432,16 @@
 				D43616931EF3730500FD1070 /* AudioPausePlayButton.swift in Sources */,
 				D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */,
 				D45700571F10200D00E4DC9D /* SpotifyTrackExtended.swift in Sources */,
-				D457005B1F10204800E4DC9D /* SpotifyTrackSimplified.swift in Sources */,
+				D457005B1F10204800E4DC9D /* SpotifyTrack.swift in Sources */,
 				D4F7AFA91EF9C56100A6E7ED /* NearbySongsDataSource.swift in Sources */,
 				D4F7AFAB1EF9D06F00A6E7ED /* ImageDataRequest.swift in Sources */,
 				D493323B1EF0C5D0009B4671 /* SongDetailAnnotationView.swift in Sources */,
 				D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */,
 				D43C32871EE0B58500B8E202 /* AudioModalViewController.swift in Sources */,
 				D48558161F11E56A00C6AB42 /* SpotifyDataSource.swift in Sources */,
+				D4E85FB51F301840009BB58A /* AudioModalSelectionView.swift in Sources */,
 				D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */,
+				D446721B1F33EF220048DDD5 /* FavoriteSongButton.swift in Sources */,
 				D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */,
 				D43C32851EE0B57900B8E202 /* AudioModalNavController.swift in Sources */,
 				D43C327F1EE0B52C00B8E202 /* AudioHalfModalInteractiveTransition.swift in Sources */,
@@ -450,7 +458,7 @@
 				D4F5DED01ED79F53008FA0C1 /* LoginViewController.swift in Sources */,
 				D417B5B01EEE4960000E17F6 /* SpotifyTrackAnnotation.swift in Sources */,
 				D41042451EE222E4009D620C /* SpotifyAudioPlayerViewController.swift in Sources */,
-				D45700591F10203500E4DC9D /* SpotifyUserSimplified.swift in Sources */,
+				D45700591F10203500E4DC9D /* SpotifyUser.swift in Sources */,
 				D41042481EE2296D009D620C /* UIViewExtensions.swift in Sources */,
 				D43C32801EE0B52C00B8E202 /* AudioHalfModalTransitionAnimator.swift in Sources */,
 				D4F7AFAD1EF9D51C00A6E7ED /* SongsSearchDataSource.swift in Sources */,

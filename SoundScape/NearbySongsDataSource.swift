@@ -38,7 +38,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         
         let taskCompletionSource = TaskCompletionSource<[String]>()
         var trackKeys: [String] = []
-        let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+        let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.FirebasePaths.songLocations.rawValue))
         
         if let geoFire = geoFire {
             
@@ -62,7 +62,7 @@ class NearbySongsDataSource: SpotifyDataSource {
     func getSpotifyTracksByKey(trackKeys: [String]) -> Task<[SpotifyTrack]> {
         
         let taskCompletionSource = TaskCompletionSource<[SpotifyTrack]>()
-        let ref = FirebaseService.baseRef.child(FirebaseService.ChildRef.songs.rawValue)
+        let ref = FirebaseService.baseRef.child(FirebaseService.FirebasePaths.songs.rawValue)
         let dispatchGroup = DispatchGroup()
         var nearbyTracks: [SpotifyTrack] = []
         
@@ -116,7 +116,7 @@ class NearbySongsDataSource: SpotifyDataSource {
         return taskCompletionSource.task
     }
     
-    // create annotations (map pins) from nearby extended track objects
+    // create annotations (map  pins) from nearby extended track objects
     func getTrackAnnotations(spotifyTracksExtended: [SpotifyTrackExtended]) -> Task<[SpotifyTrackAnnotation]> {
         
         let taskCompletionSource = TaskCompletionSource<[SpotifyTrackAnnotation]>()
@@ -128,7 +128,7 @@ class NearbySongsDataSource: SpotifyDataSource {
             dispatchGroup.enter()
             
             let key = track.soundScapeId
-            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.ChildRef.songLocations.rawValue))
+            let geoFire = GeoFire(firebaseRef: FirebaseService.baseRef.child(FirebaseService.FirebasePaths.songLocations.rawValue))
             
             geoFire?.getLocationForKey(key, withCallback: { (location, error) in
                 if let location = location {

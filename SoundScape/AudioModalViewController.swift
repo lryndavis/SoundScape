@@ -21,6 +21,7 @@ class AudioModalViewController: UIViewController {
         super.viewWillAppear(true)
         
         getAlbumImage()
+        getTrackFavoriteStatus()
     }
     
     func setupView() {
@@ -61,6 +62,18 @@ class AudioModalViewController: UIViewController {
                         strongSelf.audioHalfModalView.audioButton.updateBackgroundImage(image: image)
                     }
                 })
+            }
+        }
+    }
+    
+    func getTrackFavoriteStatus() {
+        
+        if let currentTrack = spotifyManager.currentTrack,
+            let currentUser = spotifyManager.currentUser {
+            if currentTrack.isFavoritedByUser(user: currentUser) {
+                audioHalfModalView.favoriteButton.setButtontoFavorite()
+            } else {
+                audioHalfModalView.favoriteButton.setButtonToUnfavorite()
             }
         }
     }
@@ -120,4 +133,21 @@ extension AudioModalViewController: AudioModalViewDelegate, SpotifyAudioControll
             audioHalfModalView.audioButton.setButtonPause()
         }
     }
+    
+    func toggleFavoriteSong() {
+        
+        if let _ = spotifyManager.currentUser,
+            let currentTrack = spotifyManager.currentTrack,
+            let id = currentTrack.soundScapeId {
+            
+                if currentTrack.isFavoritedByUser(user: spotifyManager.currentUser!) {
+                    spotifyManager.currentUser?.removeFavoriteSong(songId: id)
+                    audioHalfModalView.favoriteButton.setButtonToUnfavorite(animated: true)
+                } else {
+                    spotifyManager.currentUser?.addFavoriteSong(songId: id)
+                    audioHalfModalView.favoriteButton.setButtontoFavorite(animated: true)
+            }
+        }
+    }
+    
 }

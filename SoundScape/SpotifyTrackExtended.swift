@@ -54,4 +54,20 @@ struct SpotifyTrackExtended {
         
         return track.album.largestCover.imageURL.absoluteString
     }
+    
+    func isFavoritedByUser(user: SpotifyUser) -> Bool {
+        
+        guard let _ = user.favoritedSongs else { return false }
+        
+        if let id = self.soundScapeId,
+            let favoriteSongsKeys = user.favoritedSongs {
+            
+            if favoriteSongsKeys.contains(id) {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
 }

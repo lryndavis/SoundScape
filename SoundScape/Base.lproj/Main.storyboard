@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="-1110" y="-92"/>
         </scene>
-        <!--Item-->
+        <!--Roadtrip-->
         <scene sceneID="p2g-Lx-iK3">
             <objects>
                 <viewController storyboardIdentifier="SongsSearchViewController" id="5db-yh-fdK" customClass="SongsSearchViewController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
@@ -73,7 +73,7 @@
                             <constraint firstItem="dXM-W4-udC" firstAttribute="leading" secondItem="5Pc-Og-KI3" secondAttribute="leading" id="vbh-vg-Sc4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="OUE-Oa-JHL"/>
+                    <tabBarItem key="tabBarItem" title="Roadtrip" image="playlist" selectedImage="plus" id="OUE-Oa-JHL"/>
                     <connections>
                         <outlet property="containerStackView" destination="dXM-W4-udC" id="dAm-VE-vWN"/>
                         <outlet property="tableView" destination="OPr-jM-QXH" id="PJp-wD-fkb"/>
@@ -169,7 +169,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="356-Gc-ovA">
             <objects>
-                <tabBarController id="aLo-5a-EKj" sceneMemberID="viewController">
+                <tabBarController id="aLo-5a-EKj" customClass="TabBarController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="6ZQ-L8-lWf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -178,11 +178,51 @@
                     </tabBar>
                     <connections>
                         <segue destination="hg2-Hs-rHl" kind="relationship" relationship="viewControllers" id="TDT-pU-nyD"/>
+                        <segue destination="JnI-vq-MhY" kind="relationship" relationship="viewControllers" id="yob-NM-Rjy"/>
+                        <segue destination="syj-Ny-xOY" kind="relationship" relationship="viewControllers" id="P4b-9J-ua6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="efG-Vu-MnK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1364" y="-888"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="zjI-2I-d7R">
+            <objects>
+                <viewController id="syj-Ny-xOY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8g3-Dp-Gco"/>
+                        <viewControllerLayoutGuide type="bottom" id="dDE-M1-Bqz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HcD-dD-Lax">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="star" selectedImage="star" id="etK-j4-lzA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ecb-fY-zBp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-439" y="-1590"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="GKH-Dh-PIz">
+            <objects>
+                <viewController id="JnI-vq-MhY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ymB-5L-sXK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Szv-mK-OUe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BZr-aN-8jm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="map" id="Ig3-0w-JVv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w5J-Ds-Qon" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-414" y="-890"/>
         </scene>
         <!--Base Container View Controller-->
         <scene sceneID="Pg1-kh-sI6">
@@ -238,9 +278,10 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g1i-gc-CqH" customClass="AudioModalNavController" customModule="SoundScape" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e7W-jS-GlL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="e7W-jS-GlL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <edgeInsets key="layoutMargins" top="0.0" left="8" bottom="0.0" right="8"/>
                         <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -252,11 +293,11 @@
             </objects>
             <point key="canvasLocation" x="-3495" y="-83"/>
         </scene>
-        <!--Near Me-->
+        <!--Navigation Controller-->
         <scene sceneID="vUM-rU-gSF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hg2-Hs-rHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Near Me" image="eye" id="qwR-mr-y65"/>
+                    <tabBarItem key="tabBarItem" title="" image="eye" id="qwR-mr-y65"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="IP5-7r-Hgn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -315,5 +356,9 @@
     </scenes>
     <resources>
         <image name="eye" width="32" height="22"/>
+        <image name="map" width="32" height="32"/>
+        <image name="playlist" width="32" height="32"/>
+        <image name="plus" width="32" height="32"/>
+        <image name="star" width="32" height="32"/>
     </resources>
 </document>
