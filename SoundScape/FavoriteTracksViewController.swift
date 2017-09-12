@@ -1,20 +1,17 @@
 
 import UIKit
 
-class FavoriteTracksViewController: UIViewController {
+class FavoriteTracksViewController: UIViewController, SpotifyAudioPlayable {
     
     @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     
-    var favoriteTracks: [SpotifyTrackExtended]?
+    var spotifyTracks: [SpotifyTrackExtended] = []
     let spotifyManager = SpotifyManager.sharedInstance
     let dataSource = FavoriteTracksDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // navigation bar 
-        self.navigationItem.title = "Favorite Tracks"
         
         // tableView
         tableView.delegate = self
@@ -33,7 +30,7 @@ class FavoriteTracksViewController: UIViewController {
                 if success {
                     if let strongSelf = self,
                         let favoriteTracks = strongSelf.dataSource.favoriteTracks {
-                        strongSelf.favoriteTracks = favoriteTracks
+                        strongSelf.spotifyTracks = favoriteTracks
                         strongSelf.tableView.reloadData()
                     }
                 }
@@ -45,29 +42,25 @@ class FavoriteTracksViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 }
 
 extension FavoriteTracksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if let favoriteTracks = favoriteTracks {
-            return favoriteTracks.count
-        }
-        return 0
+        return spotifyTracks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteSongCell", for: indexPath) as! SongTableViewCell
-        let trackItem = favoriteTracks?[indexPath.row]
+        let trackItem = spotifyTracks[indexPath.row]
         
-        cell.songLabel.text = trackItem?.track.name
-        cell.artistLabel.text = trackItem?.albumArtistDisplayStr
+        cell.songLabel.text = trackItem.track.name
+        cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        if let imageURL = trackItem?.albumCoverImageURLSmall {
+        if let imageURL = trackItem.albumCoverImageURLSmall {
             ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })
@@ -75,7 +68,30 @@ extension FavoriteTracksViewController: UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        
+        let trackItem = spotifyTracks[editActionsForRowAt.row]
+        
+        let removeAction = UITableViewRowAction(style: .normal, title: "") { action, index in
+            if let _ = self.spotifyManager.currentUser,
+                let id = trackItem.soundScapeId {
+                self.spotifyManager.currentUser?.removeFavoriteSong(songId: id)
+                
+                self.spotifyTracks = self.spotifyTracks.filter{ $0.soundScapeId != id }
+                tableView.reloadData()
+            }
+        }
+        
+        removeAction.backgroundColor = .black
+        removeAction.title = "X"
+        
+        return [removeAction]
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let trackItem = spotifyTracks[indexPath.row]
+        startNewQueueFromSelection(sptTrack: trackItem, isSampleSelection: true)
     }
     
 }

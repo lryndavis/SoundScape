@@ -40,6 +40,7 @@
 		D4A17E2E1ED7D34200490D1A /* SpotifyAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */; };
 		D4A3F18F1F6615D100F518CF /* FavoriteTracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A3F18E1F6615D100F518CF /* FavoriteTracksViewController.swift */; };
 		D4A3F1911F66233200F518CF /* FavoriteTracksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A3F1901F66233200F518CF /* FavoriteTracksDataSource.swift */; };
+		D4A3F1941F67573900F518CF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A3F1931F67573900F518CF /* UserProfileViewController.swift */; };
 		D4ABCE081EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE071EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift */; };
 		D4ABCE0A1EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */; };
 		D4ABCE0D1EF4A559002C0EF6 /* BaseContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */; };
@@ -97,6 +98,7 @@
 		D4A17E2D1ED7D34200490D1A /* SpotifyAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAuthManager.swift; sourceTree = "<group>"; };
 		D4A3F18E1F6615D100F518CF /* FavoriteTracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteTracksViewController.swift; sourceTree = "<group>"; };
 		D4A3F1901F66233200F518CF /* FavoriteTracksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteTracksDataSource.swift; sourceTree = "<group>"; };
+		D4A3F1931F67573900F518CF /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		D4ABCE071EF45E6B002C0EF6 /* SpotifyAudioPlayable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAudioPlayable.swift; sourceTree = "<group>"; };
 		D4ABCE091EF45EC0002C0EF6 /* MiniSpotifyAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniSpotifyAudioPlayer.swift; sourceTree = "<group>"; };
 		D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseContainerViewController.swift; sourceTree = "<group>"; };
@@ -194,8 +196,8 @@
 				D4A17E2C1ED7CEF100490D1A /* Services and Managers */,
 				D4A17E2B1ED7CEE300490D1A /* Root / Login */,
 				D49332351EF05149009B4671 /* Track Search  */,
-				D4A3F18B1F66137F00F518CF /* Favorite Tracks  */,
 				D4D1AE181EEE621100D10685 /* Nearby Tracks  */,
+				D4A3F1921F67570F00F518CF /* User Profile */,
 				D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */,
 				D43C327B1EE0B4E400B8E202 /* Universal Mini Audio Player */,
 				D41042461EE22952009D620C /* Extensions */,
@@ -271,6 +273,15 @@
 				D4A3F1901F66233200F518CF /* FavoriteTracksDataSource.swift */,
 			);
 			name = "Favorite Tracks ";
+			sourceTree = "<group>";
+		};
+		D4A3F1921F67570F00F518CF /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D4A3F1931F67573900F518CF /* UserProfileViewController.swift */,
+				D4A3F18B1F66137F00F518CF /* Favorite Tracks  */,
+			);
+			name = "User Profile";
 			sourceTree = "<group>";
 		};
 		D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */ = {
@@ -446,6 +457,7 @@
 				D43616931EF3730500FD1070 /* AudioPausePlayButton.swift in Sources */,
 				D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */,
 				D45700571F10200D00E4DC9D /* SpotifyTrackExtended.swift in Sources */,
+				D4A3F1941F67573900F518CF /* UserProfileViewController.swift in Sources */,
 				D457005B1F10204800E4DC9D /* SpotifyTrack.swift in Sources */,
 				D4F7AFA91EF9C56100A6E7ED /* NearbySongsDataSource.swift in Sources */,
 				D4F7AFAB1EF9D06F00A6E7ED /* ImageDataRequest.swift in Sources */,
