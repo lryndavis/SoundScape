@@ -120,8 +120,7 @@ struct SpotifyUser {
     static func getFirebaseUser(sptUser: SPTUser, completion: @escaping (_ user: SpotifyUser?) -> ()) {
         
         let ref = FirebaseService.baseRef.child(FirebaseService.FirebasePaths.users.rawValue)
-        ref.queryOrdered(byChild: "canonicalUserName").queryEqual(toValue: sptUser.canonicalUserName)
-        ref.observeSingleEvent(of: .value, with: { snapshot in
+        ref.queryOrdered(byChild: "canonicalUserName").queryEqual(toValue: sptUser.canonicalUserName).observe(.value, with: { snapshot in
             var matchingUsers = [SpotifyUser]()
             for item in snapshot.children {
                 if let user = SpotifyUser(snapshot: item as! DataSnapshot) {
