@@ -53,7 +53,7 @@ class AudioModalViewController: UIViewController {
         
         if let currentTrack = spotifyManager.currentTrack {
             if let imageURL = currentTrack.albumCoverImageURLLarge {
-                ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { [weak self] (image)  in
+                ImageDataRequest.getImageData(imageUrl: imageURL, completion: { [weak self] (image)  in
                     if let strongSelf = self {
                         
                         guard let image = image else { return }

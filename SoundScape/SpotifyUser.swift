@@ -45,6 +45,11 @@ struct SpotifyUser {
         self.firebaseRef?.removeValue()
     }
     
+    static func getUserProfileImage(user: SPTUser) -> String? {
+        
+        return user.largestImage.imageURL.absoluteString
+    }
+    
     mutating func createUserInFirebase() {
         
         let reference = Database.database().reference(withPath: FirebaseService.FirebasePaths.users.rawValue)

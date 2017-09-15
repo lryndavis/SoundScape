@@ -31,10 +31,24 @@ class SpotifyDataSource {
         }
     }
     
-    // get SPTUser from simplified user object
-    func getSPTUser(track: SpotifyTrack, completion: @escaping (_ user: SPTUser) -> ()) {
+    // get SPTUser from spotify track (placed by user)
+    func getSPTUserByTrack(track: SpotifyTrack, completion: @escaping (_ user: SPTUser) -> ()) {
         
         SPTUser.request(track.placedByUser, withAccessToken: session.accessToken) {
+            error, response in
+            if let error = error {
+                print("error getting SPTUser: \(error)")
+            } else {
+                guard let spotifyUser = response as? SPTUser else { return }
+                completion(spotifyUser)
+            }
+        }
+    }
+    
+    // query spotify user by username
+    func getSPTUserByUsername(username: String, completion: @escaping (_ user: SPTUser) -> ()) {
+        
+        SPTUser.request(username, withAccessToken: session.accessToken) {
             error, response in
             if let error = error {
                 print("error getting SPTUser: \(error)")
@@ -112,7 +126,7 @@ class SpotifyDataSource {
             self.getSPTTrack(track: nearbyTrack, completion: {
                 track in
                 
-                self.getSPTUser(track: nearbyTrack, completion: {
+                self.getSPTUserByTrack(track: nearbyTrack, completion: {
                     user in
                     
                     let newSpotifyTrackExtended = SpotifyTrackExtended(track: track, user: user, soundScapeId: nearbyTrack.id, trackType: .soundScapeTrack)

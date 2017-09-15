@@ -6,8 +6,8 @@ import Alamofire
 
 struct ImageDataRequest {
     
-    // load album cover image data 
-    static func getAlbumCoverImage(imageUrl: String, completion: @escaping (_ image: UIImage?) -> ()) {
+    // load image via spotify URL
+    static func getImageData(imageUrl: String, completion: @escaping (_ image: UIImage?) -> ()) {
         
         let dispatchGroup = DispatchGroup()
         var newImage: UIImage?

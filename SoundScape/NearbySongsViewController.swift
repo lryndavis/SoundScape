@@ -218,7 +218,7 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.selectionStyle = .none
         
         if let imageURL = trackItem.albumCoverImageURLSmall {
-            ImageDataRequest.getAlbumCoverImage(imageUrl: imageURL, completion: { (image) in
+            ImageDataRequest.getImageData(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })
         }

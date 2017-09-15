@@ -100,7 +100,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         
         let url = trackItem.albumCoverImageURLSmall
         if let url = url {
-            ImageDataRequest.getAlbumCoverImage(imageUrl: url, completion: { (image) in
+            ImageDataRequest.getImageData(imageUrl: url, completion: { (image) in
                 cell.albumImage.image = image
             })
         }

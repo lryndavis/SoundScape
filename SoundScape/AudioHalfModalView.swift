@@ -57,8 +57,8 @@ class AudioHalfModalView: UIView {
         secondaryVerticalContainerStackView.axis = .vertical
         secondaryVerticalContainerStackView.isLayoutMarginsRelativeArrangement = true
         secondaryVerticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
+    
         mainVerticalContainerStackView.addArrangedSubview(secondaryVerticalContainerStackView)
-        //secondaryVerticalContainerStackView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         
         let secondaryHorizontalContainerStackView = UIStackView()
         secondaryHorizontalContainerStackView.axis = .horizontal

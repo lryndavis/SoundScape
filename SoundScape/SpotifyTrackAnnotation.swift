@@ -2,7 +2,7 @@
 import Foundation
 import MapKit
 
-// custom annotation (map pin) that contains a spotify track objects
+// custom annotation (map pin) that contains a spotify track object
 class SpotifyTrackAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
