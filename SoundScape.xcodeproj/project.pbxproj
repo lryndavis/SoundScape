@@ -10,6 +10,8 @@
 		BBF3A4B0F5F6E41F467F0753 /* Pods_SoundScape.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6797C15E936E333C697E1AD /* Pods_SoundScape.framework */; };
 		D40CD97E1F6B2EE10082D089 /* UserProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40CD97D1F6B2EE10082D089 /* UserProfileDataSource.swift */; };
 		D40DB85D1F6C433B009542C7 /* LogoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40DB85C1F6C433B009542C7 /* LogoutButton.swift */; };
+		D40DB85F1F6C7791009542C7 /* UISegmentedControlExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40DB85E1F6C7791009542C7 /* UISegmentedControlExtensions.swift */; };
+		D40DB8611F6C77D7009542C7 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40DB8601F6C77D7009542C7 /* UIImageExtensions.swift */; };
 		D41042451EE222E4009D620C /* SpotifyAudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */; };
 		D41042481EE2296D009D620C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41042471EE2296D009D620C /* UIViewExtensions.swift */; };
 		D417B5B01EEE4960000E17F6 /* SpotifyTrackAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D417B5AF1EEE4960000E17F6 /* SpotifyTrackAnnotation.swift */; };
@@ -70,6 +72,8 @@
 		8AEDADC3142FA1CEF2C657CA /* Pods-SoundScape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundScape.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundScape/Pods-SoundScape.release.xcconfig"; sourceTree = "<group>"; };
 		D40CD97D1F6B2EE10082D089 /* UserProfileDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileDataSource.swift; sourceTree = "<group>"; };
 		D40DB85C1F6C433B009542C7 /* LogoutButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutButton.swift; sourceTree = "<group>"; };
+		D40DB85E1F6C7791009542C7 /* UISegmentedControlExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISegmentedControlExtensions.swift; sourceTree = "<group>"; };
+		D40DB8601F6C77D7009542C7 /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAudioPlayerViewController.swift; sourceTree = "<group>"; };
 		D41042471EE2296D009D620C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		D417B5AF1EEE4960000E17F6 /* SpotifyTrackAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrackAnnotation.swift; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				D49332331EF050B3009B4671 /* ArrayExtensions.swift */,
 				D446ADF81EF237E500D89123 /* UIColorExtensions.swift */,
 				D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */,
+				D40DB85E1F6C7791009542C7 /* UISegmentedControlExtensions.swift */,
+				D40DB8601F6C77D7009542C7 /* UIImageExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +491,7 @@
 				D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */,
 				D43C32871EE0B58500B8E202 /* AudioModalViewController.swift in Sources */,
 				D48558161F11E56A00C6AB42 /* SpotifyDataSource.swift in Sources */,
+				D40DB8611F6C77D7009542C7 /* UIImageExtensions.swift in Sources */,
 				D4E85FB51F301840009BB58A /* AudioModalSelectionView.swift in Sources */,
 				D4E11FDA1F06018D00708E34 /* ModalAudioButton.swift in Sources */,
 				D40DB85D1F6C433B009542C7 /* LogoutButton.swift in Sources */,
@@ -512,6 +519,7 @@
 				D45700591F10203500E4DC9D /* SpotifyUser.swift in Sources */,
 				D41042481EE2296D009D620C /* UIViewExtensions.swift in Sources */,
 				D43C32801EE0B52C00B8E202 /* AudioHalfModalTransitionAnimator.swift in Sources */,
+				D40DB85F1F6C7791009542C7 /* UISegmentedControlExtensions.swift in Sources */,
 				D40CD97E1F6B2EE10082D089 /* UserProfileDataSource.swift in Sources */,
 				D4F7AFAD1EF9D51C00A6E7ED /* SongsSearchDataSource.swift in Sources */,
 				D43B13551ED61B2F00A78A77 /* AppDelegate.swift in Sources */,

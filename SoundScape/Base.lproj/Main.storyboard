@@ -197,36 +197,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HHD-rj-ge5">
-                                <rect key="frame" x="0.0" y="113" width="375" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ysW-BL-bDt"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                            </segmentedControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJ3-xK-H1u">
-                                <rect key="frame" x="0.0" y="161" width="375" height="437"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5an-Oz-Fhh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mJ3-xK-H1u" firstAttribute="top" secondItem="HHD-rj-ge5" secondAttribute="bottom" constant="8" symbolic="YES" id="1y9-G0-Xc8"/>
-                            <constraint firstAttribute="trailing" secondItem="HHD-rj-ge5" secondAttribute="trailing" id="94D-zP-LbC"/>
-                            <constraint firstItem="HHD-rj-ge5" firstAttribute="leading" secondItem="HcD-dD-Lax" secondAttribute="leading" id="Iov-hB-ktb"/>
-                            <constraint firstItem="dDE-M1-Bqz" firstAttribute="top" secondItem="HHD-rj-ge5" secondAttribute="bottom" constant="445" id="Mfq-Us-aP6"/>
-                            <constraint firstItem="mJ3-xK-H1u" firstAttribute="leading" secondItem="HHD-rj-ge5" secondAttribute="leading" id="O1A-yj-WBu"/>
-                            <constraint firstItem="mJ3-xK-H1u" firstAttribute="bottom" secondItem="dDE-M1-Bqz" secondAttribute="top" id="SE7-5d-aFJ"/>
-                            <constraint firstItem="mJ3-xK-H1u" firstAttribute="trailing" secondItem="HHD-rj-ge5" secondAttribute="trailing" id="Syw-FF-bSv"/>
+                            <constraint firstItem="dDE-M1-Bqz" firstAttribute="top" secondItem="5an-Oz-Fhh" secondAttribute="bottom" id="62U-5K-hbp"/>
+                            <constraint firstItem="5an-Oz-Fhh" firstAttribute="leading" secondItem="HcD-dD-Lax" secondAttribute="leading" id="n8I-62-UCC"/>
+                            <constraint firstAttribute="trailing" secondItem="5an-Oz-Fhh" secondAttribute="trailing" id="p4M-gD-XMA"/>
+                            <constraint firstItem="5an-Oz-Fhh" firstAttribute="top" secondItem="8g3-Dp-Gco" secondAttribute="bottom" id="txH-af-guX"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="star" selectedImage="star" id="etK-j4-lzA"/>
                     <connections>
-                        <outlet property="mainContainerView" destination="mJ3-xK-H1u" id="QeA-St-Iju"/>
-                        <outlet property="segmentedControl" destination="HHD-rj-ge5" id="9hI-I4-JlK"/>
+                        <outlet property="mainVerticalContainerStackView" destination="5an-Oz-Fhh" id="p9o-r1-brh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecb-fY-zBp" userLabel="First Responder" sceneMemberID="firstResponder"/>
