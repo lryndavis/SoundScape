@@ -12,7 +12,7 @@ class FavoriteTracksDataSource: SpotifyDataSource {
         
         self.getSpotifyTracksByKey(trackKeys: trackKeys).continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
             
-            return self.getExtendedSpotifyTracks(nearbyTracks: tracks)
+            return self.getExtendedSpotifyTracks(tracks: tracks)
             
         }.continueOnSuccessWith { extendedTracks in
             

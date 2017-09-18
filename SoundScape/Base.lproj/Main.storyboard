@@ -248,12 +248,33 @@
                     <view key="view" contentMode="scaleToFill" id="hiX-W0-cNA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rvb-xo-qWP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CjO-Cw-ECw">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rvb-xo-qWP" firstAttribute="top" secondItem="hiX-W0-cNA" secondAttribute="top" id="Msb-ev-NiP"/>
+                            <constraint firstAttribute="trailing" secondItem="rvb-xo-qWP" secondAttribute="trailing" id="OQd-5J-4rU"/>
+                            <constraint firstItem="MtH-wf-Qrp" firstAttribute="top" secondItem="rvb-xo-qWP" secondAttribute="bottom" id="p0f-ES-znT"/>
+                            <constraint firstItem="rvb-xo-qWP" firstAttribute="leading" secondItem="hiX-W0-cNA" secondAttribute="leading" id="zc4-y9-5HA"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="containerStackView" destination="rvb-xo-qWP" id="Syg-Xc-D5I"/>
+                        <outlet property="tableView" destination="CjO-Cw-ECw" id="kII-sb-6jM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYP-Ix-gZ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="445" y="-1167"/>
+            <point key="canvasLocation" x="444" y="-1167.1664167916042"/>
         </scene>
         <!--Base Container View Controller-->
         <scene sceneID="Pg1-kh-sI6">

@@ -45,6 +45,7 @@ struct SpotifyUser {
         self.firebaseRef?.removeValue()
     }
     
+    //TODO: fix this 
     static func getUserProfileImage(user: SPTUser) -> String? {
         
         return user.largestImage.imageURL.absoluteString

@@ -67,6 +67,7 @@ class UserProfileView: UIView {
         
         userImageView.image = userImage
         usernameLabel.text = username
+        usernameLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
     }
     
 }

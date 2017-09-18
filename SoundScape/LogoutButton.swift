@@ -14,10 +14,10 @@ class LogoutButton: UIButton {
     
     fileprivate func buildView() {
         
-        self.widthAnchor.constraint(equalToConstant: 20.0).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 22.0).isActive = true
         self.imageView?.contentMode = .scaleAspectFit
         
-        let logoutImage = UIImage(named: "favorite-solid.png")
+        let logoutImage = UIImage(named: "settings.png")
         self.setImage(logoutImage, for: .normal)
     }
 

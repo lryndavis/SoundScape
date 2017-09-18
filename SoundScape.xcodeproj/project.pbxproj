@@ -15,6 +15,7 @@
 		D41042451EE222E4009D620C /* SpotifyAudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */; };
 		D41042481EE2296D009D620C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41042471EE2296D009D620C /* UIViewExtensions.swift */; };
 		D417B5B01EEE4960000E17F6 /* SpotifyTrackAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D417B5AF1EEE4960000E17F6 /* SpotifyTrackAnnotation.swift */; };
+		D4338BD51F706734004E4E85 /* SoundscapeTracksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4338BD41F706734004E4E85 /* SoundscapeTracksDataSource.swift */; };
 		D43616931EF3730500FD1070 /* AudioPausePlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43616921EF3730500FD1070 /* AudioPausePlayButton.swift */; };
 		D4391CA11F0479F2002F2D66 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4391CA01F0479F2002F2D66 /* RootViewController.swift */; };
 		D43B13551ED61B2F00A78A77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B13541ED61B2F00A78A77 /* AppDelegate.swift */; };
@@ -77,6 +78,7 @@
 		D41042441EE222E4009D620C /* SpotifyAudioPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyAudioPlayerViewController.swift; sourceTree = "<group>"; };
 		D41042471EE2296D009D620C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		D417B5AF1EEE4960000E17F6 /* SpotifyTrackAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyTrackAnnotation.swift; sourceTree = "<group>"; };
+		D4338BD41F706734004E4E85 /* SoundscapeTracksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundscapeTracksDataSource.swift; sourceTree = "<group>"; };
 		D43616921EF3730500FD1070 /* AudioPausePlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPausePlayButton.swift; sourceTree = "<group>"; };
 		D4391CA01F0479F2002F2D66 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		D43B13511ED61B2F00A78A77 /* SoundScape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundScape.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,16 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		D41E235D1F6F152A00BFBA86 /* User Profile Landing */ = {
+			isa = PBXGroup;
+			children = (
+				D4A3F1931F67573900F518CF /* UserProfileViewController.swift */,
+				D4A3F1981F677F6700F518CF /* UserProfileView.swift */,
+				D40CD97D1F6B2EE10082D089 /* UserProfileDataSource.swift */,
+			);
+			name = "User Profile Landing";
+			sourceTree = "<group>";
+		};
 		D43B13481ED61B2F00A78A77 = {
 			isa = PBXGroup;
 			children = (
@@ -280,33 +292,32 @@
 			name = "Services and Managers";
 			sourceTree = "<group>";
 		};
-		D4A3F18B1F66137F00F518CF /* Favorite Tracks  */ = {
+		D4A3F18B1F66137F00F518CF /* User Favorite Tracks  */ = {
 			isa = PBXGroup;
 			children = (
 				D4A3F18E1F6615D100F518CF /* FavoriteTracksViewController.swift */,
 				D4A3F1901F66233200F518CF /* FavoriteTracksDataSource.swift */,
 			);
-			name = "Favorite Tracks ";
+			name = "User Favorite Tracks ";
 			sourceTree = "<group>";
 		};
 		D4A3F1921F67570F00F518CF /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
-				D4A3F1931F67573900F518CF /* UserProfileViewController.swift */,
-				D40CD97D1F6B2EE10082D089 /* UserProfileDataSource.swift */,
-				D4A3F1981F677F6700F518CF /* UserProfileView.swift */,
-				D4A3F1951F676B2200F518CF /* Soundscape Tracks  */,
-				D4A3F18B1F66137F00F518CF /* Favorite Tracks  */,
+				D41E235D1F6F152A00BFBA86 /* User Profile Landing */,
+				D4A3F1951F676B2200F518CF /* User Soundscape Tracks  */,
+				D4A3F18B1F66137F00F518CF /* User Favorite Tracks  */,
 			);
 			name = "User Profile";
 			sourceTree = "<group>";
 		};
-		D4A3F1951F676B2200F518CF /* Soundscape Tracks  */ = {
+		D4A3F1951F676B2200F518CF /* User Soundscape Tracks  */ = {
 			isa = PBXGroup;
 			children = (
 				D4A3F1961F676B4700F518CF /* SoundScapeTracksViewController.swift */,
+				D4338BD41F706734004E4E85 /* SoundscapeTracksDataSource.swift */,
 			);
-			name = "Soundscape Tracks ";
+			name = "User Soundscape Tracks ";
 			sourceTree = "<group>";
 		};
 		D4ABCE0B1EF462BF002C0EF6 /* Audio Modal  */ = {
@@ -479,6 +490,7 @@
 				D43B13571ED61B2F00A78A77 /* NearbySongsViewController.swift in Sources */,
 				D43C32811EE0B52C00B8E202 /* AudioHalfModalTransitioningDelegate.swift in Sources */,
 				D4D1AE281EEF453600D10685 /* NoResultsView.swift in Sources */,
+				D4338BD51F706734004E4E85 /* SoundscapeTracksDataSource.swift in Sources */,
 				D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */,
 				D43616931EF3730500FD1070 /* AudioPausePlayButton.swift in Sources */,
 				D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */,
