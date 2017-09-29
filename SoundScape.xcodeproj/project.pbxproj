@@ -56,7 +56,6 @@
 		D4ABCE0D1EF4A559002C0EF6 /* BaseContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */; };
 		D4B87A0C1F7E037000289495 /* SoundscapeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B87A0B1F7E037000289495 /* SoundscapeError.swift */; };
 		D4B87A0E1F7E0B6D00289495 /* SpotifyApiRequestTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B87A0D1F7E0B6D00289495 /* SpotifyApiRequestTasks.swift */; };
-		D4B87A101F7E0D4100289495 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B87A0F1F7E0D4100289495 /* DictionaryExtensions.swift */; };
 		D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */; };
 		D4D1AE281EEF453600D10685 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D1AE271EEF453600D10685 /* NoResultsView.swift */; };
 		D4E11FD81F05C81000708E34 /* StackableSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */; };
@@ -127,7 +126,6 @@
 		D4ABCE0C1EF4A559002C0EF6 /* BaseContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseContainerViewController.swift; sourceTree = "<group>"; };
 		D4B87A0B1F7E037000289495 /* SoundscapeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundscapeError.swift; sourceTree = "<group>"; };
 		D4B87A0D1F7E0B6D00289495 /* SpotifyApiRequestTasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyApiRequestTasks.swift; sourceTree = "<group>"; };
-		D4B87A0F1F7E0D4100289495 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		D4D1AE191EEE622C00D10685 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		D4D1AE271EEF453600D10685 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
 		D4E11FD71F05C81000708E34 /* StackableSpacerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackableSpacerView.swift; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				D4E11FDB1F06357100708E34 /* UIButtonExtensions.swift */,
 				D40DB85E1F6C7791009542C7 /* UISegmentedControlExtensions.swift */,
 				D40DB8601F6C77D7009542C7 /* UIImageExtensions.swift */,
-				D4B87A0F1F7E0D4100289495 /* DictionaryExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -515,7 +512,6 @@
 				D43616931EF3730500FD1070 /* AudioPausePlayButton.swift in Sources */,
 				D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */,
 				D45700571F10200D00E4DC9D /* SpotifyTrackExtended.swift in Sources */,
-				D4B87A101F7E0D4100289495 /* DictionaryExtensions.swift in Sources */,
 				D4A3F1941F67573900F518CF /* UserProfileViewController.swift in Sources */,
 				D457005B1F10204800E4DC9D /* SpotifyTrack.swift in Sources */,
 				D4F7AFA91EF9C56100A6E7ED /* NearbySongsDataSource.swift in Sources */,

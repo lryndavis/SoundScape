@@ -54,15 +54,21 @@ extension SpotifyApiTask {
     }
     
     //unbox nested json arrays 
-    static func createUnboxedArray<T>(obj: Any, key: String) throws -> [T] where T: Unboxable {
+    static func createUnboxedArray<T>(obj: Any, key: String, isNestedAtKeyPath: Bool = false) throws -> [T] where T: Unboxable {
     
         var result: [T]?
         guard let resultDict = obj as? [String: Any] else {
             throw SoundscapeError.couldNotCastAsDictionary
         }
+        
         do {
-            result = try unbox(dictionary: resultDict, atKey: key)
+            if isNestedAtKeyPath {
+                result = try unbox(dictionary: resultDict, atKeyPath: key)
+            } else {
+                result = try unbox(dictionary: resultDict, atKey: key)
+            }
         } catch {
+            print(error)
             throw SoundscapeError.couldNotUnboxAtKey
         }
         
@@ -72,7 +78,8 @@ extension SpotifyApiTask {
             throw SoundscapeError.unknownUnboxError
         }
     }
+    
 }
-
+ 
 
 
