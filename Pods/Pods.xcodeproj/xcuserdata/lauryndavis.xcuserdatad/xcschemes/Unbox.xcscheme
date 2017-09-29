@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7391C7B0033BD5E160909D9B71CCEFD1'
-               BlueprintName = 'Pulsator'
+               BlueprintIdentifier = '7F25E0285474B3343D377379B02D556F'
+               BlueprintName = 'Unbox'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pulsator.framework'>
+               BuildableName = 'Unbox.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

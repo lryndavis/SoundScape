@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PulsatorVersionNumber;
-FOUNDATION_EXPORT const unsigned char PulsatorVersionString[];
+FOUNDATION_EXPORT double UnboxVersionNumber;
+FOUNDATION_EXPORT const unsigned char UnboxVersionString[];
 

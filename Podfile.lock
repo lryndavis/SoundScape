@@ -24,7 +24,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
-  - Pulsator (0.3.0)
+  - Unbox (2.4.0)
 
 DEPENDENCIES:
   - AlamofireImage (~> 3.1)
@@ -32,7 +32,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
-  - Pulsator
+  - Unbox
 
 EXTERNAL SOURCES:
   GeoFire:
@@ -54,8 +54,8 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   GeoFire: 02f02683e09367c2eee073c6b09c794da19833ee
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  Pulsator: 0191f14f7ab82d6dbde6fdbde42036f07a4450e3
+  Unbox: c8b2ab69d3337597b4a3f47a0538807dc12db670
 
-PODFILE CHECKSUM: 9eac83180714e5cc6452e69bdefd1477554d4107
+PODFILE CHECKSUM: 1236405ffe6db07480ef6e71116215be636b202e
 
 COCOAPODS: 1.2.1
