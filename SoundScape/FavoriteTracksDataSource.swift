@@ -2,7 +2,7 @@
 import Foundation
 import BoltsSwift
 
-class FavoriteTracksDataSource: SpotifyDataSource {
+class FavoriteTracksDataSource {
     
     var favoriteTracks: [SpotifyTrackExtended]?
     
@@ -10,9 +10,9 @@ class FavoriteTracksDataSource: SpotifyDataSource {
         
         guard let trackKeys = trackKeys else { return }
         
-        self.getSpotifyTracksByKey(trackKeys: trackKeys).continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
+        FirebaseTask.getSpotifyTracksByKey(trackKeys: trackKeys).continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
             
-            return self.getExtendedSpotifyTracks(tracks: tracks)
+            return SpotifyApiTask.getExtendedSpotifyTracks(nearbyTracks: tracks)
             
         }.continueOnSuccessWith { extendedTracks in
             

@@ -9,6 +9,7 @@ enum SpotifyApiPath {
     case tracks
     case user (Id)
     case search
+    case currentUser
     
     func path() -> String {
         switch self {
@@ -21,6 +22,8 @@ enum SpotifyApiPath {
             return "/users/\(id)"
         case .search:
             return "/search/"
+        case .currentUser:
+            return "/me"
         }
     }
     

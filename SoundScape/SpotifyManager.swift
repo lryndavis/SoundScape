@@ -1,6 +1,7 @@
 
 import Foundation
 import Firebase
+import BoltsSwift
 
 // handles the spotify player singleton
 // grabs the current spotify user, used when adding new tracks to location 
@@ -11,7 +12,7 @@ class SpotifyManager {
     
     var player = SPTAudioStreamingController.sharedInstance()
     var session: SPTSession!
-    var currentUser: SpotifyUser?
+    var currentUser: SoundScapeUser?
     var trackQueue: [SpotifyTrackExtended]?
     var trackIndex: Int = 0
     
@@ -27,19 +28,25 @@ class SpotifyManager {
         
         initializePlayer()
         
-        SpotifyUser.getCurrentUser(session: self.session, completion: {
-            [weak self] (user) in
-            if let user = user {
-                SpotifyUser.getFirebaseUser(sptUser: user, completion: {
-                    [weak self] (firebaseUser) in
-                    if let strongSelf = self {
-                        strongSelf.currentUser = firebaseUser
-                    }
-                })
+        loadCurrentUserData(completion: { [weak self] (currentUser) in
+            if let strongSelf = self {
+                strongSelf.currentUser = currentUser
             }
         })
     }
-
+    
+    private func loadCurrentUserData(completion: @escaping (SoundScapeUser) -> ()) {
+        
+        SpotifyApiTask.readCurrentSpotifyUser().continueOnSuccessWithTask { currentUser -> Task<SoundScapeUser> in
+            
+            return FirebaseTask.getFirebaseUser(userId: currentUser.id)
+            
+        }.continueOnSuccessWith { currentFirebaseUser in
+                
+            completion(currentFirebaseUser)
+        }
+    }
+    
     private func initializePlayer() {
         
         do {
@@ -59,7 +66,7 @@ extension SpotifyManager {
     }
     
     public var currentTrackId: String? {
-        return self.trackQueue?[safe: self.trackIndex]?.track.identifier
+        return self.trackQueue?[safe: self.trackIndex]?.track.id
     }
     
     public var isPlaying: Bool {
@@ -69,7 +76,7 @@ extension SpotifyManager {
      public func playTrack() {
 
         if let currentTrack = self.currentTrack {
-            self.player?.playSpotifyURI(currentTrack.track.uri.absoluteString, startingWith: 0, startingWithPosition: 0, callback: { error in
+            self.player?.playSpotifyURI(currentTrack.track.uri, startingWith: 0, startingWithPosition: 0, callback: { error in
                 if error != nil {
                     print("error playing track: \(String(describing: error))")
                 } else {

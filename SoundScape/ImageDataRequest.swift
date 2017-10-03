@@ -1,6 +1,5 @@
 
 import Foundation
-import AlamofireImage
 import Alamofire
 
 

@@ -126,9 +126,10 @@ class AudioHalfModalView: UIView {
         
         if !isDragging {
             guard let currentTrack = spotifyManager.currentTrack else { return }
-            let duration = currentTrack.track.duration
+            let duration = currentTrack.track.durationMs
 
-            progressSlider.value = Float(position / duration)
+            //TODO: redo based on new api object data
+            //progressSlider.value = Float(position / duration)
         }
     }
     
@@ -145,8 +146,10 @@ class AudioHalfModalView: UIView {
         
         if !isDragging {
             guard let currentTrack = spotifyManager.currentTrack else { return }
-            let targetTime = currentTrack.track.duration * Double(progressSlider.value)
-            spotifyManager.player?.seek(to: TimeInterval(targetTime), callback: nil)
+            
+            //TODO: redo based on new api object data
+//            let targetTime = currentTrack.track.durationMs * Double(progressSlider.value)
+//            spotifyManager.player?.seek(to: TimeInterval(targetTime), callback: nil)
         }
     }
     

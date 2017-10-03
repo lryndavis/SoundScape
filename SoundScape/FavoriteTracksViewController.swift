@@ -41,8 +41,7 @@ class FavoriteTracksViewController: UIViewController, SpotifyAudioPlayable {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
+    }    
 }
 
 extension FavoriteTracksViewController: UITableViewDelegate, UITableViewDataSource {
@@ -60,7 +59,7 @@ extension FavoriteTracksViewController: UITableViewDelegate, UITableViewDataSour
         cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        if let imageURL = trackItem.albumCoverImageURLSmall {
+        if let imageURL = trackItem.track.smallestImageUrl {
             ImageDataRequest.getImageData(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })

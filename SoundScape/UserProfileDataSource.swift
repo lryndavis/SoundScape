@@ -1,17 +1,18 @@
 
 import Foundation
+import BoltsSwift
 
-class UserProfileDataSource: SpotifyDataSource {
+class UserProfileDataSource {
     
-    var sptUser: SPTUser?
+    var currentUser: CurrentSpotifyUser?
     
-    func loadData(username: String, completion: @escaping (Bool) -> ()) {
+    func loadData(completion: @escaping (Bool) -> ()) {
         
-        getSPTUserByUsername(username: username, completion: {
-            user in
-            self.sptUser = user
+        SpotifyApiTask.readCurrentSpotifyUser().continueOnSuccessWith { currentUser in
+            
+            self.currentUser = currentUser
             completion(true)
-        })
+        } 
     }
     
 }

@@ -10,8 +10,7 @@ enum SoundscapeError: Error {
     case couldNotUnboxAtKey
     case unknownUnboxError
     
-    //api request errors 
-    
+    //TODO: api request errors 
     
     var errorDescription: String {
         switch self {

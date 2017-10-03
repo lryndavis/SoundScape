@@ -1,7 +1,6 @@
 
 import UIKit
 import MapKit
-import Pulsator
 
 let kMapPinImage = UIImage(named: "headphones")!
 

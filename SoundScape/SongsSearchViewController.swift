@@ -36,31 +36,45 @@ class SongsSearchViewController: UIViewController, SpotifyAudioPlayable {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
     }
-    
-    // prevent search controller warning
+
     deinit {
         self.searchController.view.removeFromSuperview()
     }
 
     // begin search
-    func performSearch() {
+    fileprivate func performSearch() {
         
         if let query = searchController.searchBar.text {
             if !query.isEmpty {
                 
-                dataSource.searchSpotify(query: query, completion: {
-                    [weak self] (spotifyTracks) in
+                dataSource.loadSpotifySearchQueryData(query: query, completion: {
+                    [weak self] (success) in
                     if let strongSelf = self {
-                        strongSelf.spotifyTracks.removeAll()
-                        strongSelf.spotifyTracks.append(contentsOf: spotifyTracks)
-                        strongSelf.tableView.reloadData()
+                        if success {
+                            if let tracks = strongSelf.dataSource.spotifyTracks {
+                                strongSelf.convertTracksToExtended(spotifyTracks: tracks)
+                            }
+                        }
                     }
                 })
             }
         }
     }
     
-    func presentSaveSongAlert(spotifyTrack: SpotifyTrackExtended) {
+    private func convertTracksToExtended(spotifyTracks: [SpotifyTrack]) {
+        
+        self.spotifyTracks.removeAll()
+        var newExtendedTracks = [SpotifyTrackExtended]()
+        
+        for track in spotifyTracks {
+            let extendedTrack = SpotifyTrackExtended(track: track, user: nil, soundScapeId: nil,trackType: .sptTrackOnly)
+            newExtendedTracks.append(extendedTrack)
+        }
+        self.spotifyTracks.append(contentsOf: newExtendedTracks)
+        tableView.reloadData()
+    }
+    
+    fileprivate func presentSaveSongAlert(spotifyTrack: SpotifyTrackExtended) {
 
         let alert = UIAlertController(title: nil,
                                       message: "Do you want to add \(spotifyTrack.track.name) to this location?",
@@ -98,7 +112,7 @@ extension SongsSearchViewController: UITableViewDelegate, UITableViewDataSource 
         cell.songLabel.text = trackItem.track.name
         cell.selectionStyle = .none
         
-        let url = trackItem.albumCoverImageURLSmall
+        let url = trackItem.track.smallestImageUrl
         if let url = url {
             ImageDataRequest.getImageData(imageUrl: url, completion: { (image) in
                 cell.albumImage.image = image

@@ -5,7 +5,7 @@ import GeoFire
 import Firebase
 import BoltsSwift
 
-class NearbySongsDataSource: SpotifyDataSource {
+class NearbySongsDataSource {
     
     var spotifyTracksExtended: [SpotifyTrackExtended]?
     var spotifyTrackAnnotations: [SpotifyTrackAnnotation]?
@@ -13,13 +13,13 @@ class NearbySongsDataSource: SpotifyDataSource {
     //load all nearby track objects once user location is available
     func loadNearbyTrackData(location: CLLocation, completion: @escaping (Bool) -> ()) {
         
-        self.getLocalTracks(location: location).continueOnSuccessWithTask { keys -> Task<[SpotifyTrack]> in
+        FirebaseTask.getLocalTracks(location: location).continueOnSuccessWithTask { keys -> Task<[SoundScapeTrack]> in
         
-            return self.getSpotifyTracksByKey(trackKeys: keys)
+            return FirebaseTask.getSpotifyTracksByKey(trackKeys: keys)
         
         }.continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
         
-            return self.getExtendedSpotifyTracks(nearbyTracks: tracks)
+            return SpotifyApiTask.getExtendedSpotifyTracks(nearbyTracks: tracks)
         
         }.continueOnSuccessWithTask { extendedTracks -> Task<[SpotifyTrackAnnotation]> in
             
@@ -34,7 +34,7 @@ class NearbySongsDataSource: SpotifyDataSource {
     }
     
     // create annotations (map pins) from nearby extended track objects
-    func getTrackAnnotations(spotifyTracksExtended: [SpotifyTrackExtended]) -> Task<[SpotifyTrackAnnotation]> {
+    private func getTrackAnnotations(spotifyTracksExtended: [SpotifyTrackExtended]) -> Task<[SpotifyTrackAnnotation]> {
         
         let taskCompletionSource = TaskCompletionSource<[SpotifyTrackAnnotation]>()
         let dispatchGroup = DispatchGroup()

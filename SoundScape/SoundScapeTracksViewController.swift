@@ -31,7 +31,7 @@ class SoundScapeTracksViewController: UIViewController {
                     if let strongSelf = self,
                         let tracksPlacedByCurrentUser = strongSelf.dataSource.soundscapeTracks {
                         strongSelf.spotifyTracks = tracksPlacedByCurrentUser
-                        //tableView.reloadData
+                        strongSelf.tableView.reloadData()
                     }
                 }
             })
@@ -59,7 +59,7 @@ extension SoundScapeTracksViewController: UITableViewDelegate, UITableViewDataSo
         cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        if let imageURL = trackItem.albumCoverImageURLSmall {
+        if let imageURL = trackItem.track.smallestImageUrl {
             ImageDataRequest.getImageData(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })

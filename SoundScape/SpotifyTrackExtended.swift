@@ -7,15 +7,15 @@ enum TrackType {
     case soundScapeTrack
 }
 
-// extended spotify class for use throughout app 
+// extended spotify track class for use throughout app 
 struct SpotifyTrackExtended {
     
-    let track: SPTTrack
-    let user: SPTUser?
+    let track: SpotifyTrack
+    let user: SpotifyUser?
     let soundScapeId: String?
     let trackType: TrackType
     
-    init(track: SPTTrack, user: SPTUser?, soundScapeId: String?, trackType: TrackType) {
+    init(track: SpotifyTrack, user: SpotifyUser?, soundScapeId: String?, trackType: TrackType) {
         
         self.track             = track
         self.user              = user
@@ -23,9 +23,9 @@ struct SpotifyTrackExtended {
         self.trackType         = trackType
     }
     
-    var primaryArtist: SPTPartialArtist? {
+    var primaryArtist: SpotifyArtist? {
         
-        return track.artists[safe: 0] as? SPTPartialArtist
+        return track.artists[safe: 0] 
     }
     
     var primaryArtistDisplayStr: String {
@@ -35,27 +35,17 @@ struct SpotifyTrackExtended {
     
     var userDisplayStr: String {
         
-        return self.user?.canonicalUserName ?? "User Unavailable"
+        return self.user?.displayName ?? "User Unavailable"
     }
     
     var albumArtistDisplayStr: String {
         
         let artistName = self.primaryArtist?.name ?? "Artist Unavailable"
-        let albumName = self.track.album.name ?? "Album Unavailable"
+        let albumName = self.track.album.name 
         return "\(artistName) / \(albumName)"
     }
     
-    var albumCoverImageURLSmall: String? {
-        
-        return track.album.smallestCover.imageURL.absoluteString
-    }
-    
-    var albumCoverImageURLLarge: String? {
-        
-        return track.album.largestCover.imageURL.absoluteString
-    }
-    
-    func isFavoritedByUser(user: SpotifyUser) -> Bool {
+    func isFavoritedByUser(user: SoundScapeUser) -> Bool {
         
         guard let _ = user.favoritedSongs else { return false }
         

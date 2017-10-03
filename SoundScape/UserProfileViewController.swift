@@ -10,7 +10,7 @@ class UserProfileViewController: UIViewController {
     
     let spotifyManager = SpotifyManager.sharedInstance
     let dataSource = UserProfileDataSource()
-    var sptUser: SPTUser?
+    var user: CurrentSpotifyUser?
     
     let horizontalLineStackView = UIStackView()
     let firstSegmentUnderline = UIView()
@@ -49,18 +49,18 @@ class UserProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        if let currentUser = spotifyManager.currentUser {
-            dataSource.loadData(username: currentUser.canonicalUserName, completion: {
-                [weak self] success in
+        dataSource.loadData(completion: {
+            [weak self] success in
                 if success {
                     if let strongSelf = self {
-                        let user = strongSelf.dataSource.sptUser
-                        strongSelf.sptUser = user
+                    
+                        let user = strongSelf.dataSource.currentUser
+                        strongSelf.user = user
+                        strongSelf.userProfileView.username = user?.id
                         strongSelf.getUserProfileImage()
-                    }
                 }
-            })
-        }
+            }
+        })
     }
     
     private func setupView() {
@@ -68,23 +68,24 @@ class UserProfileViewController: UIViewController {
         mainVerticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
         mainVerticalContainerStackView.addArrangedSubview(userProfileView)
 
-        
         setupSegmentedControl()
         updateView()
     }
     
     private func getUserProfileImage() {
         
-        if let sptUser = sptUser {
-            if let userImageURL = SpotifyUser.getUserProfileImage(user: sptUser) {
-                ImageDataRequest.getImageData(imageUrl: userImageURL, completion: {
-                    [weak self] image in
-                    if let strongSelf = self {
-                        guard let image = image else { return }
-                        strongSelf.userProfileView.setupProfileImage(userImage: image, username: sptUser.canonicalUserName)
-                    }
-                })
-            }
+        guard let user = user else { return }
+        userProfileView.username = user.id
+        
+        if let imageUrl = user.largestImageUrl {
+            ImageDataRequest.getImageData(imageUrl: imageUrl, completion: {
+                [weak self] image in
+                if let strongSelf = self {
+                    
+                    strongSelf.userProfileView.userAvatarImage = image
+                    strongSelf.userProfileView.setupProfileDisplayInfo()
+                }
+            })
         }
     }
     

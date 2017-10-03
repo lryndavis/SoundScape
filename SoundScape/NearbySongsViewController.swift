@@ -40,8 +40,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         // mapview
         mapView.delegate = self
         mapView.userTrackingMode = MKUserTrackingMode.follow
-        determineCurrentUserLocation()
-    
+        
         // build views
         buildView()
         
@@ -51,7 +50,19 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
-    func buildView() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        determineCurrentUserLocation()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        locationManager.stopUpdatingLocation()
+    }
+    
+    private func buildView() {
         
         // add mapview
         containerStackView.isLayoutMarginsRelativeArrangement = true
@@ -67,7 +78,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     }
     
     //TODO: rebuild the no results view
-    func showNoResultsView() {
+    private func showNoResultsView() {
         
         noResultsLabel.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height)
         noResultsLabel.text = "No nearby songs"
@@ -77,7 +88,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
         self.tableView.separatorStyle = .none
     }
     
-    func determineCurrentUserLocation() {
+    private func determineCurrentUserLocation() {
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -88,7 +99,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
             locationManager.startUpdatingLocation()
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         loadTracksInVicinity()
@@ -102,7 +113,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     }
     
     // get local tracks from query and update
-    func loadTracksInVicinity() {
+    private func loadTracksInVicinity() {
 
         if let location = self.locationManager.location {
             dataSource.loadNearbyTrackData(location: location, completion: {
@@ -146,7 +157,7 @@ class NearbySongsViewController: UIViewController, CLLocationManagerDelegate, Sp
     }
     
     // update nearby songs tableview
-    func updateTracksList(nearbyTracks: [SpotifyTrackExtended]) {
+    private func updateTracksList(nearbyTracks: [SpotifyTrackExtended]) {
         
         if !nearbyTracks.isEmpty {
             
@@ -217,7 +228,7 @@ extension NearbySongsViewController: UITableViewDelegate, UITableViewDataSource 
         cell.artistLabel.text = trackItem.albumArtistDisplayStr
         cell.selectionStyle = .none
         
-        if let imageURL = trackItem.albumCoverImageURLSmall {
+        if let imageURL = trackItem.track.smallestImageUrl {
             ImageDataRequest.getImageData(imageUrl: imageURL, completion: { (image) in
                 cell.albumImage.image = image
             })

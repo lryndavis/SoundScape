@@ -15,6 +15,9 @@ class UserProfileView: UIView {
     let profileImageHorizontalStackView = UIStackView()
     let profileTextVerticalStackView = UIStackView()
     let logoutButton = LogoutButton()
+    
+    var username: String?
+    var userAvatarImage: UIImage?
 
     init() {
         super.init(frame: .zero)
@@ -57,17 +60,22 @@ class UserProfileView: UIView {
         profileTextVerticalStackView.isLayoutMarginsRelativeArrangement = false
         profileTextVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
         profileTextVerticalStackView.addArrangedSubview(usernameLabel)
+        usernameLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
         
         profileImageHorizontalStackView.addArrangedSubview(profileTextVerticalStackView)
         
         mainHorizontalStackView.addArrangedSubview(logoutButton)
+        
+        setupProfileDisplayInfo()
     }
     
-    func setupProfileImage(userImage: UIImage, username: String) {
+    public func setupProfileDisplayInfo() {
         
-        userImageView.image = userImage
         usernameLabel.text = username
-        usernameLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
+        
+        if let userAvatarImage = userAvatarImage {
+            userImageView.image = userAvatarImage
+        }
     }
     
 }

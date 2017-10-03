@@ -3,15 +3,15 @@ import Foundation
 import Firebase
 import BoltsSwift
 
-class SoundscapeTracksDataSource: SpotifyDataSource {
+class SoundscapeTracksDataSource {
     
     var soundscapeTracks: [SpotifyTrackExtended]?
     
     func loadSoundscapeTracksData(userName: String, completion: @escaping (Bool) -> ()) {
         
-        self.getSpotifyTracksPlacedByUser(userName: userName).continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
+        FirebaseTask.getSpotifyTracksPlacedByUser(userName: userName).continueOnSuccessWithTask { tracks -> Task<[SpotifyTrackExtended]> in
             
-            return self.getExtendedSpotifyTracks(tracks: tracks)
+            return SpotifyApiTask.getExtendedSpotifyTracks(nearbyTracks: tracks)
             
             }.continueOnSuccessWith { extendedTracks in
                 

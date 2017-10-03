@@ -30,6 +30,7 @@ struct SpotifyApiTask {
         }
         return taskCompletionSource.task
     }
+    
 }
 
 extension SpotifyApiTask {
@@ -43,6 +44,7 @@ extension SpotifyApiTask {
         do {
             result = try unbox(dictionary: resultDict)
         } catch {
+            print(error)
             throw SoundscapeError.couldNotUnboxResult
         }
         

@@ -1,5 +1,6 @@
 
 import UIKit
+import BoltsSwift
 
 class LoginViewController: UIViewController {
 
@@ -25,13 +26,10 @@ class LoginViewController: UIViewController {
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
             
-            SpotifyUser.getCurrentUser(session: session, isFirstLogin: true, completion: { (user) in
-                if let user = user,
-                    let uri = user.uri {
-                        var newUser = SpotifyUser(canonicalUserName: user.canonicalUserName, uri: uri.absoluteString)
-                        newUser.createUserInFirebase()
-                }
-            })
+            SpotifyApiTask.readCurrentSpotifyUser().continueOnSuccessWith { currentUser in
+                var newUser = SoundScapeUser(canonicalUserName: currentUser.id, uri: currentUser.uri)
+                newUser.createUserInFirebase()
+            }
         }
     }
     
