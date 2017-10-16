@@ -37,6 +37,7 @@
 		D45700591F10203500E4DC9D /* SoundScapeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45700581F10203500E4DC9D /* SoundScapeUser.swift */; };
 		D457005B1F10204800E4DC9D /* SoundScapeTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457005A1F10204800E4DC9D /* SoundScapeTrack.swift */; };
 		D45C6B6F1F79D92F00DA4DB8 /* SpotifyApiTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45C6B6E1F79D92F00DA4DB8 /* SpotifyApiTask.swift */; };
+		D46875861F8F300100BE43BC /* DefaultUserIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46875851F8F300100BE43BC /* DefaultUserIconView.swift */; };
 		D47A39361F05A1E400122BDC /* AudioHalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */; };
 		D48711101EDE61E20009D4C6 /* SongsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */; };
 		D49251261F16AF9C006D29DB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49251251F16AF9C006D29DB /* TabBarController.swift */; };
@@ -110,6 +111,7 @@
 		D45700581F10203500E4DC9D /* SoundScapeUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundScapeUser.swift; sourceTree = "<group>"; };
 		D457005A1F10204800E4DC9D /* SoundScapeTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundScapeTrack.swift; sourceTree = "<group>"; };
 		D45C6B6E1F79D92F00DA4DB8 /* SpotifyApiTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyApiTask.swift; sourceTree = "<group>"; };
+		D46875851F8F300100BE43BC /* DefaultUserIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUserIconView.swift; sourceTree = "<group>"; };
 		D47A39351F05A1E400122BDC /* AudioHalfModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHalfModalView.swift; sourceTree = "<group>"; };
 		D487110F1EDE61E20009D4C6 /* SongsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsSearchViewController.swift; sourceTree = "<group>"; };
 		D49251251F16AF9C006D29DB /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				D4E11FD91F06018D00708E34 /* ModalAudioButton.swift */,
 				D446721A1F33EF220048DDD5 /* FavoriteSongButton.swift */,
 				D40DB85C1F6C433B009542C7 /* LogoutButton.swift */,
+				D46875851F8F300100BE43BC /* DefaultUserIconView.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				D4F7AFAB1EF9D06F00A6E7ED /* ImageDataRequest.swift in Sources */,
 				D493323B1EF0C5D0009B4671 /* SongDetailAnnotationView.swift in Sources */,
 				D4D1AE1A1EEE622C00D10685 /* SongTableViewCell.swift in Sources */,
+				D46875861F8F300100BE43BC /* DefaultUserIconView.swift in Sources */,
 				D43C32871EE0B58500B8E202 /* AudioModalViewController.swift in Sources */,
 				D40DB8611F6C77D7009542C7 /* UIImageExtensions.swift in Sources */,
 				D4E85FB51F301840009BB58A /* AudioModalSelectionView.swift in Sources */,

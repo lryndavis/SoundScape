@@ -48,33 +48,55 @@ class UserProfileView: UIView {
         profileImageHorizontalStackView.spacing = 16.0
         profileImageHorizontalStackView.alignment = .center
         
-        mainHorizontalStackView.addArrangedSubview(profileImageHorizontalStackView)
-        
-        userImageView.clipsToBounds = true
-        userImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
-        userImageView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
-        userImageView.layer.cornerRadius = 40
-        profileImageHorizontalStackView.addArrangedSubview(userImageView)
-        
         profileTextVerticalStackView.axis = .vertical
         profileTextVerticalStackView.isLayoutMarginsRelativeArrangement = false
         profileTextVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        profileTextVerticalStackView.addArrangedSubview(usernameLabel)
-        usernameLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
         
-        profileImageHorizontalStackView.addArrangedSubview(profileTextVerticalStackView)
-        
+        mainHorizontalStackView.addArrangedSubview(profileImageHorizontalStackView)
         mainHorizontalStackView.addArrangedSubview(logoutButton)
-        
-        setupProfileDisplayInfo()
     }
     
-    public func setupProfileDisplayInfo() {
+    public func setupUserProfileText() {
         
+        usernameLabel.font = UIFont(name: "Helvetica Neue", size: 18.0)
         usernameLabel.text = username
         
+        profileImageHorizontalStackView.addArrangedSubview(profileTextVerticalStackView)
+        profileTextVerticalStackView.addArrangedSubview(usernameLabel)
+    }
+    
+    public func setupUserIconImage() {
+        
         if let userAvatarImage = userAvatarImage {
+            
+            userImageView.clipsToBounds = true
+            userImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
+            userImageView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
+            userImageView.layer.cornerRadius = 40
+            
+            profileImageHorizontalStackView.addArrangedSubview(userImageView)
             userImageView.image = userAvatarImage
+        }
+    }
+    
+    public func setupDefaultIconImage() {
+
+        if let username = username {
+            
+            let defaultIconView = DefaultRoundIconView()
+            
+            defaultIconView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
+            defaultIconView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
+            
+            defaultIconView.setupUserIconText(displayName: username)
+            profileImageHorizontalStackView.addArrangedSubview(defaultIconView)
+        }
+    }
+    
+    public func removeAllSubviews() {
+        
+        for view in mainHorizontalStackView.arrangedSubviews {
+            mainHorizontalStackView.removeArrangedSubview(view)
         }
     }
     

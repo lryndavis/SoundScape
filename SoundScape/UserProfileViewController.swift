@@ -53,11 +53,10 @@ class UserProfileViewController: UIViewController {
             [weak self] success in
                 if success {
                     if let strongSelf = self {
-                    
+                        
                         let user = strongSelf.dataSource.currentUser
                         strongSelf.user = user
-                        strongSelf.userProfileView.username = user?.id
-                        strongSelf.getUserProfileImage()
+                        strongSelf.setupUserProfileView()
                 }
             }
         })
@@ -72,21 +71,25 @@ class UserProfileViewController: UIViewController {
         updateView()
     }
     
-    private func getUserProfileImage() {
+    private func setupUserProfileView() {
         
         guard let user = user else { return }
         userProfileView.username = user.id
-        
+    
         if let imageUrl = user.largestImageUrl {
             ImageDataRequest.getImageData(imageUrl: imageUrl, completion: {
                 [weak self] image in
                 if let strongSelf = self {
-                    
-                    strongSelf.userProfileView.userAvatarImage = image
-                    strongSelf.userProfileView.setupProfileDisplayInfo()
+                    if let image = image {
+                        strongSelf.userProfileView.userAvatarImage = image
+                        strongSelf.userProfileView.setupUserIconImage()
+                    }
                 }
             })
+        } else {
+            self.userProfileView.setupDefaultIconImage()
         }
+        userProfileView.setupUserProfileText()
     }
     
     private func setupSegmentedControl() {
